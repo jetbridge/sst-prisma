@@ -1,4 +1,4 @@
-# Serverless Stack + Prisma + RDS - Starter Kit
+# Serverless Stack + Prisma + RDS: Starter Kit
 
 ## What is this?
 
