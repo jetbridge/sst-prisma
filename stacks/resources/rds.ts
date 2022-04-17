@@ -54,5 +54,5 @@ function makeDatabaseUrl(db: Rds) {
   const dbPassword =
     db.rdsServerlessCluster.secret?.secretValueFromJson("password");
 
-  return `postgresql://${dbUsername}:${dbPassword}@${db.clusterEndpoint.hostname}/wedgwood?connection_limit=${prismaConnectionLimit}`;
+  return `postgresql://${dbUsername}:${dbPassword}@${db.clusterEndpoint.hostname}/${APP_NAME}?connection_limit=${prismaConnectionLimit}`;
 }
