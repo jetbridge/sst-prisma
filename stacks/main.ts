@@ -1,5 +1,6 @@
 import * as sst from "@serverless-stack/resources";
 import { SecurityGroup, Vpc } from "aws-cdk-lib/aws-ec2";
+import { Runtime } from "aws-cdk-lib/aws-lambda";
 import { APP_NAME } from ".";
 import { ENV_VARS } from "../src/env";
 import { APP_SECRETS } from "../src/secrets";
@@ -9,6 +10,8 @@ import { DbMigrationScript } from "./resources/migrationScript";
 import { Rds } from "./resources/rds";
 import { RestApi } from "./resources/restApi";
 import Secret from "./resources/secret";
+
+export const RUNTIME = Runtime.NODEJS_14_X;
 
 export default class MainStack extends sst.Stack {
   constructor(scope: sst.App, id: string, props?: sst.StackProps) {
@@ -26,7 +29,7 @@ export default class MainStack extends sst.Stack {
     );
     this.setDefaultFunctionProps({
       vpc,
-      runtime: "nodejs14.x",
+      runtime: RUNTIME,
       securityGroups: [defaultLambdaSecurityGroup],
       environment: {
         [ENV_VARS.STAGE]: scope.stage,
