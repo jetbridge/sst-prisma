@@ -1,0 +1,43 @@
+name: Test
+
+on: push
+
+jobs:
+  build-and-test:
+    env:
+      DATABASE_URL: "postgresql://prisma:prisma@localhost/tests"
+      NODE_OPTIONS: "--max-old-space-size=4096"
+
+    services:
+      postgres:
+        image: postgres:12
+        env:
+          POSTGRES_USER: prisma
+          POSTGRES_PASSWORD: prisma
+          POSTGRES_DB: tests
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 1s
+          --health-timeout 1s
+          --health-retries 60
+        ports:
+          - 5432:5432
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Build
+      - name: Install Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+          cache: npm
+      - name: Install dependencies
+        run: npm install
+      - name: Lint
+        run: npm run lint
+      - name: Tests
+        run: npm run --ignore-scripts test:ci
