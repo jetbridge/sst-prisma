@@ -1,0 +1,76 @@
+{
+  "name": "wedgwood",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate-graphql-schema": "DEBUG=1 graphql-codegen --config graphql/codegen.yml",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest",
+    "test:ci": "npm run test",
+    "lint": "eslint --ext .js,.ts,.tsx src stacks test",
+    "start": "npm run start:db && AWS_PROFILE=tombo-dev dotenv -e .env.sst.start sst start",
+    "deploy": "AWS_PROFILE=tombo-dev sst deploy --region eu-central-1",
+    "deploy:main": "AWS_PROFILE=tombo-dev sst deploy --region eu-central-1 main",
+    "remove": "sst remove",
+    "postinstall": "prisma generate",
+    "format": "prisma format",
+    "pretest": "npm run start:db && npm run migrate:test",
+    "migrate": "npm run migrate:dev",
+    "migrate:dev": "npm run format && prisma migrate dev",
+    "migrate:test": "dotenv -e .env.jest -- prisma migrate dev --skip-seed --skip-generate",
+    "start:db": "docker-compose up -d",
+    "stop:db": "docker-compose down"
+  },
+  "eslintConfig": {
+    "extends": [
+      "serverless-stack"
+    ]
+  },
+  "devDependencies": {
+    "@aws-cdk/aws-appsync-alpha": "2.15.0-alpha.0",
+    "@graphql-codegen/cli": "^2.3.0",
+    "@graphql-codegen/schema-ast": "^2.4.0",
+    "@graphql-codegen/typescript": "^2.4.2",
+    "@graphql-codegen/typescript-operations": "^2.2.2",
+    "@graphql-codegen/typescript-react-apollo": "*",
+    "@serverless-stack/static-site-env": "^0.65.2",
+    "@tsconfig/node14": "^1.0.1",
+    "@types/aws-lambda": "^8.10.70",
+    "@types/jest": "^27.4.1",
+    "@types/memoizee": "^0.4.7",
+    "@types/node": "<15.0.0",
+    "dotenv": "^16.0.0",
+    "dotenv-cli": "^5.1.0",
+    "husky": "^7.0.4",
+    "jest": "^27.5.1",
+    "jest-esbuild": "^0.2.6",
+    "lint-staged": "^12.3.8",
+    "prisma": "^3.12.0"
+  },
+  "dependencies": {
+    "@aws-lambda-powertools/logger": "^0.8.0",
+    "@aws-sdk/client-secrets-manager": "^3.67.0",
+    "@middy/core": "^2.5.7",
+    "@prisma/client": "^3.12.0",
+    "@serverless-stack/cli": "0.69.5",
+    "@serverless-stack/resources": "0.69.5",
+    "@sls-next/lambda-at-edge": "^3.7.0-alpha.7",
+    "aws-cdk-lib": "2.15.0",
+    "aws-lambda": "^1.0.7",
+    "memoizee": "^0.4.15"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{yaml,yml}": [
+      "yamllint"
+    ],
+    "{*.{ts,js},!(node*)**/*.{ts,tsx,js,jsx}}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  }
+}

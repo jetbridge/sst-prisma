@@ -1,0 +1,13 @@
+version: "3.6"
+
+services:
+  local-db:
+    image: postgres:12
+    container_name: wedgwood-local
+    ports:
+      - "5437:5432"
+    environment:
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: ww
+      POSTGRES_PASSWORD: ww
+      POSTGRES_DB: ww
