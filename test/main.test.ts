@@ -8,5 +8,5 @@ test("Main Stack", () => {
   const stack = new MainStack(app, "test-stack");
   // THEN
   const template = Template.fromStack(stack);
-  template.hasOutput("RestApiEndpoint");
+  template.hasOutput("RestApiEndpoint", {});
 });
