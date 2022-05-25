@@ -27,4 +27,5 @@ module.exports = {
       },
     },
   },
+  ignorePatterns: ['node_modules', 'build', 'jest.config.js', 'prisma-generated-client', 'generated/', 'cdk.out'],
 };
