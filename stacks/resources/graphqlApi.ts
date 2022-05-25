@@ -22,7 +22,10 @@ export class GraphqlApi extends AppSyncApi {
       dataSources: {},
 
       // define resolvers here - https://docs.serverless-stack.com/constructs/AppSyncApi#using-the-minimal-config
-      resolvers: {},
+      resolvers: {
+        "Query getGreeting": "src/api/resolver/greeting.getGreeting",
+        "Mutation greet": "src/api/resolver/greeting.greet",
+      },
     });
 
     scope.addOutputs({

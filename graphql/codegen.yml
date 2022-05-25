@@ -4,7 +4,7 @@ schema:
 documents:
   - "graphql/documents/**/*.ts"
 generates:
-  graphql/generated/platform.ts:
+  graphql/generated/gql.ts:
     config:
       maybeValue: T | undefined
       enumsAsTypes: true
@@ -24,7 +24,7 @@ generates:
       - "typescript"
       - "typescript-operations"
       - "typescript-react-apollo"
-  # graphql/generated/platform.graphql:
+  # graphql/generated/schema.graphql:
   #   plugins:
   #     - schema-ast
   #   config:
