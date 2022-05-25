@@ -18,6 +18,6 @@ export default {
   transform,
   maxWorkers: 1, // remove when we can enable runInBand for integration tests
   extensionsToTreatAsEsm: ['.ts', '.tsx', '.jsx'],
-  roots: ['<rootDir>/stacks', '<rootDir>/src', '<rootDir>/test'],
-  modulePaths: ['<rootDir>/stacks', '<rootDir>/src', '<rootDir>/test'],
+  roots: ['<rootDir>/stacks', '<rootDir>/src', '<rootDir>/graphql/documents'],
+  modulePaths: ['<rootDir>/stacks', '<rootDir>/src', '<rootDir>/graphql/documents'],
 };
