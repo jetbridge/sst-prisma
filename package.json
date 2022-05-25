@@ -25,6 +25,7 @@
     "stop:db": "docker-compose down"
   },
   "dependencies": {
+    "@apollo/client": "^3.6.5",
     "@aws-lambda-powertools/logger": "^0.8.0",
     "@aws-sdk/client-secrets-manager": "^3.67.0",
     "@middy/core": "^2.5.7",
@@ -45,7 +46,7 @@
     "@graphql-codegen/typescript-operations": "^2.4.0",
     "@graphql-codegen/typescript-react-apollo": "*",
     "@serverless-stack/static-site-env": "1.2.3",
-    "@tsconfig/node16": "^1.0.1",
+    "@tsconfig/node16-strictest-esm": "^1.0.1",
     "@types/aws-lambda": "^8.10.70",
     "@types/jest": "^27.4.1",
     "@types/memoizee": "^0.4.7",
