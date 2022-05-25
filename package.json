@@ -10,7 +10,7 @@
     "postinstall": "npm run generate:all",
     "test": "node --experimental-vm-modules node_modules/.bin/jest",
     "test:ci": "npm run test",
-    "lint": "eslint --ext .js,.ts,.tsx src stacks test graphql/documents",
+    "lint": "eslint --ext .js,.ts,.tsx src stacks graphql/documents",
     "lint:fix": "npm run lint -- --fix",
     "build": "tsc",
     "start": "npm run start:db && AWS_PROFILE=default dotenv -e .env.sst.start sst start",
