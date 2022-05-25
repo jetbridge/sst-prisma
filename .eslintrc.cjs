@@ -15,17 +15,16 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'import'],
   rules: {},
   settings: {
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
     },
     'import/resolver': {
-      typescript: {
-        project: ['tsconfig.json'],
-      },
+      node: {},
+      typescript: {},
     },
   },
-  ignorePatterns: ['node_modules', 'build', 'jest.config.js', 'prisma-generated-client', 'generated/', 'cdk.out'],
+  ignorePatterns: ['.build', 'build', 'jest.config.js', 'prisma-generated-client', 'generated/', 'cdk.out'],
 };
