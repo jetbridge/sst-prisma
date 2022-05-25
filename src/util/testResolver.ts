@@ -1,13 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AppSyncIdentity, AppSyncResolverHandler, Context } from 'aws-lambda';
+import { AppSyncIdentity, AppSyncResolverEvent, Callback, Context } from 'aws-lambda';
 
-// aggressively infer arguments and return type of a function
-// eslint-disable-next-line no-unused-vars
-type InferFunc<T> = T extends (...p: infer P) => infer R | void ? (...p: P) => R : never;
-
-export interface CallAuthenticatedResolver<A, R, S> {
+export interface TestCallResolverArgs<A, R, S> {
   userName?: string;
-  resolverFunc: InferFunc<AppSyncResolverHandler<A, R, S>>;
+  resolverFunc: (event: AppSyncResolverEvent<A, S>, context?: Context, callback?: Callback) => R;
   args: A;
   source?: S;
 }
@@ -17,12 +13,12 @@ export interface CallAuthenticatedResolver<A, R, S> {
  * @param args arguments passed to resolver
  * @param userName for current user
  */
-export const callAuthenticatedResolver = <A, R, S>({
+export const testCallResolver = <A, R, S>({
   userName,
   args,
   source = null as unknown as S,
   resolverFunc,
-}: CallAuthenticatedResolver<A, R, S>) =>
+}: TestCallResolverArgs<A, R, S>) =>
   resolverFunc(
     {
       arguments: args,
