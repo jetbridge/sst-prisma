@@ -24,11 +24,6 @@
     "start:db": "docker-compose up -d",
     "stop:db": "docker-compose down"
   },
-  "eslintConfig": {
-    "extends": [
-      "serverless-stack"
-    ]
-  },
   "dependencies": {
     "@aws-lambda-powertools/logger": "^0.8.0",
     "@aws-sdk/client-secrets-manager": "^3.67.0",
