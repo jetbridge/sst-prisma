@@ -44,4 +44,4 @@ jobs:
       - name: Lint
         run: pnpm run lint
       - name: Tests
-        run: pnpm run --ignore-scripts test:ci
+        run: pnpm run test:ci
