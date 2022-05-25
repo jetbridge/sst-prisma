@@ -4,5 +4,5 @@
     "incremental": true,
     "outDir": "./build"
   },
-  "include": ["stacks", "src", "graphql/generated"]
+  "include": ["stacks", "src", "graphql/generated", "graphql/documents"]
 }
