@@ -1,0 +1,11 @@
+type HelloResponse {
+  greeting: String!
+}
+
+type Query {
+  getGreeting: String
+}
+
+type Mutation {
+  sayHello(name: String!): HelloResponse
+}

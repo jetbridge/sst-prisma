@@ -4,7 +4,7 @@
 
 If you want to build a serverless app with AWS CDK, Lambda, and Postgres, this is the template for you.
 
-## Features:
+## Features
 
 All features are optional, delete what you don't need.
 
@@ -16,6 +16,6 @@ All features are optional, delete what you don't need.
 - Prisma lambda layer
 - Prisma DB migrations
 - Aurora Serverless RDS Postgres
-- Nextjs frontend w/ Material-UI
+- NextJS frontend w/ Material-UI
 - Integration test setup with postgres in docker
-- Local development (`npm run start`) - uses SST
+- Local development (`npm start`) - uses SST
