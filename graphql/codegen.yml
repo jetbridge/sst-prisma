@@ -1,14 +1,14 @@
 overwrite: true
 schema:
-  - "graphql/schema/*.graphql"
+  - 'graphql/schema/*.graphql'
 documents:
-  - "graphql/documents/**/*.ts"
+  - 'graphql/documents/**/*.ts'
 generates:
   graphql/generated/gql.ts:
     config:
       maybeValue: T | undefined
       enumsAsTypes: true
-      gqlImport: "graphql-tag#gql"
+      gqlImport: 'graphql-tag#gql'
       strictScalars: true
       scalars:
         AWSDate: any
@@ -21,9 +21,9 @@ generates:
         AWSTimestamp: any
         AWSURL: any
     plugins:
-      - "typescript"
-      - "typescript-operations"
-      - "typescript-react-apollo"
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
   # graphql/generated/schema.graphql:
   #   plugins:
   #     - schema-ast

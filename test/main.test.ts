@@ -1,12 +1,12 @@
-import { Template } from "aws-cdk-lib/assertions";
-import * as sst from "@serverless-stack/resources";
-import MainStack from "../stacks/main";
+import { Template } from 'aws-cdk-lib/assertions';
+import * as sst from '@serverless-stack/resources';
+import MainStack from '../stacks/main';
 
-test("Main Stack", () => {
+test('Main Stack', () => {
   const app = new sst.App();
   // WHEN
-  const stack = new MainStack(app, "test-stack");
+  const stack = new MainStack(app, 'test-stack');
   // THEN
   const template = Template.fromStack(stack);
-  template.hasOutput("RestApiEndpoint", {});
+  template.hasOutput('RestApiEndpoint', {});
 });

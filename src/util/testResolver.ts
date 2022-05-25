@@ -1,9 +1,9 @@
-import { AppSyncIdentity, AppSyncResolverHandler, Context } from "aws-lambda";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { AppSyncIdentity, AppSyncResolverHandler, Context } from 'aws-lambda';
 
 // aggressively infer arguments and return type of a function
-type InferFunc<T> = T extends (...p: infer P) => infer R | void
-  ? (...p: P) => R
-  : never;
+// eslint-disable-next-line no-unused-vars
+type InferFunc<T> = T extends (...p: infer P) => infer R | void ? (...p: P) => R : never;
 
 export interface CallAuthenticatedResolver<A, R, S> {
   userName?: string;
@@ -29,11 +29,11 @@ export const callAuthenticatedResolver = <A, R, S>({
       identity: userName
         ? {
             sub: userName,
-            issuer: "King Mischa",
-            sourceIp: ["1.2.3.4"],
-            defaultAuthStrategy: "whatever",
+            issuer: 'King Mischa',
+            sourceIp: ['1.2.3.4'],
+            defaultAuthStrategy: 'whatever',
             groups: [],
-            claims: { "cognito:username": userName },
+            claims: { 'cognito:username': userName },
             username: userName,
           }
         : ({} as AppSyncIdentity),

@@ -1,11 +1,10 @@
-import { afterEach, beforeEach } from "@jest/globals";
-import type { PrismaClient } from "@prisma/client";
-import { isProd } from "../env";
-import { getPrisma } from "./client";
+import { afterEach, beforeEach } from '@jest/globals';
+import type { PrismaClient } from '@prisma/client';
+import { isProd } from '../env';
+import { getPrisma } from './client';
 
 export async function truncateAllTables(prisma: PrismaClient) {
-  if (isProd())
-    throw new Error("Please stop whatever you are doing right now.");
+  if (isProd()) throw new Error('Please stop whatever you are doing right now.');
 
   await prisma.$executeRawUnsafe(`
       DO $$ DECLARE
@@ -18,10 +17,7 @@ export async function truncateAllTables(prisma: PrismaClient) {
       `);
 }
 
-export const integrationTest = async (
-  title: string,
-  inner: () => Promise<void>
-) => {
+export const integrationTest = async (title: string, inner: () => Promise<void>) => {
   beforeEach(async () => {
     // begin txn ... https://github.com/prisma/prisma/issues/9710
   });

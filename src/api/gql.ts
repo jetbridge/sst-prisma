@@ -1,3 +1,3 @@
 // holds generated graphQL types and mutations
 
-export * as GQL from "../../graphql/generated/gql";
+export * as GQL from '../../graphql/generated/gql';
