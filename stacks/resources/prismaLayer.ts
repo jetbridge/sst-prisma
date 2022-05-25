@@ -1,13 +1,9 @@
-import { Construct } from "constructs";
-import {
-  Code,
-  LayerVersion,
-  LayerVersionProps,
-  Runtime,
-} from "aws-cdk-lib/aws-lambda";
 import { AssetHashType, IgnoreMode } from "aws-cdk-lib";
+import { Code, LayerVersion, LayerVersionProps } from "aws-cdk-lib/aws-lambda";
+import { Construct } from "constructs";
 import crypto from "crypto";
 import path from "path";
+import { RUNTIME } from "../main";
 
 // modules to mark as "external" when bundling
 // added to prismaModules
@@ -25,7 +21,7 @@ type PrismaEngine =
   | "libquery_engine";
 
 export interface PrismaLayerProps extends Omit<LayerVersionProps, "code"> {
-  // e.g. 3.7.0
+  // e.g. 3.14.0
   prismaVersion?: string;
 
   // some more modules to add to the layer
@@ -152,7 +148,7 @@ export class PrismaLayer extends LayerVersion {
         assetHash: bundleCommandHash.digest("hex"),
 
         bundling: {
-          image: Runtime.NODEJS_14_X.bundlingImage,
+          image: RUNTIME.bundlingImage,
           command: createBundleCommand,
         },
       });

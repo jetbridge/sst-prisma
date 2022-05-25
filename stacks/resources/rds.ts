@@ -16,7 +16,7 @@ const prismaConnectionLimit = 10;
 export class Rds extends RDS {
   constructor(scope: Stack, id: string, { vpc }: RdsProps) {
     super(scope, id, {
-      rdsServerlessCluster: { vpc },
+      cdk: { cluster: { vpc } },
       engine: "postgresql10.14",
       defaultDatabaseName: APP_NAME,
       scaling: {
@@ -49,10 +49,8 @@ export class Rds extends RDS {
  * Generate a database connection string (DSN).
  */
 function makeDatabaseUrl(db: Rds) {
-  const dbUsername =
-    db.rdsServerlessCluster.secret?.secretValueFromJson("username");
-  const dbPassword =
-    db.rdsServerlessCluster.secret?.secretValueFromJson("password");
+  const dbUsername = db.cdk.cluster.secret?.secretValueFromJson("username");
+  const dbPassword = db.cdk.cluster.secret?.secretValueFromJson("password");
 
   return `postgresql://${dbUsername}:${dbPassword}@${db.clusterEndpoint.hostname}/${APP_NAME}?connection_limit=${prismaConnectionLimit}`;
 }

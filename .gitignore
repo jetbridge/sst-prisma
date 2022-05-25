@@ -28,3 +28,6 @@ yarn-debug.log*
 yarn-error.log*
 
 !jest.config.js
+
+# TSC build output
+/build

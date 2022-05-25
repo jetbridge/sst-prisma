@@ -1,4 +1,7 @@
 {
-  "extends": "@tsconfig/node14",
+  "extends": "@tsconfig/node16",
+  "compilerOptions": {
+    "outDir": "./build"
+  },
   "include": ["stacks", "src", "graphql/generated"]
 }

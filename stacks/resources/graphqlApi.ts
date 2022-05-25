@@ -6,24 +6,28 @@ import { Duration, Expiration } from "aws-cdk-lib";
 export class GraphqlApi extends AppSyncApi {
   constructor(scope: Stack, id: string) {
     super(scope, id, {
-      graphqlApi: {
-        authorizationConfig: {
-          defaultAuthorization: {
-            authorizationType: AuthorizationType.API_KEY,
-            apiKeyConfig: {
-              expires: Expiration.after(Duration.days(365)),
+      cdk: {
+        graphqlApi: {
+          authorizationConfig: {
+            defaultAuthorization: {
+              authorizationType: AuthorizationType.API_KEY,
+              apiKeyConfig: {
+                expires: Expiration.after(Duration.days(365)),
+              },
             },
           },
         },
-        schema: "graphql/schema.graphql",
       },
+      schema: "graphql/schema.graphql",
       dataSources: {},
+
+      // define resolvers here - https://docs.serverless-stack.com/constructs/AppSyncApi#using-the-minimal-config
       resolvers: {},
     });
 
     scope.addOutputs({
       GraphqlApiEndpoint: this.url,
-      GraphqlApiKey: this.graphqlApi.apiKey || "none",
+      GraphqlApiKey: this.cdk.graphqlApi.apiKey || "none",
     });
   }
 }
