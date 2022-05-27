@@ -10,7 +10,7 @@
     "postinstall": "pnpm run generate:all",
     "vitest": "vitest",
     "test": "pnpm run vitest",
-    "test:ci": "pnpm run migrate:test && pnpm run vitest",
+    "test:ci": "pnpm run vitest",
     "lint": "pnpm run --recursive --if-present --aggregate-output lint && pnpm run lint:toplevel",
     "lint:toplevel": "eslint --ext .js,.ts,.tsx common stacks graphql/documents",
     "lint:fix": "pnpm run lint -- --fix",
