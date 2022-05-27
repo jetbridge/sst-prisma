@@ -22,8 +22,8 @@ export class GraphqlApi extends AppSyncApi {
 
       // define resolvers here - https://docs.serverless-stack.com/constructs/AppSyncApi#using-the-minimal-config
       resolvers: {
-        'Query getGreeting': 'src/api/resolver/greeting.getGreeting',
-        'Mutation greet': 'src/api/resolver/greeting.greet',
+        'Query getGreeting': 'backend/src/api/resolver/greeting.getGreeting',
+        'Mutation greet': 'backend/src/api/resolver/greeting.greet',
       },
     });
 

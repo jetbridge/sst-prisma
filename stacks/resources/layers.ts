@@ -28,7 +28,7 @@ export class Layers extends Construct {
     scope.addDefaultFunctionEnv(prismaLayer.environment);
     scope.setDefaultFunctionProps({
       bundle: {
-        copyFiles: [{ from: 'prisma/schema.prisma', to: 'src/schema.prisma' }],
+        copyFiles: [{ from: 'backend/prisma/schema.prisma', to: 'src/schema.prisma' }],
         externalModules: prismaLayer.externalModules,
       },
     });
