@@ -1,5 +1,5 @@
 import { Secret as CdkSecret, SecretProps as CdkSecretProps } from 'aws-cdk-lib/aws-secretsmanager';
-import { ENV_VARS } from '@common/env';
+import { APP_SECRETS, ENV_VARS } from '@common/env';
 import { APP_NAME } from '..';
 import { Stack } from '@serverless-stack/resources';
 

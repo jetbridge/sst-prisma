@@ -1,6 +1,6 @@
 import { SecretsManagerClient, GetSecretValueCommand } from '@aws-sdk/client-secrets-manager';
 import memoize from 'memoizee';
-import { APP_SECRETS, ENV_VARS } from '../../common/env';
+import { APP_SECRETS, ENV_VARS } from '@common/env';
 
 type SecretName = typeof APP_SECRETS[keyof typeof APP_SECRETS];
 type SecretValue = string | undefined; // technically can be any json value type (but it's probably always a string)
