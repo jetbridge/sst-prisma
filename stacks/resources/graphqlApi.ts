@@ -17,7 +17,7 @@ export class GraphqlApi extends AppSyncApi {
           },
         },
       },
-      schema: 'graphql/schema.graphql',
+      schema: 'graphql/generated/schema.graphql',
       dataSources: {},
 
       // define resolvers here - https://docs.serverless-stack.com/constructs/AppSyncApi#using-the-minimal-config

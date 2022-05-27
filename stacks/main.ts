@@ -30,6 +30,9 @@ export default class MainStack extends sst.Stack {
       environment: {
         [ENV_VARS.STAGE]: scope.stage,
       },
+      bundle: {
+        format: 'esm',
+      },
     });
 
     // Layers

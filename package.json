@@ -15,18 +15,19 @@
     "lint:fix": "pnpm run lint -- --fix",
     "build": "tsc",
     "start": "pnpm run start:db && dotenv -e .env.sst.start sst start",
-    "deploy": "sst deploy",
-    "deploy:main": "sst deploy main",
+    "deploy": "pnpm graphql:generate && sst deploy",
+    "deploy:main": "pnpm graphql:generate && sst deploy main",
     "remove": "sst remove",
     "prettier:exc": "./node_modules/.bin/prettier --config .prettierrc.yaml --write",
     "prettier": "pnpm run prettier:exc -- '**/*.{js,ts,tsx,css,json,yaml,yml,md}'",
     "format": "pnpm run prettier && prisma format",
-    "pretest": "pnpm run start:db && pnpm run migrate:test",
+    "pretest": "pnpm run start:db && pnpm graphql:generate && pnpm run migrate:test",
     "migrate": "pnpm run migrate:dev",
     "migrate:dev": "pnpm run format && prisma migrate dev",
     "migrate:test": "dotenv -e .env.jest -- prisma migrate dev --skip-seed --skip-generate",
     "start:db": "docker-compose up -d",
-    "stop:db": "docker-compose down"
+    "stop:db": "docker-compose down",
+    "clean": "rm -rf .build dist graphql/generated"
   },
   "dependencies": {
     "@apollo/client": "^3.6.5",
@@ -50,6 +51,7 @@
     "@graphql-codegen/typescript-operations": "^2.4.0",
     "@graphql-codegen/typescript-react-apollo": "*",
     "@prisma/generator-helper": "~3.14.0",
+    "@serverless-stack/core": "^1.2.11",
     "@serverless-stack/static-site-env": "~1.2.5",
     "@tsconfig/node16-strictest-esm": "^1.0.1",
     "@types/aws-lambda": "^8.10.70",
@@ -70,6 +72,7 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.30.0",
     "eslint-plugin-react-hooks": "^4.5.0",
+    "fs-extra": "^10.1.0",
     "graphql": "^16.5.0",
     "graphql-tag": "^2.12.6",
     "husky": "^7.0.4",
@@ -96,5 +99,8 @@
       "eslint --fix",
       "prettier --write"
     ]
+  },
+  "pnpm": {
+    "enable-pre-post-scripts": true
   }
 }
