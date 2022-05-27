@@ -8,6 +8,7 @@
     "test": "pnpm run vitest",
     "test:ci": "pnpm run migrate:test && pnpm run vitest",
     "build": "tsc",
+    "lint":"eslint --ext .js,.ts,.tsx src",
     "start": " dotenv -e .env.sst.start sst start",
     "format": "pnpm run prettier && prisma format",
     "pretest": "pnpm run start:db && pnpm graphql:generate && pnpm run migrate:test",
