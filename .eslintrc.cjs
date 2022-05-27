@@ -26,5 +26,5 @@ module.exports = {
       typescript: {},
     },
   },
-  ignorePatterns: ['.build', 'dist', 'jest.config.js', 'prisma-generated-client', 'generated/', 'cdk.out', 'frontend'],
+  ignorePatterns: ['.build', 'dist', 'cdk.out'],
 };
