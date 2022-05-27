@@ -8,7 +8,12 @@
     "noUncheckedIndexedAccess": false,
     "noPropertyAccessFromIndexSignature": false,
     "exactOptionalPropertyTypes": false,
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals"],
+    "baseUrl": ".",
+    "paths": {
+      "@common/*": ["common/*"],
+      "@gql/*": ["graphql/generated/*"]
+    }
   },
-  "include": ["stacks", "src", "graphql/generated", "graphql/documents"]
+  "include": ["stacks", "common", "graphql/generated", "graphql/documents"]
 }

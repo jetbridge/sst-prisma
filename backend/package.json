@@ -1,0 +1,50 @@
+{
+  "name": "backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "vitest": "vitest",
+    "test": "pnpm run vitest",
+    "test:ci": "pnpm run migrate:test && pnpm run vitest",
+    "build": "tsc",
+    "start": " dotenv -e .env.sst.start sst start",
+    "format": "pnpm run prettier && prisma format",
+    "pretest": "pnpm run start:db && pnpm graphql:generate && pnpm run migrate:test",
+    "migrate": "pnpm run migrate:dev",
+    "migrate:dev": "pnpm run format && prisma migrate dev",
+    "migrate:test": "dotenv -e .env.jest -- prisma migrate dev --skip-seed --skip-generate",
+    "start:db": "docker-compose up -d",
+    "stop:db": "docker-compose down",
+    "postinstall": "pnpm run generate",
+    "generate": "prisma generate"
+  },
+  "dependencies": {
+    "@aws-lambda-powertools/logger": "^0.8.0",
+    "@aws-sdk/client-secrets-manager": "^3.67.0",
+    "@middy/core": "^2.5.7",
+    "@prisma/client": "~3.14.0",
+    "@prisma/migrate": "~3.14.0",
+    "@prisma/sdk": "~3.14.0",
+    "aws-lambda": "^1.0.7",
+    "memoizee": "^0.4.15"
+  },
+  "devDependencies": {
+    "@aws-sdk/signature-v4-crt": "^3.31.0",
+    "@babel/core": ">=7.0.0 <8.0.0",
+    "@prisma/generator-helper": "*",
+    "@sls-next/lambda-at-edge": "^3.7.0",
+    "@types/aws-lambda": "^8.10.70",
+    "@types/memoizee": "^0.4.7",
+    "builtin-modules": "3.2.0",
+    "dotenv": "^16.0.0",
+    "dotenv-cli": "^5.1.0",
+    "graphql": "^16.5.0",
+    "graphql-tag": "^2.12.6",
+    "prisma": "~3.14.0"
+  },
+  "engines": {
+    "node": ">=0.16",
+    "npm": ">=7.0.0"
+  }
+}

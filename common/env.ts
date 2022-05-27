@@ -7,6 +7,11 @@ export const ENV_VARS = {
   STAGE: 'STAGE',
 } as const;
 
+export const APP_SECRETS = {
+  APP: 'APP',
+  DATABASE_URL: 'DATABASE_URL',
+};
+
 type EnvVar = typeof ENV_VARS[keyof typeof ENV_VARS];
 
 export function requireEnvVar(envVar: EnvVar): string {

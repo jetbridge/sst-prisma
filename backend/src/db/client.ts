@@ -3,8 +3,9 @@ import * as PrismaClientPkg from '@prisma/client';
 import memoize from 'memoizee';
 import { requireSecret } from '../secrets';
 
-const { PrismaClient, Prisma } = PrismaClientPkg;
-export { PrismaClient, Prisma };
+// const { PrismaClient, Prisma } = PrismaClientPkg;
+// export { PrismaClient, Prisma };
+export { PrismaClient, Prisma } from '@prisma/client';
 
 export const loadDatabaseUrl = async (): Promise<string> => {
   const databaseUrl = process.env.DATABASE_URL || (await requireSecret('DATABASE_URL'));
