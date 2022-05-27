@@ -6,7 +6,7 @@
   "scripts": {
     "graphql:generate": "cross-env DEBUG=1 graphql-codegen --config graphql/codegen.yml",
     "generate": "pnpm run graphql:generate",
-    "generate:all": "pnpm run --recursive --if-present generate && pnpm run graphql",
+    "generate:all": "pnpm run --recursive --if-present generate && pnpm run generate",
     "postinstall": "pnpm run generate:all",
     "vitest": "vitest",
     "test": "pnpm run vitest",
