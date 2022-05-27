@@ -31,7 +31,7 @@ export const handler = async (): Promise<string> => {
   if (editedMigrationNames.length > 0) {
     console.info(
       `${chalk.yellow('WARNING The following migrations have been modified since they were applied:')}
-${editedMigrationNames.join('\n')}`,
+${editedMigrationNames.join('\n')}`
     );
   }
 
@@ -46,7 +46,7 @@ ${editedMigrationNames.join('\n')}`,
   return `The following migration${migrationIds.length > 1 ? 's' : ''} have been applied:\n\n${chalk(
     printFilesFromMigrationIds('migrations', migrationIds, {
       'migration.sql': '',
-    }),
+    })
   )}
 
 ${chalk.greenBright('All migrations have been successfully applied.')}`;
