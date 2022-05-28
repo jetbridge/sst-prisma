@@ -1,4 +1,4 @@
-import { envVar, secret } from '@common/env';
+import { envVar, secret } from 'common';
 import * as sst from '@serverless-stack/resources';
 import { SecurityGroup, Vpc } from 'aws-cdk-lib/aws-ec2';
 import { Runtime } from 'aws-cdk-lib/aws-lambda';
