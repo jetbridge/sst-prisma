@@ -14,7 +14,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "graphql:generate": "cross-env DEBUG=1 graphql-codegen --config graphql/codegen.yml",
-    "generate": "pnpm run graphql:generate"
+    "generate": "pnpm run graphql:generate",
+    "lint": "eslint --ext .js,.ts,.tsx src graphql/documents"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^2.6.2",
