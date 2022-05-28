@@ -6,7 +6,10 @@
   "type": "module",
   "exports": {
     ".": "./dist/src/index.js",
-    "./*": "./dist/src/*.js"
+    "./*": {
+      "types": "./dist/src/*.d.ts",
+      "default": "./dist/src/*.js"
+    }
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

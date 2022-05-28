@@ -14,7 +14,7 @@
     "lint": "pnpm run --recursive --if-present --aggregate-output lint && pnpm run lint:toplevel",
     "lint:toplevel": "eslint --ext .js,.ts,.tsx stacks",
     "lint:fix": "pnpm run lint -- --fix",
-    "build": "tsc -b && pnpm run -r --aggregate-output build",
+    "build": "tsc -b && pnpm run --recursive --if-present --aggregate-output build",
     "deploy": "pnpm generate && sst deploy",
     "deploy:main": "pnpm generate && sst deploy main",
     "remove": "sst remove",
