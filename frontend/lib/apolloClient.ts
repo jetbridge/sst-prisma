@@ -6,7 +6,7 @@ import { SentryLink } from 'apollo-link-sentry';
 import { createAuthLink } from 'aws-appsync-auth-link';
 import { createSubscriptionHandshakeLink } from 'aws-appsync-subscription-link';
 import memoizee from 'memoizee';
-import { requireEnvVar } from '@common/env';
+import { requireEnvVar } from 'common';
 
 // TODO: move me somewhere better
 async function getCognitoAccessJwt(): Promise<string> {
