@@ -11,12 +11,7 @@
     "noUncheckedIndexedAccess": false,
     "noPropertyAccessFromIndexSignature": false,
     "exactOptionalPropertyTypes": false,
-    "types": ["vitest/globals"],
-    "baseUrl": ".",
-    "paths": {
-      "@common/*": ["common/src/*"],
-      "@gql/*": ["common/graphql/generated/*"]
-    }
+    "types": ["vitest/globals"]
   },
   "include": ["stacks"],
   "references": [{ "path": "common" }, { "path": "frontend" }, { "path": "backend" }]

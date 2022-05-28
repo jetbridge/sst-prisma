@@ -1,5 +1,5 @@
 import { AppSyncResolverEvent } from 'aws-lambda';
-import { GQL } from '@common/gql';
+import { GQL } from 'common';
 
 export const GREETING = 'Yo yo';
 

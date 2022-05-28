@@ -1,4 +1,4 @@
-import { envVar } from '@common/env';
+import { envVar } from 'common';
 import { RDS, Stack } from '@serverless-stack/resources';
 import { Duration } from 'aws-cdk-lib';
 import { IVpc } from 'aws-cdk-lib/aws-ec2';

@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "watch": "pnpm run tsc:watch",
     "tsc:watch": "tsc -b --watch",
     "generate": "pnpm run --recursive --if-present generate",
     "postinstall": "pnpm run generate",
@@ -11,17 +12,18 @@
     "test": "pnpm run vitest",
     "test:ci": "pnpm run test",
     "lint": "pnpm run --recursive --if-present --aggregate-output lint && pnpm run lint:toplevel",
-    "lint:toplevel": "eslint --ext .js,.ts,.tsx common stacks graphql/documents",
+    "lint:toplevel": "eslint --ext .js,.ts,.tsx stacks",
     "lint:fix": "pnpm run lint -- --fix",
     "build": "tsc -b && pnpm run -r --aggregate-output build",
-    "deploy": "pnpm graphql:generate && sst deploy",
-    "deploy:main": "pnpm graphql:generate && sst deploy main",
+    "deploy": "pnpm generate && sst deploy",
+    "deploy:main": "pnpm generate && sst deploy main",
     "remove": "sst remove",
     "prettier:exc": "./node_modules/.bin/prettier --config .prettierrc.yaml --write",
     "prettier": "pnpm run prettier:exc -- '**/*.{js,ts,tsx,css,json,yaml,yml,md}'",
-    "clean": "tsc -b --clean && rm -rf .build dist graphql/generated"
+    "clean": "tsc -b --clean && rm -rf .build dist common/graphql/generated"
   },
   "dependencies": {
+    "common": "workspace:*",
     "@aws-lambda-powertools/logger": "^0.8.0",
     "@aws-sdk/client-secrets-manager": "^3.67.0",
     "@serverless-stack/cli": "~1.2.11",

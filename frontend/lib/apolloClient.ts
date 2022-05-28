@@ -1,7 +1,7 @@
 // from https://github.com/awslabs/aws-mobile-appsync-sdk-js#creating-a-client
 
 import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client';
-import Auth from '@aws-amplify/auth';
+import { Auth } from '@aws-amplify/auth';
 import { SentryLink } from 'apollo-link-sentry';
 import { createAuthLink } from 'aws-appsync-auth-link';
 import { createSubscriptionHandshakeLink } from 'aws-appsync-subscription-link';

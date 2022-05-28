@@ -1,6 +1,6 @@
 import { SecretsManagerClient, GetSecretValueCommand } from '@aws-sdk/client-secrets-manager';
 import memoize from 'memoizee';
-import { APP_SECRETS, envVar } from '@common/env';
+import { APP_SECRETS, envVar } from 'common';
 
 type SecretValue = string | undefined; // technically can be any json value type (but it's probably always a string)
 type SecretMap = Record<APP_SECRETS, SecretValue>;

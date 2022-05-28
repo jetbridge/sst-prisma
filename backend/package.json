@@ -26,10 +26,11 @@
     "@prisma/migrate": "~3.14.0",
     "@prisma/sdk": "~3.14.0",
     "aws-lambda": "^1.0.7",
+    "common": "workspace:*",
     "memoizee": "^0.4.15"
   },
   "devDependencies": {
-    "@aws-sdk/signature-v4-crt": "^3.31.0",
+    "@aws-sdk/signature-v4-crt": "^3.88.0",
     "@babel/core": ">=7.0.0 <8.0.0",
     "@prisma/generator-helper": "*",
     "@types/aws-lambda": "^8.10.70",
