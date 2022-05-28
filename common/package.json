@@ -2,7 +2,7 @@
   "name": "common",
   "version": "1.0.0",
   "description": "Code shared between the client and server",
-  "main": "index.js",
+  "main": "build/index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

@@ -2,7 +2,7 @@
   "extends": "../tsconfig.base.json",
   "include": ["src"],
   "compilerOptions": {
-    "outDir": "./build",
+    "outDir": "./dist",
     "module": "esnext",
     "target": "es2021",
     "types": ["vitest/globals"]
