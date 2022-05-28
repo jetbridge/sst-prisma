@@ -1,2 +1,2 @@
 // import this for all graphql types
-export * as GQL from '../graphql/generated/gql';
+export * as GQL from '../graphql/generated/gql.js';

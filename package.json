@@ -20,7 +20,7 @@
     "remove": "sst remove",
     "prettier:exc": "./node_modules/.bin/prettier --config .prettierrc.yaml --write",
     "prettier": "pnpm run prettier:exc -- '**/*.{js,ts,tsx,css,json,yaml,yml,md}'",
-    "clean": "tsc -b --clean && rm -rf .build dist common/graphql/generated"
+    "clean": "tsc -b --clean && rm -rf .build .sst dist common/graphql/generated && pnpm run --recursive --if-present clean"
   },
   "dependencies": {
     "common": "workspace:*",
