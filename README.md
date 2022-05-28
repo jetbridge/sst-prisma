@@ -28,5 +28,7 @@ All features are optional, delete what you don't need.
 - Aurora Serverless RDS Postgres
 - NextJS frontend w/ Material-UI
 - Integration test setup with postgres in docker
-- Local development (`npm start`) - uses SST
+- Local development (`pnpm start`) - uses SST
 - [pnpm](https://pnpm.io/) package manager
+- Fast tests with [vitest](https://vitest.dev/)
+- ES Modules

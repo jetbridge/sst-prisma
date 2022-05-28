@@ -1,8 +1,8 @@
+import { envVar } from '@common/env';
 import { RDS, Stack } from '@serverless-stack/resources';
 import { Duration } from 'aws-cdk-lib';
 import { IVpc } from 'aws-cdk-lib/aws-ec2';
 import { APP_NAME } from '..';
-import { ENV_VARS } from '@common/env';
 import { IS_PRODUCTION } from '../config';
 
 interface RdsProps {
@@ -27,16 +27,16 @@ export class Rds extends RDS {
     });
 
     scope.addDefaultFunctionEnv({
-      [ENV_VARS.DATABASE]: DATABASE,
-      [ENV_VARS.CLUSTER_ARN]: this.clusterArn,
-      [ENV_VARS.DB_SECRET_ARN]: this.secretArn,
+      [envVar('DATABASE')]: DATABASE,
+      [envVar('CLUSTER_ARN')]: this.clusterArn,
+      [envVar('DB_SECRET_ARN')]: this.secretArn,
     });
     scope.addDefaultFunctionPermissions([this]);
 
     // DB connection for local dev
     if (process.env.IS_LOCAL_DEV && process.env.DATABASE_URL) {
       scope.addDefaultFunctionEnv({
-        [ENV_VARS.DATABASE_URL]: process.env.DATABASE_URL,
+        [envVar('DATABASE_URL')]: process.env.DATABASE_URL,
       });
     }
   }

@@ -6,6 +6,5 @@
     "module": "esnext",
     "target": "es2021",
     "types": ["vitest/globals"]
-  },
-  "references": [{ "path": "../common" }]
+  }
 }

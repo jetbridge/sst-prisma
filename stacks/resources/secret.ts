@@ -1,7 +1,7 @@
-import { Secret as CdkSecret, SecretProps as CdkSecretProps } from 'aws-cdk-lib/aws-secretsmanager';
-import { APP_SECRETS, ENV_VARS } from '@common/env';
-import { APP_NAME } from '..';
+import { envVar, secret } from '@common/env';
 import { Stack } from '@serverless-stack/resources';
+import { Secret as CdkSecret, SecretProps as CdkSecretProps } from 'aws-cdk-lib/aws-secretsmanager';
+import { APP_NAME } from '..';
 
 export interface SecretProps extends CdkSecretProps {
   secrets: Record<string, string>;
@@ -14,12 +14,12 @@ export default class Secret extends CdkSecret {
       description: APP_NAME + scope.stage,
       generateSecretString: {
         secretStringTemplate: JSON.stringify(secrets),
-        generateStringKey: APP_SECRETS.APP,
+        generateStringKey: secret('APP'),
       },
     });
 
     scope.addDefaultFunctionEnv({
-      [ENV_VARS.APP_SECRET_ARN]: this.secretArn,
+      [envVar('APP_SECRET_ARN')]: this.secretArn,
     });
     scope.addDefaultFunctionPermissions([[this, 'grantRead']]);
   }

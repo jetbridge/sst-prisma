@@ -1,8 +1,8 @@
+import { envVar, secret } from '@common/env';
 import * as sst from '@serverless-stack/resources';
 import { SecurityGroup, Vpc } from 'aws-cdk-lib/aws-ec2';
 import { Runtime } from 'aws-cdk-lib/aws-lambda';
 import { APP_NAME } from '.';
-import { APP_SECRETS, ENV_VARS } from '@common/env';
 import { GraphqlApi } from './resources/graphqlApi';
 import { Layers } from './resources/layers';
 import { DbMigrationScript } from './resources/migrationScript';
@@ -27,7 +27,7 @@ export default class MainStack extends sst.Stack {
       runtime: 'nodejs16.x',
       securityGroups: [defaultLambdaSecurityGroup],
       environment: {
-        [ENV_VARS.STAGE]: scope.stage,
+        [envVar('STAGE')]: scope.stage,
       },
       bundle: {
         format: 'esm',
@@ -45,7 +45,7 @@ export default class MainStack extends sst.Stack {
     new Secret(this, 'AppSecret', {
       secrets: {
         // DB URL in secrets
-        [APP_SECRETS.DATABASE_URL]: rds.makeDatabaseUrl(),
+        [secret('DATABASE_URL')]: rds.makeDatabaseUrl(),
       },
     });
 

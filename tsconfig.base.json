@@ -1,0 +1,23 @@
+{
+  "extends": "@tsconfig/node16-strictest-esm/tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "moduleResolution": "node",
+    "incremental": true,
+    "outDir": "./dist",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "importsNotUsedAsValues": "remove",
+    "noUncheckedIndexedAccess": false,
+    "noPropertyAccessFromIndexSignature": false,
+    "exactOptionalPropertyTypes": false,
+    "types": ["vitest/globals"],
+    "baseUrl": ".",
+    "paths": {
+      "@common/*": ["common/src/*"],
+      "@gql/*": ["common/graphql/generated/*"]
+    }
+  },
+  "include": ["stacks"],
+  "references": [{ "path": "common" }, { "path": "frontend" }, { "path": "backend" }]
+}

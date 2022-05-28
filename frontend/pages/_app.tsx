@@ -1,53 +1,19 @@
-import '../styles/globals.css';
+import { colors } from '@mui/material';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import type { AppProps } from 'next/app';
-import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
-
-import { createTheme } from '@mui/material/styles';
+import '../styles/globals.css';
 
 const theme = createTheme({
   palette: {
     mode: 'dark',
+
+    // adjust!
+    primary: colors.lime,
+    secondary: colors.teal,
   },
   typography: {
     fontFamily: 'SourceSansPro',
     fontSize: 18,
-  },
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          textTransform: 'capitalize',
-        },
-      },
-    },
-    MuiPopover: {
-      styleOverrides: {
-        root: {
-          backgroundColor: 'transparent',
-        },
-      },
-    },
-    MuiChip: {
-      styleOverrides: {
-        root: {
-          fontSize: '1.2rem',
-        },
-      },
-    },
-    MuiTypography: {
-      styleOverrides: {
-        root: {
-          fontSize: '1.2rem',
-        },
-      },
-    },
-    MuiTableCell: {
-      styleOverrides: {
-        root: {
-          fontSize: '1.2rem',
-        },
-      },
-    },
   },
 });
 
@@ -65,7 +31,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           alignItems: 'center',
         }}
       >
-        {' '}
         <Component {...pageProps} />
       </main>
     </ThemeProvider>
