@@ -24,7 +24,7 @@ export class DbMigrationScript extends Construct {
 
       prismaVersion: PRISMA_VERSION,
       prismaEngines: ['migration-engine'],
-      layerZipPath: 'layers/migration.zip',
+      layerZipPath: 'layers/migration-3.14.zip',
       prismaModules: ['@prisma/engines', '@prisma/engines-version', '@prisma/sdk', '@prisma/migrate', '@prisma/client'],
     });
 

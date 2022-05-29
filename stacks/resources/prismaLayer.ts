@@ -1,5 +1,5 @@
 import { AssetHashType, IgnoreMode } from 'aws-cdk-lib';
-import { Code, LayerVersion, LayerVersionProps } from 'aws-cdk-lib/aws-lambda';
+import { Code, LayerVersion, LayerVersionProps, Runtime } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 import crypto from 'crypto';
 import path from 'path';
@@ -128,7 +128,8 @@ export class PrismaLayer extends LayerVersion {
         assetHash: bundleCommandHash.digest('hex'),
 
         bundling: {
-          image: RUNTIME.bundlingImage,
+          // image: RUNTIME.bundlingImage,
+          image: Runtime.NODEJS_14_X.bundlingImage,
           command: createBundleCommand,
         },
       });
