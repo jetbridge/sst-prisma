@@ -10,8 +10,8 @@ Assumes you have Node 16 installed and AWS credentials configured.
 
 ```shell
 npm i -g pnpm
-pnpm i
-pnpm start
+pnpm i  # install deps / generate types from DB and GQL
+pnpm start  # deploy and run live dev server on AWS
 ```
 
 ## Features
