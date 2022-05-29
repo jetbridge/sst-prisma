@@ -3,7 +3,9 @@ import { Code, LayerVersion, LayerVersionProps, Runtime } from 'aws-cdk-lib/aws-
 import { Construct } from 'constructs';
 import crypto from 'crypto';
 import path from 'path';
-import { RUNTIME } from '../main';
+
+// TODO: when SST fixes asset hashing/caching we can delete the layer zip files
+// https://github.com/serverless-stack/serverless-stack/issues/1121
 
 // modules to mark as "external" when bundling
 // added to prismaModules
