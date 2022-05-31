@@ -1,0 +1,13 @@
+dist
+.build
+.next
+packages/*/output
+node_modules
+.idea
+.DS_Store
+*.map
+tsconfig.tsbuildinfo
+packages/infra/cdk.out/
+packages/infra/.aws*/*
+.sst/*
+pnpm-lock.yaml

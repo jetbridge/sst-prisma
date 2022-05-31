@@ -2,7 +2,7 @@ import { RDS, Stack } from '@serverless-stack/resources';
 import { Duration } from 'aws-cdk-lib';
 import { IVpc } from 'aws-cdk-lib/aws-ec2';
 import { APP_NAME } from '..';
-import { ENV_VARS } from '../../src/env';
+import { ENV_VARS } from '@common/env';
 import { IS_PRODUCTION } from '../config';
 
 interface RdsProps {

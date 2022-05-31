@@ -3,11 +3,17 @@
   "compilerOptions": {
     "moduleResolution": "node",
     "incremental": true,
-    "outDir": "./build",
+    "outDir": "./dist",
     "importsNotUsedAsValues": "remove",
     "noUncheckedIndexedAccess": false,
     "noPropertyAccessFromIndexSignature": false,
-    "exactOptionalPropertyTypes": false
+    "exactOptionalPropertyTypes": false,
+    "types": ["vitest/globals"],
+    "baseUrl": ".",
+    "paths": {
+      "@common/*": ["common/*"],
+      "@gql/*": ["graphql/generated/*"]
+    }
   },
-  "include": ["stacks", "src", "graphql/generated", "graphql/documents"]
+  "include": ["stacks", "common", "graphql/generated", "graphql/documents"]
 }

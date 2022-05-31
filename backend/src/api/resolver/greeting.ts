@@ -1,11 +1,10 @@
 import { AppSyncResolverEvent } from 'aws-lambda';
-import { GreetingState } from '../../../graphql/generated/gql';
 import { GQL } from '../gql';
 
 export const GREETING = 'Yo yo';
 
 // sample query
-export const getGreeting = (): GreetingState => ({
+export const getGreeting = (): GQL.GreetingState => ({
   currentGreeting: GREETING,
 });
 

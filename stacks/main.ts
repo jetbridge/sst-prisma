@@ -2,8 +2,7 @@ import * as sst from '@serverless-stack/resources';
 import { SecurityGroup, Vpc } from 'aws-cdk-lib/aws-ec2';
 import { Runtime } from 'aws-cdk-lib/aws-lambda';
 import { APP_NAME } from '.';
-import { ENV_VARS } from '../src/env';
-import { APP_SECRETS } from '../src/secrets';
+import { APP_SECRETS, ENV_VARS } from '@common/env';
 import { GraphqlApi } from './resources/graphqlApi';
 import { Layers } from './resources/layers';
 import { DbMigrationScript } from './resources/migrationScript';
@@ -29,6 +28,9 @@ export default class MainStack extends sst.Stack {
       securityGroups: [defaultLambdaSecurityGroup],
       environment: {
         [ENV_VARS.STAGE]: scope.stage,
+      },
+      bundle: {
+        format: 'esm',
       },
     });
 

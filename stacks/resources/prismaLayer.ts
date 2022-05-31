@@ -54,9 +54,7 @@ export class PrismaLayer extends LayerVersion {
   environment: Record<string, string>;
 
   constructor(scope: Construct, id: string, props: PrismaLayerProps = {}) {
-    const {
-      prismaVersion, layerZipPath, prismaModules, ...rest
-    } = props;
+    const { prismaVersion, layerZipPath, prismaModules, ...rest } = props;
     const nodeModules = props.nodeModules || [];
 
     const layerDir = '/asset-output/nodejs';

@@ -31,12 +31,12 @@ export class DbMigrationScript extends Construct {
     const migrationFunction = new Function(this, 'MigrationScriptLambda', {
       vpc,
       enableLiveDev: false,
-      handler: 'src/db/migrateScript.handler',
+      handler: 'backend/src/db/migrateScript.handler',
       layers: [migrationLayer],
       bundle: {
         copyFiles: [
-          { from: 'prisma/schema.prisma', to: 'schema.prisma' },
-          { from: 'prisma/migrations', to: 'migrations' },
+          { from: 'backend/prisma/schema.prisma', to: 'schema.prisma' },
+          { from: 'backend/prisma/migrations', to: 'migrations' },
         ],
         externalModules: migrationLayer.externalModules,
       },

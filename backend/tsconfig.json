@@ -1,0 +1,13 @@
+{
+  "extends": "../tsconfig.json",
+  "include": ["src"],
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "es2021",
+    "types": ["vitest/globals"],
+    "paths": {
+      "@common/*": ["common/*"],
+      "@gql/*": ["graphql/generated/*"]
+    }
+  }
+}
