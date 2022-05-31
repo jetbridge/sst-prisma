@@ -1,4 +1,13 @@
 {
-  "extends": "@tsconfig/node14",
-  "include": ["stacks", "src", "graphql/generated"]
+  "extends": "@tsconfig/node16-strictest-esm/tsconfig.json",
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "incremental": true,
+    "outDir": "./build",
+    "importsNotUsedAsValues": "remove",
+    "noUncheckedIndexedAccess": false,
+    "noPropertyAccessFromIndexSignature": false,
+    "exactOptionalPropertyTypes": false
+  },
+  "include": ["stacks", "src", "graphql/generated", "graphql/documents"]
 }

@@ -11,7 +11,7 @@ import { Rds } from "./resources/rds";
 import { RestApi } from "./resources/restApi";
 import Secret from "./resources/secret";
 
-export const RUNTIME = Runtime.NODEJS_14_X;
+export const RUNTIME = Runtime.NODEJS_16_X;
 
 export default class MainStack extends sst.Stack {
   constructor(scope: sst.App, id: string, props?: sst.StackProps) {
@@ -29,7 +29,7 @@ export default class MainStack extends sst.Stack {
     );
     this.setDefaultFunctionProps({
       vpc,
-      runtime: RUNTIME,
+      runtime: "nodejs16.x",
       securityGroups: [defaultLambdaSecurityGroup],
       environment: {
         [ENV_VARS.STAGE]: scope.stage,
@@ -41,7 +41,7 @@ export default class MainStack extends sst.Stack {
 
     // Postgres DB
     const rds = new Rds(this, "Rds", { vpc });
-    rds.rdsServerlessCluster.connections.allowDefaultPortFrom(
+    rds.cdk.cluster.connections.allowDefaultPortFrom(
       defaultLambdaSecurityGroup,
       "Allow access from lambda functions"
     );

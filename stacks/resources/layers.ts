@@ -3,7 +3,7 @@ import { RemovalPolicy } from "aws-cdk-lib";
 import { PrismaLayer } from "./prismaLayer";
 import { Construct } from "constructs";
 
-export const PRISMA_VERSION = "3.12.0";
+export const PRISMA_VERSION = "3.14.0";
 
 export class Layers extends Construct {
   constructor(scope: Stack, id: string) {
