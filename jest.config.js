@@ -1,15 +1,15 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 
 // for prisma integration tests
 // run `npm run pretest` in repo to make sure pg docker is running
-dotenv.config({ path: ".env.jest" });
+dotenv.config({ path: '.env.jest' });
 
 const transform = {
-  "^.+\\.[jt]sx?$": [
-    "jest-esbuild",
+  '^.+\\.[jt]sx?$': [
+    'jest-esbuild',
     {
-      target: "esnext",
-      format: "esm",
+      target: 'esnext',
+      format: 'esm',
     },
   ],
 };
@@ -17,7 +17,7 @@ const transform = {
 export default {
   transform,
   maxWorkers: 1, // remove when we can enable runInBand for integration tests
-  extensionsToTreatAsEsm: [".ts", ".tsx", ".jsx"],
-  roots: ["<rootDir>/stacks", "<rootDir>/src", "<rootDir>/test"],
-  modulePaths: ["<rootDir>/stacks", "<rootDir>/src", "<rootDir>/test"],
+  extensionsToTreatAsEsm: ['.ts', '.tsx', '.jsx'],
+  roots: ['<rootDir>/stacks', '<rootDir>/src', '<rootDir>/graphql/documents'],
+  modulePaths: ['<rootDir>/stacks', '<rootDir>/src', '<rootDir>/graphql/documents'],
 };

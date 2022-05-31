@@ -4,12 +4,22 @@
 
 If you want to build a serverless app with AWS CDK, Lambda, and Postgres, this is the template for you.
 
+## Quickstart
+
+Assumes you have Node 16 installed and AWS credentials configured.
+
+```shell
+npm i -g pnpm
+pnpm i
+pnpm start
+```
+
 ## Features
 
 All features are optional, delete what you don't need.
 
-- Serverless Stack
-- CDK
+- [Serverless Stack](https://serverless-stack.com/)
+- [AWS CDK](https://aws.amazon.com/cdk/)
 - GraphQL + TS + apollo client codegen
 - REST API gateway
 - Prisma ORM
@@ -19,3 +29,4 @@ All features are optional, delete what you don't need.
 - NextJS frontend w/ Material-UI
 - Integration test setup with postgres in docker
 - Local development (`npm start`) - uses SST
+- [pnpm](https://pnpm.io/) package manager

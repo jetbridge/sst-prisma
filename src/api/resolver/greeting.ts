@@ -1,8 +1,8 @@
-import { AppSyncResolverEvent } from "aws-lambda";
-import { GreetingState } from "../../../graphql/generated/gql";
-import { GQL } from "../gql";
+import { AppSyncResolverEvent } from 'aws-lambda';
+import { GreetingState } from '../../../graphql/generated/gql';
+import { GQL } from '../gql';
 
-export const GREETING = "Yo yo";
+export const GREETING = 'Yo yo';
 
 // sample query
 export const getGreeting = (): GreetingState => ({
@@ -10,8 +10,6 @@ export const getGreeting = (): GreetingState => ({
 });
 
 // sample mutation
-export const greet = ({
-  arguments: { name },
-}: AppSyncResolverEvent<GQL.MutationGreetArgs>): GQL.GreetingResponse => ({
+export const greet = ({ arguments: { name } }: AppSyncResolverEvent<GQL.MutationGreetArgs>): GQL.GreetingResponse => ({
   greeting: `${GREETING}, ${name}!`,
 });
