@@ -1,0 +1,15 @@
+type GreetingResponse {
+  greeting: String!
+}
+
+type GreetingState {
+  currentGreeting: String!
+}
+
+type Query {
+  getGreeting: GreetingState!
+}
+
+type Mutation {
+  greet(name: String!): GreetingResponse
+}

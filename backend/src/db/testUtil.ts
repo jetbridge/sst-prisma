@@ -1,5 +1,5 @@
 import type { PrismaClient } from '@prisma/client';
-import { isProd } from '@common/env';
+import { isProd } from 'common';
 import { getPrisma } from './client';
 
 export async function truncateAllTables(prisma: PrismaClient) {

@@ -21,7 +21,7 @@ export class Layers extends Construct {
       removalPolicy: RemovalPolicy.RETAIN,
 
       prismaEngines: ['libquery_engine'],
-      layerZipPath: 'layers/prisma.zip',
+      layerZipPath: 'layers/prisma-3.14.zip',
     });
 
     scope.addDefaultFunctionLayers([prismaLayer]);

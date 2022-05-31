@@ -1,13 +1,11 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "../tsconfig.base.json",
   "include": ["src"],
   "compilerOptions": {
+    "outDir": "./dist",
     "module": "esnext",
     "target": "es2021",
-    "types": ["vitest/globals"],
-    "paths": {
-      "@common/*": ["common/*"],
-      "@gql/*": ["graphql/generated/*"]
-    }
-  }
+    "types": ["vitest/globals"]
+  },
+  "references": [{ "path": "../common" }]
 }

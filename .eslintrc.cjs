@@ -16,7 +16,6 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['@typescript-eslint', 'import'],
-  rules: {},
   settings: {
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
@@ -27,4 +26,5 @@ module.exports = {
     },
   },
   ignorePatterns: ['.build', 'dist', 'cdk.out'],
+  rules: { 'comma-dangle': ['error', 'only-multiline'] },
 };
