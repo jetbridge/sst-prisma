@@ -10,12 +10,43 @@ If you want to build a serverless app with AWS CDK, Lambda, and Postgres, this i
 
 Assumes you have [Node 16](https://nodejs.org/en/download/current/) installed and AWS credentials [configured](https://serverless-stack.com/chapters/configure-the-aws-cli.html).
 
-### Commands
+### Setup
 
 ```shell
 npm i -g pnpm  # install pnpm globally
 pnpm i  # install dependencies + generate types from DB and GQL schemas
-pnpm start  # run live dev server on AWS
+```
+
+## Commands
+
+### Start live backend dev server with AWS
+
+```shell
+pnpm start
+```
+
+### Start frontend + backend dev server
+
+```shell
+pnpm frontend
+```
+
+### Run/generate DB migrations locally
+
+```shell
+pnpm db:migrate
+```
+
+### Just watch and perform type-checking
+
+```shell
+pnpm watch
+```
+
+### Deploy to your AWS environment
+
+```shell
+pnpm deploy
 ```
 
 ## Features
