@@ -22,6 +22,7 @@
     "predeploy": "pnpm generate && pnpm build:common",
     "deploy": "sst deploy",
     "deploy:main": "pnpm build:common && sst deploy main",
+    "deploy:verbose": "sst deploy --verbose",
     "remove": "sst remove",
     "prettier:exc": "./node_modules/.bin/prettier --config .prettierrc.yaml --write",
     "prettier": "pnpm run prettier:exc -- '**/*.{js,ts,tsx,css,json,yaml,yml,md}'",
