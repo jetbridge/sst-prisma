@@ -5,10 +5,11 @@ export default class FrontendStack extends sst.Stack {
     super(scope, id, props);
 
     // Frontend
+    // docs: https://docs.serverless-stack.com/constructs/NextjsSite
     const frontendSite = new sst.NextjsSite(this, 'Site', {
       path: 'frontend',
       environment: {
-        REGION: scope.region,
+        NEXT_PUBLIC_REGION: scope.region,
       },
     });
 

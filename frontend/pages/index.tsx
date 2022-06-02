@@ -7,6 +7,7 @@ const Home: NextPage = () => {
     <div className={styles.container}>
       <AppBar>Next+SST</AppBar>
       <h1>Welcome to Next.js and SST</h1>
+      <h2>We're in region {process.env.NEXT_PUBLIC_REGION}</h2>
     </div>
   );
 };
