@@ -87,7 +87,9 @@ importers:
 
   backend:
     specifiers:
-      '@aws-lambda-powertools/logger': ^0.8.0
+      '@aws-lambda-powertools/logger': ^0.8.1
+      '@aws-lambda-powertools/metrics': ^0.9.1
+      '@aws-lambda-powertools/tracer': ^0.9.1
       '@aws-sdk/client-secrets-manager': ^3.67.0
       '@aws-sdk/signature-v4-crt': ^3.88.0
       '@babel/core': '>=7.0.0 <8.0.0'
@@ -109,6 +111,8 @@ importers:
       prisma: ~3.14.0
     dependencies:
       '@aws-lambda-powertools/logger': 0.8.1
+      '@aws-lambda-powertools/metrics': 0.9.1
+      '@aws-lambda-powertools/tracer': 0.9.1
       '@aws-sdk/client-secrets-manager': 3.100.0
       '@middy/core': 2.5.7
       '@prisma/client': 3.14.0_prisma@3.14.0
@@ -538,12 +542,16 @@ packages:
   /@aws-crypto/util/2.0.1:
     resolution: {integrity: sha512-JJmFFwvbm08lULw4Nm5QOLg8+lAQeC8aCXK5xrtxntYzYXCGfHwUJ4Is3770Q7HmICsXthGQ+ZsDL7C2uH3yBQ==}
     dependencies:
-      '@aws-sdk/types': 3.54.0
+      '@aws-sdk/types': 3.78.0
       '@aws-sdk/util-utf8-browser': 3.52.0
       tslib: 1.14.1
 
   /@aws-lambda-powertools/commons/0.8.1:
     resolution: {integrity: sha512-R2sePsxUtlPyreSZ/6DkjMHX+pQedv4JCBaLJzZ5tsLI5gARGPwk3zu/eI11OueUOvCRVYTl3h2H8q0Q558FZg==}
+    dev: false
+
+  /@aws-lambda-powertools/commons/0.9.1:
+    resolution: {integrity: sha512-Q49XlXyER5hxzlvN0Doz9SDaeZDq0zTz7zUeNbPaMTRHtazpk4pxtDH/EYVOSx60fYPsqtrhSeV9hGc4FxOS/A==}
     dev: false
 
   /@aws-lambda-powertools/logger/0.8.1:
@@ -553,6 +561,19 @@ packages:
       lodash.clonedeep: 4.5.0
       lodash.merge: 4.6.2
       lodash.pickby: 4.6.0
+    dev: false
+
+  /@aws-lambda-powertools/metrics/0.9.1:
+    resolution: {integrity: sha512-iInpjM2N6J+VO1v8/EpSgUO3nuAx9uwdvqmEUqX1Gqx+Fnbv70jxbouiSHfgT28+l8U23WckW5mY2LPQz9Gk5Q==}
+    dependencies:
+      '@aws-lambda-powertools/commons': 0.9.1
+    dev: false
+
+  /@aws-lambda-powertools/tracer/0.9.1:
+    resolution: {integrity: sha512-pJRWQuK7DrdTORfHE6S6Hf9egb/jeOpGgM58bXFpGGQh5SvlnrkjeT+s3C4Ez/BpRFMmj88zyPvMLHwg5wvX8Q==}
+    dependencies:
+      '@aws-lambda-powertools/commons': 0.9.1
+      aws-xray-sdk-core: 3.3.6
     dev: false
 
   /@aws-sdk/abort-controller/3.54.0:
@@ -7824,6 +7845,12 @@ packages:
     resolution: {integrity: sha512-/zPMqDkzSZ8t3VtxOa4KPq7uzzW978M9Tvh+j7GHKuo6k6GTLxPJ4J5gE5cjfJ26pnXst0N5Hax8Sr0T2Mi9zQ==}
     dev: true
 
+  /@types/cls-hooked/4.3.3:
+    resolution: {integrity: sha512-gNstDTb/ty5h6gJd6YpSPgsLX9LmRpaKJqGFp7MRlYxhwp4vXXKlJ9+bt1TZ9KbVNXE+Mbxy2AYXcpY21DDtJw==}
+    dependencies:
+      '@types/node': 17.0.36
+    dev: false
+
   /@types/cookie/0.3.3:
     resolution: {integrity: sha512-LKVP3cgXBT9RYj+t+9FDKwS5tdI+rPBXaNSkma7hvqy35lc7mAokC2zsqWJH0LaqIt3B962nuYI77hsJoT1gow==}
     dev: false
@@ -7967,7 +7994,7 @@ packages:
   /@types/node-fetch/2.6.1:
     resolution: {integrity: sha512-oMqjURCaxoSIsHSr1E47QHzbmzNR5rK8McHuNb11BOM9cHcIK3Avy0s/b2JlXHoQGTYS3NsvWzV1M0iK7l0wbA==}
     dependencies:
-      '@types/node': 17.0.18
+      '@types/node': 17.0.36
       form-data: 3.0.1
 
   /@types/node/14.18.18:
@@ -7979,6 +8006,7 @@ packages:
 
   /@types/node/17.0.18:
     resolution: {integrity: sha512-eKj4f/BsN/qcculZiRSujogjvp5O/k4lOW5m35NopjZM/QwLOR075a8pJW5hD+Rtdm2DaCVPENS6KtSQnUD6BA==}
+    dev: true
 
   /@types/node/17.0.36:
     resolution: {integrity: sha512-V3orv+ggDsWVHP99K3JlwtH20R7J4IhI1Kksgc+64q5VxgfRkQG8Ws3MFm/FZOKDYGy9feGFlZ70/HpCNe9QaA==}
@@ -9138,6 +9166,13 @@ packages:
     dev: true
     optional: true
 
+  /async-hook-jl/1.7.6:
+    resolution: {integrity: sha512-gFaHkFfSxTjvoxDMYqDuGHlcRyUuamF8s+ZTtJdDzqjws4mCt7v0vuV79/E2Wr2/riMQgtG4/yUtXWs1gZ7JMg==}
+    engines: {node: ^4.7 || >=6.9 || >=7.3}
+    dependencies:
+      stack-chain: 1.3.7
+    dev: false
+
   /async-retry/1.3.3:
     resolution: {integrity: sha512-wfr/jstw9xNi/0teMHrRW7dsz3Lt5ARhYNZ2ewpadnhaIp5mbALhOAP+EAdsC7t4Z6wqsDVv9+W6gm1Dk9mEyw==}
     dependencies:
@@ -9163,6 +9198,10 @@ packages:
     engines: {node: '>= 4.5.0'}
     hasBin: true
     dev: true
+
+  /atomic-batcher/1.0.2:
+    resolution: {integrity: sha512-EFGCRj4kLX1dHv1cDzTk+xbjBFj1GnJDpui52YmEcxxHHEWjYyT6l51U7n6WQ28osZH4S9gSybxe56Vm7vB61Q==}
+    dev: false
 
   /atomically/1.7.0:
     resolution: {integrity: sha512-Xcz9l0z7y9yQ9rdDaxlmaI4uJHf/T8g9hOEzJcsEqX2SjCj4J20uK7+ldkDHMbpJDK76wF7xEIgxc/vSlsfw5w==}
@@ -9285,6 +9324,18 @@ packages:
       url: 0.10.3
       uuid: 3.3.2
       xml2js: 0.4.19
+
+  /aws-xray-sdk-core/3.3.6:
+    resolution: {integrity: sha512-5pJnix2mNBshzBtVsJxus3YOX2gM8+AirjyAJ0U+4ZkLRAcofNzBJUabZyHZPoVKud/YjEmcRr36bh4T3vOL2A==}
+    engines: {node: '>= 12.x'}
+    dependencies:
+      '@aws-sdk/service-error-classification': 3.78.0
+      '@aws-sdk/types': 3.78.0
+      '@types/cls-hooked': 4.3.3
+      atomic-batcher: 1.0.2
+      cls-hooked: 4.2.2
+      semver: 5.7.1
+    dev: false
 
   /axe-core/4.4.2:
     resolution: {integrity: sha512-LVAaGp/wkkgYJcjmHsoKx4juT1aQvJyPcW09MLCjVTh3V2cc6PnyempiLMNH5iMdfIX/zdbjUx2KDjMLCTdPeA==}
@@ -10358,6 +10409,15 @@ packages:
   /clone/1.0.4:
     resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
     engines: {node: '>=0.8'}
+
+  /cls-hooked/4.2.2:
+    resolution: {integrity: sha512-J4Xj5f5wq/4jAvcdgoGsL3G103BtWpZrMo8NEinRltN+xpTZdI+M38pyQqhuFU/P792xkMFvnKSf+Lm81U1bxw==}
+    engines: {node: ^4.7 || >=6.9 || >=7.3 || >=8.2.1}
+    dependencies:
+      async-hook-jl: 1.7.6
+      emitter-listener: 1.1.2
+      semver: 5.7.1
+    dev: false
 
   /clsx/1.1.0:
     resolution: {integrity: sha512-3avwM37fSK5oP6M5rQ9CNe99lwxhXDOeSWVPAOYF6OazUTgZCMb0yWlJpmdD74REy1gkEaFiub2ULv4fq9GUhA==}
@@ -11541,6 +11601,12 @@ packages:
       minimalistic-assert: 1.0.1
       minimalistic-crypto-utils: 1.0.1
     dev: true
+
+  /emitter-listener/1.1.2:
+    resolution: {integrity: sha512-Bt1sBAGFHY9DKY+4/2cV6izcKJUf5T7/gkdmkxzX/qv9CcGH8xSwVRW5mtX03SWJtRTWSOpzCuWN9rBFYZepZQ==}
+    dependencies:
+      shimmer: 1.2.1
+    dev: false
 
   /emoji-regex/8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -18866,6 +18932,10 @@ packages:
     resolution: {integrity: sha512-Vpfqwm4EnqGdlsBFNmHhxhElJYrdfcxPThu+ryKS5J8L/fhAwLazFZtq+S+TWZ9ANj2piSQLGj6NQg+lKPmxrw==}
     dev: false
 
+  /shimmer/1.2.1:
+    resolution: {integrity: sha512-sQTKC1Re/rM6XyFM6fIAGHRPVGvyXfgzIDvzoq608vM+jeyVD0Tu1E6Np0Kc2zAIFWIj963V2800iF/9LPieQw==}
+    dev: false
+
   /side-channel/1.0.4:
     resolution: {integrity: sha512-q5XPytqFEIKHkGdiMIrY10mvLRvnQh42/+GoBlFW3b2LXLE2xxJpZFdm94we0BaoV3RwJyGqg5wS7epxTv0Zvw==}
     dependencies:
@@ -19127,6 +19197,10 @@ packages:
   /stable/0.1.8:
     resolution: {integrity: sha512-ji9qxRnOVfcuLDySj9qzhGSEFVobyt1kIOSkj1qZzYLzq7Tos/oUUWvotUPQLlrsidqsK6tBH89Bc9kL5zHA6w==}
     dev: true
+
+  /stack-chain/1.3.7:
+    resolution: {integrity: sha1-0ZLJ/06moiyUxN1FkXHj8AzqEoU=}
+    dev: false
 
   /stackframe/1.2.1:
     resolution: {integrity: sha512-h88QkzREN/hy8eRdyNhhsO7RSJ5oyTqxxmmn0dzBIMUclZsjpfmrsg81vp8mjjAs2vAZ72nyWxRUwSwmh0e4xg==}

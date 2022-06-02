@@ -11,7 +11,13 @@
     "noUncheckedIndexedAccess": false,
     "noPropertyAccessFromIndexSignature": false,
     "exactOptionalPropertyTypes": false,
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals"],
+    "baseUrl": ".",
+    "paths": {
+      "@backend/*": ["./backend/src/*"],
+      "@frontend/*": ["./frontend/src/*"],
+      "@common/*": ["./common/src/*"]
+    }
   },
   "include": ["stacks"],
   "references": [{ "path": "common" }, { "path": "frontend" }, { "path": "backend" }]

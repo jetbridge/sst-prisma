@@ -4,8 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "pnpm build && pnpm run --recursive -w --parallel start",
+    "start": "sst start",
     "watch": "pnpm run tsc:watch",
+    "tsc": "tsc -b",
     "tsc:watch": "tsc -b --watch",
     "generate": "pnpm run --recursive generate",
     "postinstall": "pnpm run generate",

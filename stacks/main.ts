@@ -1,8 +1,7 @@
-import { envVar, secret } from 'common';
+import { APP_NAME, envVar, secret } from 'common';
 import * as sst from '@serverless-stack/resources';
 import { SecurityGroup, Vpc } from 'aws-cdk-lib/aws-ec2';
 import { Runtime } from 'aws-cdk-lib/aws-lambda';
-import { APP_NAME } from '.';
 import { GraphqlApi } from './resources/graphqlApi';
 import { Layers } from './resources/layers';
 import { DbMigrationScript } from './resources/migrationScript';
