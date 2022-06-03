@@ -6,3 +6,6 @@
 export * from './env.js';
 export * from './gql.js';
 export * as ApolloGQL from './apollo.js';
+
+// change this
+export const APP_NAME = 'myapp';

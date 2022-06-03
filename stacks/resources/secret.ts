@@ -1,7 +1,6 @@
-import { envVar, secret } from 'common';
+import { APP_NAME, envVar, secret } from 'common';
 import { Stack } from '@serverless-stack/resources';
 import { Secret as CdkSecret, SecretProps as CdkSecretProps } from 'aws-cdk-lib/aws-secretsmanager';
-import { APP_NAME } from '..';
 
 export interface SecretProps extends CdkSecretProps {
   secrets: Record<string, string>;
