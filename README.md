@@ -56,7 +56,7 @@ pnpm start
 ### Start frontend + backend dev server
 
 ```shell
-pnpm frontend
+pnpm fullstack
 ```
 
 ### Run/generate DB migrations locally
@@ -76,5 +76,3 @@ pnpm watch
 ```shell
 pnpm deploy
 ```
-
-Please see the
