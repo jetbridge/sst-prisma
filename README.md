@@ -17,6 +17,12 @@ npm i -g pnpm  # install pnpm globally
 pnpm i  # install dependencies + generate types from DB and GQL schemas
 ```
 
+### Run full dev server
+
+```shell
+pnpm fullstack
+```
+
 ## Features
 
 All features are optional, delete what you don't need.
@@ -56,7 +62,7 @@ pnpm start
 ### Start frontend + backend dev server
 
 ```shell
-pnpm frontend
+pnpm fullstack
 ```
 
 ### Run/generate DB migrations locally
@@ -76,5 +82,3 @@ pnpm watch
 ```shell
 pnpm deploy
 ```
-
-Please see the

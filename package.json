@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "sst start",
-    "frontend": "pnpm run --recursive --filter frontend dev",
+    "fullstack": "pnpm run --recursive --filter frontend dev",
     "watch": "pnpm run tsc:watch",
     "tsc": "tsc -b",
     "tsc:watch": "tsc -b --watch",
