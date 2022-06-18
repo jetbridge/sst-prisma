@@ -5,6 +5,7 @@
   "main": "./dist/src/index.js",
   "type": "module",
   "scripts": {
+    "build": "tsc",
     "start": "tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1",
     "graphql:generate": "cross-env DEBUG=1 graphql-codegen --config graphql/codegen.yml",
