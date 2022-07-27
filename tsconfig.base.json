@@ -15,10 +15,10 @@
     "baseUrl": ".",
     "paths": {
       "@backend/*": ["./backend/src/*"],
-      "@frontend/*": ["./frontend/src/*"],
+      "@web/*": ["./web/src/*"],
       "@common/*": ["./common/src/*"]
     }
   },
   "include": ["stacks"],
-  "references": [{ "path": "common" }, { "path": "frontend" }, { "path": "backend" }]
+  "references": [{ "path": "common" }, { "path": "web" }, { "path": "backend" }]
 }

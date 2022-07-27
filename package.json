@@ -5,12 +5,13 @@
   "type": "module",
   "scripts": {
     "start": "sst start",
-    "fullstack": "pnpm run --recursive --filter frontend dev",
+    "fullstack": "pnpm run --recursive --filter web dev",
     "watch": "pnpm run tsc:watch",
     "tsc": "tsc -b",
     "tsc:watch": "tsc -b --watch",
     "generate": "pnpm run --recursive generate",
     "postinstall": "pnpm run generate",
+    "pretest": "pnpm run start:db && pnpm generate && pnpm run --filter backend migrate:test",
     "vitest": "vitest",
     "test": "pnpm run vitest",
     "test:ci": "pnpm run test",
@@ -25,6 +26,8 @@
     "remove": "sst remove",
     "prettier:exc": "./node_modules/.bin/prettier --config .prettierrc.yaml --write",
     "prettier": "pnpm run prettier:exc -- '**/*.{js,ts,tsx,css,json,yaml,yml,md}'",
+    "start:db": "docker-compose up -d",
+    "stop:db": "docker-compose down",
     "clean": "tsc -b --clean && rm -rf .build .sst dist common/graphql/generated && pnpm run --recursive --if-present clean"
   },
   "dependencies": {

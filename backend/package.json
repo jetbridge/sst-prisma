@@ -10,12 +10,9 @@
     "lint": "eslint --ext .js,.ts,.tsx src",
     "start": " dotenv -e .env.sst.start sst start",
     "format": "pnpm run prettier && prisma format",
-    "pretest": "pnpm run start:db && pnpm graphql:generate && pnpm run migrate:test",
     "migrate": "pnpm run migrate:dev",
     "migrate:dev": "pnpm run format && prisma migrate dev",
     "migrate:test": "dotenv -e .env.jest -- prisma migrate dev --skip-seed --skip-generate",
-    "start:db": "docker-compose up -d",
-    "stop:db": "docker-compose down",
     "generate": "prisma generate"
   },
   "dependencies": {
@@ -37,6 +34,7 @@
     "@prisma/generator-helper": "*",
     "@types/aws-lambda": "^8.10.70",
     "@types/memoizee": "^0.4.7",
+    "aws-sdk-client-mock": "^1.0.0",
     "builtin-modules": "3.2.0",
     "dotenv": "^16.0.0",
     "dotenv-cli": "^5.1.0",
