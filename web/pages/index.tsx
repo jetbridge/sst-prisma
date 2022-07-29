@@ -1,15 +1,8 @@
-import { AppBar } from '@mui/material';
 import type { NextPage } from 'next';
-import styles from '../styles/Home.module.scss';
+import Home from 'web/lib/components/home/Home';
 
-const Home: NextPage = () => {
-  return (
-    <div className={styles.container}>
-      <AppBar>Next+SST</AppBar>
-      <h1>Welcome to Next.js and SST</h1>
-      <h2>We&apos;re in region {process.env.NEXT_PUBLIC_REGION}</h2>
-    </div>
-  );
+const HomePage: NextPage = () => {
+  return <Home />;
 };
 
-export default Home;
+export default HomePage;
