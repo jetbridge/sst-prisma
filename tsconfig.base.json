@@ -19,6 +19,7 @@
       "@common/*": ["./common/src/*"]
     }
   },
+
   "include": ["stacks"],
   "references": [{ "path": "common" }, { "path": "web" }, { "path": "backend" }]
 }
