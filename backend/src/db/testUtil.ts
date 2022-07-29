@@ -1,6 +1,7 @@
-import type { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { isProd } from 'common';
 import { getPrisma } from './client';
+import { PrismaTestingHelper } from '@chax-at/transactional-prisma-testing';
 
 export async function truncateAllTables(prisma: PrismaClient) {
   if (isProd()) throw new Error('Please stop whatever you are doing right now.');
@@ -16,19 +17,24 @@ export async function truncateAllTables(prisma: PrismaClient) {
       `);
 }
 
-export const integrationTest = async (title: string, inner: () => Promise<void>) => {
+const prismaClient = new PrismaClient();
+await truncateAllTables(prismaClient); // can be skipped for speed maybe
+
+// create prisma proxy to wrap all tests in a transaction
+const prismaTestingHelper = new PrismaTestingHelper(prismaClient);
+
+/**
+ * Define a database integration test suite.
+ * Clears DB contents after running.
+ */
+export const describeIntegrationTest = (title: string, inner: () => void) => {
   beforeEach(async () => {
-    // begin txn ... https://github.com/prisma/prisma/issues/9710
+    await prismaTestingHelper.startNewTransaction();
   });
 
   afterEach(async () => {
-    await truncateAllTables(await getPrisma());
-    // end txn ...
+    await prismaTestingHelper?.rollbackCurrentTransaction();
   });
 
-  it(title, inner);
+  describe(title, inner);
 };
-
-export function areWeTestingWithJest(): boolean {
-  return !!process.env.JEST_WORKER_ID;
-}

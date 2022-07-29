@@ -4,15 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "vitest": "vitest",
-    "test": "pnpm run vitest",
-    "test:ci": "pnpm run migrate:test && pnpm run vitest",
     "lint": "eslint --ext .js,.ts,.tsx src",
     "start": " dotenv -e .env.sst.start sst start",
     "format": "pnpm run prettier && prisma format",
     "migrate": "pnpm run migrate:dev",
     "migrate:dev": "pnpm run format && prisma migrate dev",
-    "migrate:test": "dotenv -e .env.jest -- prisma migrate dev --skip-seed --skip-generate",
+    "migrate:test": "prisma migrate dev --skip-seed --skip-generate",
     "generate": "prisma generate"
   },
   "dependencies": {
@@ -31,6 +28,7 @@
   "devDependencies": {
     "@aws-sdk/signature-v4-crt": "^3.88.0",
     "@babel/core": ">=7.0.0 <8.0.0",
+    "@chax-at/transactional-prisma-testing": "^0.5.0",
     "@prisma/generator-helper": "*",
     "@types/aws-lambda": "^8.10.70",
     "@types/memoizee": "^0.4.7",
