@@ -23,6 +23,7 @@ export default defineConfig({
           enforce: 'pre',
           transform(code, id) {
             if (/\.(css|sass|scss)$/.test(id)) return { code: '' };
+            return null;
           },
         }
       : undefined,

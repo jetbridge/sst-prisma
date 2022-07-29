@@ -3,7 +3,7 @@ import { RemovalPolicy } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { PrismaLayer } from './prismaLayer';
 
-export const PRISMA_VERSION = '3.14.0';
+export const PRISMA_VERSION = '4.0.0';
 
 export class Layers extends Construct {
   constructor(scope: Stack, id: string) {
@@ -21,7 +21,7 @@ export class Layers extends Construct {
       removalPolicy: RemovalPolicy.RETAIN,
 
       prismaEngines: ['libquery_engine'],
-      layerZipPath: 'layers/prisma-3.14.zip',
+      layerZipPath: `layers/prisma-${PRISMA_VERSION}.zip`,
     });
 
     scope.addDefaultFunctionLayers([prismaLayer]);
