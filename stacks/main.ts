@@ -1,5 +1,4 @@
 import { APP_NAME, envVar, secret } from 'common';
-import * as sst from '@serverless-stack/resources';
 import { SecurityGroup, Vpc } from 'aws-cdk-lib/aws-ec2';
 import { Runtime } from 'aws-cdk-lib/aws-lambda';
 import { GraphqlApi } from './resources/graphqlApi';
@@ -8,57 +7,54 @@ import { DbMigrationScript } from './resources/migrationScript';
 import { Rds } from './resources/rds';
 import { RestApi } from './resources/restApi';
 import Secret from './resources/secret';
+import { StackContext } from '@serverless-stack/resources';
 
 export const RUNTIME = Runtime.NODEJS_16_X;
 
-export default class MainStack extends sst.Stack {
-  constructor(scope: sst.App, id: string, props?: sst.StackProps) {
-    super(scope, id, props);
+export function MainStack({ stack }: StackContext) {
+  // VPC
+  const vpc = new Vpc(stack, `${APP_NAME}-vpc`, { natGateways: 1 });
+  const defaultLambdaSecurityGroup = new SecurityGroup(stack, 'DefaultLambda', {
+    vpc,
+    description: 'Default security group for lambda functions',
+  });
+  stack.setDefaultFunctionProps({
+    vpc,
+    runtime: 'nodejs16.x',
+    securityGroups: [defaultLambdaSecurityGroup],
+    environment: {
+      [envVar('STAGE')]: stack.stage,
+    },
+    bundle: {
+      format: 'esm',
+    },
+  });
 
-    // VPC
-    const vpc = new Vpc(this, `${APP_NAME}-vpc`, { natGateways: 1 });
-    const defaultLambdaSecurityGroup = new SecurityGroup(this, 'DefaultLambda', {
-      vpc,
-      description: 'Default security group for lambda functions',
-    });
-    this.setDefaultFunctionProps({
-      vpc,
-      runtime: 'nodejs16.x',
-      securityGroups: [defaultLambdaSecurityGroup],
-      environment: {
-        [envVar('STAGE')]: scope.stage,
-      },
-      bundle: {
-        format: 'esm',
-      },
-    });
+  // Layers
+  new Layers(stack, 'Layers');
 
-    // Layers
-    new Layers(this, 'Layers');
+  // Postgres DB
+  const rds = new Rds(stack, 'Rds', { vpc });
+  rds.cdk.cluster.connections.allowDefaultPortFrom(defaultLambdaSecurityGroup, 'Allow access from lambda functions');
 
-    // Postgres DB
-    const rds = new Rds(this, 'Rds', { vpc });
-    rds.cdk.cluster.connections.allowDefaultPortFrom(defaultLambdaSecurityGroup, 'Allow access from lambda functions');
+  // Secrets
+  new Secret(stack, 'AppSecret', {
+    secrets: {
+      // DB URL in secrets
+      [secret('DATABASE_URL')]: rds.makeDatabaseUrl(),
+    },
+  });
 
-    // Secrets
-    new Secret(this, 'AppSecret', {
-      secrets: {
-        // DB URL in secrets
-        [secret('DATABASE_URL')]: rds.makeDatabaseUrl(),
-      },
-    });
+  // REST API
+  const restApi = new RestApi(stack, 'RestApi');
 
-    // REST API
-    const restApi = new RestApi(this, 'RestApi');
+  // AppSync API
+  new GraphqlApi(stack, 'Gql');
 
-    // AppSync API
-    new GraphqlApi(this, 'Gql');
+  // DB migrations
+  new DbMigrationScript(stack, 'MigrationScript', { vpc });
 
-    // DB migrations
-    new DbMigrationScript(this, 'MigrationScript', { vpc });
-
-    this.addOutputs({
-      RestApiEndpoint: restApi.url,
-    });
-  }
+  stack.addOutputs({
+    RestApiEndpoint: restApi.url,
+  });
 }

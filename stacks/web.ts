@@ -1,20 +1,16 @@
-import * as sst from '@serverless-stack/resources';
+import { StackContext, NextjsSite } from '@serverless-stack/resources';
 
-export default class WebStack extends sst.Stack {
-  constructor(scope: sst.App, id: string, props?: sst.StackProps) {
-    super(scope, id, props);
+export function WebStack({ stack }: StackContext) {
+  // Web
+  // docs: https://docs.serverless-stack.com/constructs/NextjsSite
+  const frontendSite = new NextjsSite(stack, 'Site', {
+    path: 'web',
+    environment: {
+      NEXT_PUBLIC_REGION: stack.region,
+    },
+  });
 
-    // Web
-    // docs: https://docs.serverless-stack.com/constructs/NextjsSite
-    const frontendSite = new sst.NextjsSite(this, 'Site', {
-      path: 'web',
-      environment: {
-        NEXT_PUBLIC_REGION: scope.region,
-      },
-    });
-
-    this.addOutputs({
-      WebURL: frontendSite.url,
-    });
-  }
+  stack.addOutputs({
+    WebURL: frontendSite.url,
+  });
 }
