@@ -8,8 +8,9 @@ import { tracer } from '@backend/util/tracer';
 import middy from '@middy/core';
 import { Callback, Context } from 'aws-lambda';
 import { wrapLambdaHandlerWithSentry } from './sentryLambdaWrapper';
+import { appSyncXrayMiddleware } from './xray';
 
-export type Handler<TEvent = any, TResult = any> = (
+export type Handler<TEvent = unknown, TResult = unknown> = (
   event: TEvent,
   context: Context,
   callback: Callback<TResult>
