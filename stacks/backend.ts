@@ -11,7 +11,7 @@ import { StackContext } from '@serverless-stack/resources';
 
 export const RUNTIME = Runtime.NODEJS_16_X;
 
-export function MainStack({ stack }: StackContext) {
+export function Backend({ stack }: StackContext) {
   // VPC
   const vpc = new Vpc(stack, `${APP_NAME}-vpc`, { natGateways: 1 });
   const defaultLambdaSecurityGroup = new SecurityGroup(stack, 'DefaultLambda', {

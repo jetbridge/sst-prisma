@@ -44,6 +44,7 @@
     "@apollo/client": "^3.6.5",
     "@aws-cdk/aws-appsync-alpha": "2.24.0-alpha.0",
     "@serverless-stack/core": "~1.2.25",
+    "@serverless-stack/lambda": "0.0.0-20220725201006",
     "@serverless-stack/static-site-env": "~1.2.25",
     "@sls-next/lambda-at-edge": "^3.7.0",
     "@tsconfig/node16-strictest-esm": "^1.0.1",

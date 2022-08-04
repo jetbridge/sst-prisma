@@ -4,6 +4,14 @@ import { printFilesFromMigrationIds } from '@prisma/migrate/dist/utils/printFile
 import chalk from 'chalk';
 import { loadDatabaseUrl } from './client';
 
+/*
+
+Run prisma database migrations.
+
+Not really using a public API.
+
+*/
+
 export const handler = async (): Promise<string> => {
   const schemaPath = '/var/task/schema.prisma';
   await loadDatabaseUrl();
