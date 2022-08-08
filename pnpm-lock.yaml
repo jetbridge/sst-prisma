@@ -19,7 +19,7 @@ importers:
       '@types/node': <15.0.0
       '@typescript-eslint/eslint-plugin': ^5.26.0
       '@typescript-eslint/parser': ^5.26.0
-      aws-cdk-lib: 2.14.0
+      aws-cdk-lib: 2.32.0
       chalk: ^5.0.1
       common: workspace:*
       constructs: ^10.1.17
@@ -49,12 +49,12 @@ importers:
       '@aws-sdk/client-secrets-manager': 3.100.0
       '@serverless-stack/cli': 1.6.7_constructs@10.1.21
       '@serverless-stack/resources': 1.6.7
-      aws-cdk-lib: 2.14.0_constructs@10.1.21
+      aws-cdk-lib: 2.32.0_constructs@10.1.21
       common: link:common
       memoizee: 0.4.15
     devDependencies:
       '@apollo/client': 3.6.5_graphql@16.5.0
-      '@aws-cdk/aws-appsync-alpha': 2.24.0-alpha.0_z6pj2uhgej2laz3ojewrr4tgwu
+      '@aws-cdk/aws-appsync-alpha': 2.24.0-alpha.0_abfkyh2p4stavtizonc4nwuwna
       '@serverless-stack/core': 1.6.7
       '@serverless-stack/lambda': 0.0.0-20220725201006
       '@serverless-stack/static-site-env': 1.6.7
@@ -443,14 +443,14 @@ packages:
       constructs: 10.1.21
     dev: false
 
-  /@aws-cdk/aws-appsync-alpha/2.24.0-alpha.0_z6pj2uhgej2laz3ojewrr4tgwu:
+  /@aws-cdk/aws-appsync-alpha/2.24.0-alpha.0_abfkyh2p4stavtizonc4nwuwna:
     resolution: {integrity: sha512-kqv6mRXySBcQtAvHlumunJ7bWll38u8SP6ZSOPHS84uzu9BGhasIi3cFDdNNxvSqnN2eOJHoGf2LQJE4cPKxrw==}
     engines: {node: '>= 14.15.0'}
     peerDependencies:
       aws-cdk-lib: ^2.24.0
       constructs: ^10.0.0
     dependencies:
-      aws-cdk-lib: 2.14.0_constructs@10.1.21
+      aws-cdk-lib: 2.32.0_constructs@10.1.21
       constructs: 10.1.21
     dev: true
 
@@ -10934,24 +10934,6 @@ packages:
       - supports-color
     dev: false
 
-  /aws-cdk-lib/2.14.0_constructs@10.1.21:
-    resolution: {integrity: sha512-hxKH+eQ9k1L+D6BBvD0HNRf3Y6vyOJ4e3N9E+IkJKkCXJvirUJW4QSqAEVDS+Es6aiIjvZCTNMNWyEbJYdDazQ==}
-    engines: {node: '>= 14.15.0'}
-    peerDependencies:
-      constructs: ^10.0.0
-    dependencies:
-      constructs: 10.1.21
-    bundledDependencies:
-      - '@balena/dockerignore'
-      - case
-      - fs-extra
-      - ignore
-      - jsonschema
-      - minimatch
-      - punycode
-      - semver
-      - yaml
-
   /aws-cdk-lib/2.32.0_constructs@10.1.21:
     resolution: {integrity: sha512-IItrnjoLWupP3c16m06hN+13h1trGQ+VMqEn/7aPpBd6rRHcPAdR1f/jr/XxkbNxW+AEfrobAniJwMxWBzbh+g==}
     engines: {node: '>= 14.15.0'}
@@ -13917,10 +13899,10 @@ packages:
       eslint-import-resolver-webpack:
         optional: true
     dependencies:
-      '@typescript-eslint/parser': 5.26.0_4gmsiq4b4nr3cnbd3xuvl5c34u
+      '@typescript-eslint/parser': 5.26.0_xztl6dhthcahlo6akmb2bmjmle
       debug: 3.2.7
       eslint-import-resolver-node: 0.3.6
-      eslint-import-resolver-typescript: 2.7.1_mest3eukhdtwmosnztkb4gvrla
+      eslint-import-resolver-typescript: 2.7.1_btspkuwbqkl4adpiufzbathtpi
       find-up: 2.1.0
     transitivePeerDependencies:
       - supports-color

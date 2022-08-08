@@ -36,7 +36,7 @@
     "@aws-sdk/client-secrets-manager": "^3.67.0",
     "@serverless-stack/cli": "^1.6.7",
     "@serverless-stack/resources": "^1.6.7",
-    "aws-cdk-lib": "2.14.0",
+    "aws-cdk-lib": "2.32.0",
     "common": "workspace:*",
     "memoizee": "^0.4.15"
   },
