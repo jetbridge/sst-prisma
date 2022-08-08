@@ -40,13 +40,13 @@ export class DbMigrationScript extends Construct {
         ],
         externalModules: migrationLayer.externalModules,
       },
-      timeout: '10 minutes',
+      timeout: '5 minutes',
     });
 
     // script to run migrations for us during deployment
-    new Script(this, 'MigrationScript', {
-      onCreate: migrationFunction,
-      onUpdate: migrationFunction,
-    });
+    // new Script(this, 'MigrationScript', {
+    //   onCreate: migrationFunction,
+    //   onUpdate: migrationFunction,
+    // });
   }
 }
