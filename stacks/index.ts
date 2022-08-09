@@ -2,7 +2,7 @@ import * as sst from '@serverless-stack/resources';
 import { Web } from './web';
 import { Network } from './network';
 import { Auth } from './auth';
-import { AppSyncApi } from './graphqlApi';
+import { AppSyncApi } from './appSyncApi';
 import { envVar } from 'common';
 import { Layers } from './layers';
 import { Secrets } from './secrets';
