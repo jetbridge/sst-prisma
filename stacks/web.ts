@@ -1,6 +1,6 @@
 import { StackContext, NextjsSite } from '@serverless-stack/resources';
 
-export function WebStack({ stack }: StackContext) {
+export function Web({ stack }: StackContext) {
   // Web
   // docs: https://docs.serverless-stack.com/constructs/NextjsSite
   const frontendSite = new NextjsSite(stack, 'Web', {

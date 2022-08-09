@@ -1,7 +1,7 @@
 import { Auth as SstAuth, StackContext } from '@serverless-stack/resources';
 
 export function Auth({ stack }: StackContext) {
-  new SstAuth(stack, 'Auth', {
+  const auth = new SstAuth(stack, 'Auth', {
     defaults: {
       function: {},
     },
@@ -9,4 +9,6 @@ export function Auth({ stack }: StackContext) {
       preSignUp: 'backend/src/auth/trigger/preSignUp.handler',
     },
   });
+
+  return { auth };
 }
