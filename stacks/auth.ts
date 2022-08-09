@@ -10,5 +10,5 @@ export function Auth({ stack }: StackContext) {
     },
   });
 
-  return { auth };
+  return { auth, userPool: auth.cdk.userPool };
 }

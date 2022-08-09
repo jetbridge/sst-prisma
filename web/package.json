@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "@apollo/client": "^3.6.5",
-    "@aws-amplify/auth": "^4.5.6",
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.5.1",

@@ -1,17 +1,16 @@
 import { AuthorizationType } from '@aws-cdk/aws-appsync-alpha';
-import { AppSyncApi as SstAppSyncApi, StackContext } from '@serverless-stack/resources';
-import { Duration, Expiration } from 'aws-cdk-lib';
+import { AppSyncApi as SstAppSyncApi, StackContext, use } from '@serverless-stack/resources';
+import { Auth } from './auth';
 
 export function AppSyncApi({ stack }: StackContext) {
+  const auth = use(Auth);
   const api = new SstAppSyncApi(stack, 'AppSyncApi', {
     cdk: {
       graphqlApi: {
         authorizationConfig: {
           defaultAuthorization: {
-            authorizationType: AuthorizationType.API_KEY,
-            apiKeyConfig: {
-              expires: Expiration.after(Duration.days(365)),
-            },
+            authorizationType: AuthorizationType.USER_POOL,
+            userPoolConfig: { userPool: auth.userPool },
           },
         },
       },
@@ -30,4 +29,6 @@ export function AppSyncApi({ stack }: StackContext) {
     GraphqlApiEndpoint: api.url,
     GraphqlApiKey: api.cdk.graphqlApi.apiKey || 'none',
   });
+
+  return { api, url: api.url };
 }
