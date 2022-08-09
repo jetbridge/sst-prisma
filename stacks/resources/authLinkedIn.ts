@@ -1,7 +1,10 @@
-import { StackContext } from '@serverless-stack/resources';
-import { StringAttribute, UserPoolIdentityProviderOidc, OidcAttributeRequestMethod } from 'aws-cdk-lib/aws-cognito';
+import { StackContext, use } from '@serverless-stack/resources';
+import { OidcAttributeRequestMethod, ProviderAttribute, UserPoolIdentityProviderOidc } from 'aws-cdk-lib/aws-cognito';
+import { Auth } from './auth';
 
 export function LinkedInAuth({ stack }: StackContext) {
+  const auth = use(Auth).auth;
+
   // LinkedIn OIDC auth
   const userPoolIdentityProviderOidc = new UserPoolIdentityProviderOidc(stack, 'LinkedInOidc', {
     clientId: 'clientId',
@@ -11,17 +14,19 @@ export function LinkedInAuth({ stack }: StackContext) {
 
     // the properties below are optional
     attributeMapping: {
-      sub: 'id',
+      // sub: 'id',
       // name: `${userDetails.localizedFirstName} ${userDetails.localizedLastName}`,
-      preferred_username: 'vanityName',
-      picture: parseImageUrl(pictureElements),
-      locale: parseLocale(userDetails.firserDetails.lastName),
+      email: ProviderAttribute.other('email'),
+      // preferredUsername: 'vanityName',
+      // picture: parseImageUrl(pictureElements),
+      // locale: parseLocale(userDe() => 1ils.firserDetails.lastName),
       // website: `https://www.linkedin.com/in/${userDetails.vanityName}`,
 
       // custom attributes:
-      // 'custom:headline': userDetails.localizedHeadline,
-      'custom:first_name_orig': parseOrigName(userDetails.firstName),
-      'custom:last_name_orig': parseOrigName(userDetails.lastName),
+      custom: {
+        firstNameOrig: ProviderAttribute.other('firstName'),
+        lastNameOrig: ProviderAttribute.other('lastName'),
+      },
     },
     attributeRequestMethod: OidcAttributeRequestMethod.GET,
     endpoints: {
