@@ -15,15 +15,18 @@ importers:
       '@serverless-stack/static-site-env': ^1.6.7
       '@sls-next/lambda-at-edge': ^3.7.0
       '@tsconfig/node16-strictest-esm': ^1.0.1
+      '@types/aws-lambda': ^8.10.102
       '@types/memoizee': ^0.4.7
       '@types/node': <15.0.0
       '@typescript-eslint/eslint-plugin': ^5.26.0
       '@typescript-eslint/parser': ^5.26.0
       aws-cdk-lib: 2.32.0
+      aws-lambda: ^1.0.7
       chalk: ^5.0.1
       common: workspace:*
       constructs: ^10.1.17
       cross-env: ^7.0.3
+      desm: ^1.3.0
       dotenv: ^16.0.0
       dotenv-cli: ^5.1.0
       eslint: ^8.16.0
@@ -37,6 +40,8 @@ importers:
       graphql: ^16.5.0
       graphql-tag: ^2.12.6
       husky: ^7.0.4
+      json-web-key: ^0.4.0
+      jsonwebtoken: ^8.5.1
       lint-staged: ^12.3.8
       memoizee: ^0.4.15
       prettier: ^2.6.2
@@ -51,6 +56,9 @@ importers:
       '@serverless-stack/resources': 1.6.7
       aws-cdk-lib: 2.32.0_constructs@10.1.21
       common: link:common
+      desm: 1.3.0
+      json-web-key: 0.4.0
+      jsonwebtoken: 8.5.1
       memoizee: 0.4.15
     devDependencies:
       '@apollo/client': 3.6.5_graphql@16.5.0
@@ -60,10 +68,12 @@ importers:
       '@serverless-stack/static-site-env': 1.6.7
       '@sls-next/lambda-at-edge': 3.7.0_typescript@4.7.2
       '@tsconfig/node16-strictest-esm': 1.0.1
+      '@types/aws-lambda': 8.10.102
       '@types/memoizee': 0.4.8
       '@types/node': 14.18.18
       '@typescript-eslint/eslint-plugin': 5.26.0_hzuh7e2up357pvq3mkokjvu2lq
       '@typescript-eslint/parser': 5.26.0_xztl6dhthcahlo6akmb2bmjmle
+      aws-lambda: 1.0.7
       chalk: 5.0.1
       constructs: 10.1.21
       cross-env: 7.0.3
@@ -113,6 +123,8 @@ importers:
       dotenv-cli: ^5.1.0
       graphql: ^16.5.0
       graphql-tag: ^2.12.6
+      json-web-key: ^0.4.0
+      jsonwebtoken: ^8.5.1
       memoizee: ^0.4.15
       prisma: 4.0.0
     dependencies:
@@ -128,6 +140,8 @@ importers:
       '@sentry/serverless': 7.8.1
       aws-lambda: 1.0.7
       common: link:../common
+      json-web-key: 0.4.0
+      jsonwebtoken: 8.5.1
       memoizee: 0.4.15
     devDependencies:
       '@aws-sdk/signature-v4-crt': 3.88.0
@@ -9111,6 +9125,10 @@ packages:
     resolution: {integrity: sha512-84geGyVc0H9P9aGbcg/vkDh5akJq0bEf3tizHNR2d1gcm0wsp9IZ/SW6rPxvgjJFi3OeVxDc8WTKCAjoZbogzg==}
     dev: true
 
+  /@types/aws-lambda/8.10.102:
+    resolution: {integrity: sha512-BT05v46n9KtSHa9SgGuOvm49eSruJ9utD8iNXpdpuUVYk8wOcqmm1LEzpNRkrXxD0CULc38sdLpk6q3Wa2WOwg==}
+    dev: true
+
   /@types/aws-lambda/8.10.97:
     resolution: {integrity: sha512-BZk3qO4R2KN8Ts3eR6CW1n8LI46UOgv1KoDZjo8J9vOQvDeX/rsrv1H0BpEAMcSqZ1mLwTEyAMtlua5tlSn0kw==}
 
@@ -10515,7 +10533,6 @@ packages:
       inherits: 2.0.4
       minimalistic-assert: 1.0.1
       safer-buffer: 2.1.2
-    dev: true
 
   /assert/1.5.0:
     resolution: {integrity: sha512-EDsgawzwoun2CZkCgtxJbv392v4nbk9XDD06zI+kQYoBM/3RBWLlEyJARDOmhAAosBjWACEkKL6S+lIZtcAubA==}
@@ -10737,11 +10754,10 @@ packages:
     resolution: {integrity: sha512-9GNFMRrEMG5y3Jvv+V4azWvc+qNWdWLTjDdhf/zgMlz8haaaLWv0xeAIWxz9PuWUBawsVxy0zZotjCdR3Xq+2w==}
     hasBin: true
     dependencies:
-      aws-sdk: 2.1145.0
+      aws-sdk: 2.1190.0
       commander: 3.0.2
       js-yaml: 3.14.1
       watchpack: 2.3.1
-    dev: false
 
   /aws-sdk-client-mock/1.0.0:
     resolution: {integrity: sha512-qd7TJXI1nplTXNh8NdIEwFyHTnNRdUcGDUAEmWW55j9dZg6AGB9zgkzgu9yWCEkAWnpxRIc48ajE8H5FFeioVw==}
@@ -11127,7 +11143,6 @@ packages:
 
   /bn.js/4.12.0:
     resolution: {integrity: sha512-c98Bf3tPniI+scsdk237ku1Dc3ujXQTSgyiPUDEOe7tRkhrqridvh8klBv0HCEso1OLOYcHuCv/cS6DNxKH+ZA==}
-    dev: true
 
   /bn.js/5.2.1:
     resolution: {integrity: sha512-eXRvHzWyYPBuB4NBy0cmYQjGitUrtqwbvlzP3G6VFnNRbsZQIxQ10PbKKHt8gZ/HW/D/747aDl+QkDqg3KQLMQ==}
@@ -12058,7 +12073,6 @@ packages:
 
   /commander/3.0.2:
     resolution: {integrity: sha512-Gar0ASD4BDyKC4hl4DwHqDrmvjoxWKZigVnAbn5H1owvm4CxCPdb0HQDehwNYMJpla5+M2tPmPARzhtYuwpHow==}
-    dev: false
 
   /commander/4.1.1:
     resolution: {integrity: sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==}
@@ -12877,6 +12891,10 @@ packages:
       inherits: 2.0.4
       minimalistic-assert: 1.0.1
     dev: true
+
+  /desm/1.3.0:
+    resolution: {integrity: sha512-RvlHN2gfYA0BpCfjpWzCdQeR6p5U+84f5DzcirLow86UA/OcpwuOqXRC4Oz0bG9rzcJPVtMT6ZgNtjp4qh+uqA==}
+    dev: false
 
   /destroy/1.0.4:
     resolution: {integrity: sha512-3NdhDuEXnfun/z7x9GOElY49LoqVHoGScmOKwmxhsS8N5Y+Z8KyPPDnaSzqWgYt/ji4mqwfTS34Htrk0zPIXVg==}
@@ -16696,6 +16714,12 @@ packages:
       remove-trailing-spaces: 1.0.8
     dev: true
 
+  /json-web-key/0.4.0:
+    resolution: {integrity: sha512-4MwQAsadU3y7ZTfhwup/2lYJUEB7mAOMOjfNvuHGJkgkvXaBaiWlFsuWNFpWkTG23ZlMm56TBB3BI9cVQTxjzA==}
+    dependencies:
+      asn1.js: 5.4.1
+    dev: false
+
   /json5/1.0.1:
     resolution: {integrity: sha512-aKS4WQjPenRxiQsC93MNfjx+nbF4PAdYzmd/1JIj8HYzqfbu86beTuNgXDzPknWk0n0uARlyewZo4s++ES36Ow==}
     hasBin: true
@@ -17774,7 +17798,6 @@ packages:
 
   /minimalistic-assert/1.0.1:
     resolution: {integrity: sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A==}
-    dev: true
 
   /minimalistic-crypto-utils/1.0.1:
     resolution: {integrity: sha512-JIYlbt6g8i5jKfJ3xz7rF0LXmv2TkDxBLUkiBeZ7bAx4GnnNMr8xFpGnOxn6GhTEHx3SjRrZEoU+j04prX1ktg==}
