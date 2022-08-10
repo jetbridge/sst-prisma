@@ -1,14 +1,20 @@
 import { StackContext, use } from '@serverless-stack/resources';
 import { OidcAttributeRequestMethod, ProviderAttribute, UserPoolIdentityProviderOidc } from 'aws-cdk-lib/aws-cognito';
-import { Auth } from './auth';
+import { secret } from 'common';
+import { Auth } from 'stacks/auth';
+import { Secrets } from '../secrets';
 
 export function LinkedInAuth({ stack }: StackContext) {
   const auth = use(Auth).auth;
+  const secrets = use(Secrets).secret;
+
+  const clientSecret = secrets.secretValueFromJson(secret('LINKEDIN_CLIENT_ID')).toString();
+  const clientId = secrets.secretValueFromJson(secret('LINKEDIN_CLIENT_SECRET')).toString();
 
   // LinkedIn OIDC auth
   const userPoolIdentityProviderOidc = new UserPoolIdentityProviderOidc(stack, 'LinkedInOidc', {
-    clientId: 'clientId',
-    clientSecret: 'clientSecret',
+    clientId,
+    clientSecret,
     issuerUrl: 'issuerUrl',
     userPool: auth.cdk.userPool,
 

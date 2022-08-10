@@ -20,4 +20,6 @@ export function Auth({ stack }: StackContext) {
       },
     },
   });
+
+  return { auth, userPool: auth.cdk.userPool };
 }

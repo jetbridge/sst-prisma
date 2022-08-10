@@ -17,7 +17,7 @@ export type ENV_VARS_FRONTEND = 'GRAPHQL_ENDPOINT' | 'COGNITO_USER_POOL_ID' | 'C
 /**
  * Secrets that live in Secrets Manager. Edit them manually in the AWS console.
  */
-export type APP_SECRETS = 'APP' | 'DATABASE_URL';
+export type APP_SECRETS = 'APP' | 'DATABASE_URL' | 'LINKEDIN_CLIENT_ID' | 'LINKEDIN_CLIENT_SECRET';
 
 export type EnvVar = ENV_VARS_BACKEND | ENV_VARS_FRONTEND;
 
