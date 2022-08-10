@@ -1,7 +1,7 @@
 import { RDS, StackContext, use } from '@serverless-stack/resources';
 
 import { Duration } from 'aws-cdk-lib';
-import { envVar } from 'common';
+import { APP_NAME, envVar } from 'common';
 import { Network } from 'stacks/network';
 import { IS_PRODUCTION } from './config';
 import { DbMigrationScript } from './resources/migrationScript';
@@ -9,7 +9,7 @@ import { DbMigrationScript } from './resources/migrationScript';
 export function Database({ stack, app }: StackContext) {
   const net = use(Network);
 
-  const defaultDatabaseName = app.logicalPrefixedName('db');
+  const defaultDatabaseName = APP_NAME;
   const rds = new RDS(stack, 'DB', {
     cdk: { cluster: { vpc: net.vpc } },
     engine: 'postgresql10.14',
