@@ -1,30 +1,28 @@
 import { APIGatewayProxyEventV2 } from 'aws-lambda';
 
-export const getBearerToken = (event: APIGatewayProxyEventV2) => {
-  return new Promise((resolve, reject) => {
-    // This method implements https://tools.ietf.org/html/rfc6750
-    const authHeader = event.headers.authorization;
-    if (!authHeader) console.warn(`getBearerToken no auth header`);
-    if (authHeader) {
-      // Section 2.1 Authorization request header
-      // Should be of the form 'Bearer <token>'
-      // We can ignore the 'Bearer ' bit
-      const authValue = authHeader.split(' ')[1];
-      resolve(authValue);
-    } else if (event.queryStringParameters?.access_token) {
-      // Section 2.3 URI query parameter
-      const accessToken = event.queryStringParameters?.access_token;
-      resolve(accessToken);
-    } else if (event.headers['Content-Type'] === 'application/x-www-form-urlencoded' && event.body) {
-      // Section 2.2 form encoded body parameter
-      const body = JSON.parse(event.body);
-      resolve(body.access_token);
-    } else {
-      const msg = 'No token specified in request';
-      console.warn(msg);
-      reject(new Error(msg));
-    }
-  });
+export const getBearerToken = async (event: APIGatewayProxyEventV2) => {
+  // This method implements https://tools.ietf.org/html/rfc6750
+  const authHeader = event.headers.authorization;
+  if (!authHeader) console.warn(`getBearerToken no auth header`);
+  if (authHeader) {
+    // Section 2.1 Authorization request header
+    // Should be of the form 'Bearer <token>'
+    // We can ignore the 'Bearer ' bit
+    const authValue = authHeader.split(' ')[1];
+    return authValue;
+  } else if (event.queryStringParameters?.access_token) {
+    // Section 2.3 URI query parameter
+    const accessToken = event.queryStringParameters?.access_token;
+    return accessToken;
+  } else if (event.headers['Content-Type'] === 'application/x-www-form-urlencoded' && event.body) {
+    // Section 2.2 form encoded body parameter
+    const body = JSON.parse(event.body);
+    return body.access_token;
+  } else {
+    const msg = 'No token specified in request';
+    console.warn(msg);
+    throw new Error(msg);
+  }
 };
 
 export const getIssuer = (event: APIGatewayProxyEventV2) => {

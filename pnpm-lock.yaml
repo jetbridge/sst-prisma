@@ -16,6 +16,7 @@ importers:
       '@sls-next/lambda-at-edge': ^3.7.0
       '@tsconfig/node16-strictest-esm': ^1.0.1
       '@types/aws-lambda': ^8.10.102
+      '@types/jsonwebtoken': ^8.5.8
       '@types/memoizee': ^0.4.7
       '@types/node': <15.0.0
       '@typescript-eslint/eslint-plugin': ^5.26.0
@@ -69,6 +70,7 @@ importers:
       '@sls-next/lambda-at-edge': 3.7.0_typescript@4.7.2
       '@tsconfig/node16-strictest-esm': 1.0.1
       '@types/aws-lambda': 8.10.102
+      '@types/jsonwebtoken': 8.5.8
       '@types/memoizee': 0.4.8
       '@types/node': 14.18.18
       '@typescript-eslint/eslint-plugin': 5.26.0_hzuh7e2up357pvq3mkokjvu2lq

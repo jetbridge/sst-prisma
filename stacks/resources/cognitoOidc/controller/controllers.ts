@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { OpenID } from '../openid';
 import { responder } from './responder';
 
@@ -29,7 +30,7 @@ export const Controller = (openid: OpenID) => (respond: ReturnType<typeof respon
           // console.debug("Token for (%s, %s, %s) provided", code, state, host, {})
           respond.success(tokens);
         })
-        .catch((error: string) => {
+        .catch((error: any) => {
           console.error('Token for (%s, %s, %s) failed: %s', code, state, host, error.message || error, {});
           respond.error(error);
         });

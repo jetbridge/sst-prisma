@@ -1,33 +1,29 @@
-import { APIGatewayProxyEvent, Callback, Context } from 'aws-lambda';
-import { OpenID } from './openid';
-import { URLSearchParams } from 'url';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { APIGatewayProxyEventV2, Callback, Context } from 'aws-lambda';
+import { getOidcController } from './controller/getController';
+import { getBearerToken, getIssuer, parseBody } from './util';
 
-export const handler = (event: APIGatewayProxyEvent, _context: Context, callback: Callback) => {
-  const { client_id, scope, state, response_type } = event.queryStringParameters || {};
-  getOidcController(callback).authorize(client_id, scope, state, response_type);
+export const openIdConfiguration = (event: APIGatewayProxyEventV2, _context: Context, callback: Callback) => {
+  getOidcController(callback).openIdConfiguration(getIssuer(event));
 };
 
-export const token = (event: APIGatewayProxyEvent, _context: Context, callback: Callback) => {
+export const authorize = (event: APIGatewayProxyEventV2, _context: Context, callback: Callback) => {
+  const { client_id, scope, state, response_type } = event.queryStringParameters || {};
+  getOidcController(callback).authorize(client_id!, scope!, state!, response_type!);
+};
+
+export const token = (event: APIGatewayProxyEventV2, _context: Context, callback: Callback) => {
   const body = parseBody(event);
   const query = event.queryStringParameters || {};
   const code = body.code || query.code;
   const state = body.state || query.state;
-  if (code) {
-    openid
-      .getTokens(code, state, host)
-      .then((tokens: any) => {
-        // console.debug("Token for (%s, %s, %s) provided", code, state, host, {})
-        respond.success(tokens);
-      })
-      .catch((error: any) => {
-        console.error('Token for (%s, %s, %s) failed: %s', code, state, host, error.message || error, {});
-        respond.error(error);
-      });
-  } else {
-    const error = new Error('No code supplied');
-    console.error('Token for (%s, %s, %s) failed: %s', code, state, host, error.message || error, {});
-    respond.error(error);
-  }
+  getOidcController(callback).token(code, state, getIssuer(event));
 };
 
-export const;
+export const jwks = (_event: APIGatewayProxyEventV2, _context: Context, callback: Callback) => {
+  getOidcController(callback).jwks();
+};
+
+export const userinfo = (event: APIGatewayProxyEventV2, _context: Context, callback: Callback) => {
+  getOidcController(callback).userinfo(getBearerToken(event));
+};
