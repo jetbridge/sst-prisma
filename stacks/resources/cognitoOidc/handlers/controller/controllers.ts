@@ -16,15 +16,9 @@ export const Controller = (openid: OpenID) => ({
     return Responder.success(userInfo);
   },
   token: async (code: string, state: string, host: string) => {
-    console.log('TOKEN');
     if (code) {
-      try {
-        const tokens = await openid.getTokens(code, state, host);
-        return Responder.success(tokens);
-      } catch (error: any) {
-        console.error('Token for (%s, %s, %s) failed: %s', code, state, host, error.message || error, {});
-        return Responder.error(error);
-      }
+      const tokens = await openid.getTokens(code, state, host);
+      return Responder.success(tokens);
     } else {
       const error = new Error('No code supplied');
       console.error('Token for (%s, %s, %s) failed: %s', code, state, host, error.message || error, {});
