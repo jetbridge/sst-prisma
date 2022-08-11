@@ -1,5 +1,5 @@
-import { StackContext, NextjsSite, use } from '@serverless-stack/resources';
-import { envVar, secret } from 'common';
+import { NextjsSite, StackContext, use } from '@serverless-stack/resources';
+import { secret } from 'common';
 import { AppSyncApi } from './appSyncApi';
 import { Auth } from './auth';
 import { Dns } from './dns';
@@ -18,10 +18,17 @@ export function Web({ stack }: StackContext) {
     customDomain: dns.domainName,
     environment: {
       NEXTAUTH_SECRET: secrets.secret.secretValueFromJson(secret('APP')).toString(),
+      NEXTAUTH_URL: 'http://localhost:6020', // FIXME: how to pass in this URL?
       NEXT_PUBLIC_REGION: stack.region,
       NEXT_PUBLIC_APPSYNC_ENDPOINT: appSyncApi.api.url,
       NEXT_PUBLIC_COGNITO_CLIENT_ID: clientId,
       NEXT_PUBLIC_COGNITO_USER_POOL_ID: userPool.userPoolId,
+    },
+    cdk: {
+      distribution: {
+        certificate: dns.certificateGlobal,
+        ...(dns.domainName && { domainNames: [dns.domainName] }),
+      },
     },
   });
 

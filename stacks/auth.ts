@@ -1,5 +1,6 @@
 import { Auth as SstAuth, StackContext, use } from '@serverless-stack/resources';
-import { StringAttribute } from 'aws-cdk-lib/aws-cognito';
+import { Duration } from 'aws-cdk-lib';
+import { StringAttribute, UserPoolClientIdentityProvider } from 'aws-cdk-lib/aws-cognito';
 import { Key } from 'aws-cdk-lib/aws-kms';
 import { AaaaRecord, ARecord, RecordTarget } from 'aws-cdk-lib/aws-route53';
 import { UserPoolDomainTarget } from 'aws-cdk-lib/aws-route53-targets';
@@ -15,6 +16,13 @@ export function Auth({ stack, app }: StackContext) {
     description: 'Signing key for JWT',
   });
 
+  const hosts = [
+    'http://localhost:6020',
+    /// ... add frontend hosts here
+  ];
+  const allowedUrls = ['/login', '/api/auth/callback/cognito'];
+  const callbackUrls = hosts.flatMap((h) => allowedUrls.map((url) => h + url));
+
   const auth = new SstAuth(stack, 'Auth', {
     identityPoolFederation: {
       // plug in auth providers here
@@ -25,7 +33,9 @@ export function Auth({ stack, app }: StackContext) {
       preSignUp: 'backend/src/auth/trigger/preSignUp.handler',
     },
     cdk: {
+      userPoolClient: {},
       userPool: {
+        selfSignUpEnabled: false,
         customAttributes: {
           firstNameOriginal: new StringAttribute({ mutable: true }),
           lastNameOriginal: new StringAttribute({ mutable: true }),
@@ -70,6 +80,19 @@ export function Auth({ stack, app }: StackContext) {
     signingKey,
     userPool,
     cognitoDomain: cognitoDomainName,
+  });
+
+  // create cognito client
+  const webClient = userPool.addClient('WebClient', {
+    supportedIdentityProviders: [
+      UserPoolClientIdentityProvider.COGNITO,
+      UserPoolClientIdentityProvider.custom(linkedIn.userPoolIdentityProviderOidc.providerName),
+    ],
+    refreshTokenValidity: Duration.days(365),
+    oAuth: {
+      callbackUrls: callbackUrls,
+      logoutUrls: callbackUrls,
+    },
   });
 
   return {

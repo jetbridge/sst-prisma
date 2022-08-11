@@ -8,6 +8,7 @@ if (!COGNITO_USER_POOL_ID) throw new Error('COGNITO_USER_POOL_ID is not set');
 
 console.log('NEXTAUTH_SECRET', process.env.NEXTAUTH_SECRET);
 
+// console.log(process.env);
 export default NextAuth({
   providers: [
     CognitoProvider({
@@ -17,6 +18,8 @@ export default NextAuth({
     }),
   ],
   pages: {
-    signIn: '/login',
+    // signIn: '/login',
   },
+
+  // TODO: https://next-auth.js.org/adapters/prisma
 });
