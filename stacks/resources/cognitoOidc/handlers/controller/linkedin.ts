@@ -28,7 +28,7 @@ interface UserDetails {
 const getApiEndpoints = (apiBaseUrl: string, loginBaseUrl: string) => {
   return {
     // https://docs.microsoft.com/en-us/linkedin/shared/references/v2/profile/lite-profile
-    userDetails: `${apiBaseUrl}/v2/me?projection=(id,localizedFirstName,localizedLastName,profilePicture(displayImage~digitalmediaAsset:playableStreams),firstName,lastName)`,
+    userDetails: `${apiBaseUrl}/v2/me?projection=(id,vanityName,localizedFirstName,localizedLastName,profilePicture(displayImage~digitalmediaAsset:playableStreams),firstName,lastName)`,
     userEmails: `${apiBaseUrl}/v2/clientAwareMemberHandles?q=members&projection=(elements*(primary,type,handle~))`,
     oauthToken: `${loginBaseUrl}/oauth/v2/accessToken`,
     oauthAuthorize: `${loginBaseUrl}/oauth/v2/authorization`,

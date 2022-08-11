@@ -27,12 +27,12 @@ export const Controller = (openid: OpenID) => ({
   },
   jwks: async () => {
     const jwks = await openid.getJwks();
-    console.info('Providing access to JWKS: %j', jwks, {});
+    console.info('Returning JWKS:', jwks);
     return Responder.success(jwks);
   },
   openIdConfiguration: (host: string) => {
     const config = openid.getConfigFor(host);
-    console.info('Providing configuration for %s: %j', host, config, {});
+    console.info('Providing configuration for %s', host, config);
     return Responder.success(config);
   },
 });

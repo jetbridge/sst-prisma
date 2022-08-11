@@ -1,12 +1,18 @@
-import { StackContext, use, Auth as SstAuth } from '@serverless-stack/resources';
+import { Auth as SstAuth, StackContext, use } from '@serverless-stack/resources';
 import { Duration, RemovalPolicy } from 'aws-cdk-lib';
-import { StringAttribute, UserPool, UserPoolClientIdentityProvider } from 'aws-cdk-lib/aws-cognito';
+import { StringAttribute, UserPoolClientIdentityProvider } from 'aws-cdk-lib/aws-cognito';
 import { Key, KeySpec, KeyUsage } from 'aws-cdk-lib/aws-kms';
 import { AaaaRecord, ARecord, RecordTarget } from 'aws-cdk-lib/aws-route53';
 import { UserPoolDomainTarget } from 'aws-cdk-lib/aws-route53-targets';
 import { Dns } from './dns';
 import { LinkedInOidc } from './resources/cognitoOidc/linkedInOidc';
 import { Secrets } from './secrets';
+
+const ALLOWED_HOSTS = [
+  'http://localhost:6020',
+  /// ... add frontend hosts here
+];
+const ALLOWED_URLS = ['/login', '/api/auth/callback/cognito'];
 
 export function Auth({ stack, app }: StackContext) {
   const dns = use(Dns);
@@ -19,12 +25,7 @@ export function Auth({ stack, app }: StackContext) {
     removalPolicy: RemovalPolicy.DESTROY,
   });
 
-  const hosts = [
-    'http://localhost:6020',
-    /// ... add frontend hosts here
-  ];
-  const allowedUrls = ['/login', '/api/auth/callback/cognito'];
-  const callbackUrls = hosts.flatMap((h) => allowedUrls.map((url) => h + url));
+  const callbackUrls = ALLOWED_HOSTS.flatMap((h) => ALLOWED_URLS.map((url) => h + url));
 
   const auth = new SstAuth(stack, 'Auth', {
     triggers: {
@@ -90,7 +91,7 @@ export function Auth({ stack, app }: StackContext) {
   // create cognito client
   const webClient = userPool.addClient('WebClient', {
     supportedIdentityProviders: [
-      UserPoolClientIdentityProvider.COGNITO,
+      // UserPoolClientIdentityProvider.COGNITO,
       UserPoolClientIdentityProvider.custom(linkedIn.userPoolIdentityProviderOidc.providerName),
     ],
     refreshTokenValidity: Duration.days(365),

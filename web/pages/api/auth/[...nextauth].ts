@@ -10,8 +10,9 @@ export const authOptions = {
   providers: [
     CognitoProvider({
       clientId: COGNITO_CLIENT_ID,
-      issuer: `https://cognito-idp.${REGION}.amazonaws.com/${COGNITO_USER_POOL_ID}`,
-      clientSecret: 'NOT_USED', // hopefully not used for anything?
+      issuer: `https://cognito-idp.${REGION}.amazonaws.com/${COGNITO_USER_POOL_ID}/`,
+      clientSecret: '',
+      client: { token_endpoint_auth_method: 'none' },
       // authorization: `https://${COGNITO_DOMAIN_NAME}/oauth2/authorize`,  // has no effect
     }),
   ],
