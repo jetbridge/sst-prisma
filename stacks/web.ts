@@ -6,7 +6,7 @@ import { Dns } from './dns';
 import { Secrets } from './secrets';
 
 export function Web({ stack }: StackContext) {
-  const { userPool, clientId } = use(Auth);
+  const { userPool, webClient } = use(Auth);
   const appSyncApi = use(AppSyncApi);
   const dns = use(Dns);
   const secrets = use(Secrets);
@@ -21,7 +21,7 @@ export function Web({ stack }: StackContext) {
       NEXTAUTH_URL: 'http://localhost:6020', // FIXME: how to pass in this URL?
       NEXT_PUBLIC_REGION: stack.region,
       NEXT_PUBLIC_APPSYNC_ENDPOINT: appSyncApi.api.url,
-      NEXT_PUBLIC_COGNITO_CLIENT_ID: clientId,
+      NEXT_PUBLIC_COGNITO_CLIENT_ID: webClient.userPoolClientId,
       NEXT_PUBLIC_COGNITO_USER_POOL_ID: userPool.userPoolId,
     },
     cdk: {

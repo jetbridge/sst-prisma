@@ -97,9 +97,9 @@ export function Auth({ stack, app }: StackContext) {
 
   return {
     auth,
-    userPool: auth.cdk.userPool,
+    userPool,
     domainName,
-    clientId: auth.userPoolClientId,
+    webClient,
     linkedInIssuer: linkedIn.api.url,
   };
 }
