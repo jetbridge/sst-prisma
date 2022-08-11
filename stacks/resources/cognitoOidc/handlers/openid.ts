@@ -28,6 +28,7 @@ export class OpenID {
     return this.service(secrets).getToken(code, state, host);
   }
 
+  // might be unused
   getConfigFor(host: any) {
     return {
       issuer: `https://${host}`,
