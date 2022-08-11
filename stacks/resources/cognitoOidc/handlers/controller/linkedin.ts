@@ -156,6 +156,7 @@ export const linkedin = (secrets: LinkedInSecrets) => {
         // State may not be present, so we conditionally include it
         ...(state && { state }),
       };
+      console.log('DATA', data);
 
       const parameters = new URLSearchParams();
       Object.entries(data).forEach(([key, value]) => {
@@ -177,7 +178,7 @@ export const linkedin = (secrets: LinkedInSecrets) => {
       const idToken = await makeIdToken(payload, host, clientId);
       const tokenResponse = {
         ...linkedinToken,
-        scope: linkedinScope,
+        scope: linkedinScope.join(' '),
         token_type: 'bearer',
         id_token: idToken,
       };

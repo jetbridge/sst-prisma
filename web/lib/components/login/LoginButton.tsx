@@ -16,7 +16,7 @@ export function LoginButton() {
   return (
     <>
       Not signed in <br />
-      <Button variant="contained" color="primary" onClick={() => signIn()}>
+      <Button variant="contained" color="primary" onClick={() => signIn('cognito')}>
         Sign in
       </Button>
     </>

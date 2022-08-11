@@ -18,7 +18,9 @@ export const getPublicKey = async () => {
   const getKeyCmd = new GetPublicKeyCommand({
     KeyId: getKeyArn(),
   });
+  console.log('getPublicKey', getKeyCmd);
   const res = await kmsClient.send(getKeyCmd);
+  console.log('res.PublicKey', res.PublicKey);
 
   const pemToJson = jwk.fromPEM(res.PublicKey).toJSON();
   return {

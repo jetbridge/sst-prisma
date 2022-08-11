@@ -1,6 +1,6 @@
-import { Auth as SstAuth, StackContext, use } from '@serverless-stack/resources';
+import { StackContext, use } from '@serverless-stack/resources';
 import { Duration } from 'aws-cdk-lib';
-import { StringAttribute, UserPoolClientIdentityProvider } from 'aws-cdk-lib/aws-cognito';
+import { StringAttribute, UserPool, UserPoolClientIdentityProvider } from 'aws-cdk-lib/aws-cognito';
 import { Key } from 'aws-cdk-lib/aws-kms';
 import { AaaaRecord, ARecord, RecordTarget } from 'aws-cdk-lib/aws-route53';
 import { UserPoolDomainTarget } from 'aws-cdk-lib/aws-route53-targets';
@@ -23,36 +23,58 @@ export function Auth({ stack, app }: StackContext) {
   const allowedUrls = ['/login', '/api/auth/callback/cognito'];
   const callbackUrls = hosts.flatMap((h) => allowedUrls.map((url) => h + url));
 
-  const auth = new SstAuth(stack, 'Auth', {
-    identityPoolFederation: {
-      // plug in auth providers here
-      // https://docs.sst.dev/constructs/Auth#authcognitoidentitypoolfederationprops
+  // const auth = new SstAuth(stack, 'Auth', {
+  //   identityPoolFederation: {
+  //     cdk:{cfnIdentityPool:{}}
+  //     // plug in auth providers here
+  //     // https://docs.sst.dev/constructs/Auth#authcognitoidentitypoolfederationprops
+  //   },
+  //   triggers: {
+  //     // save user in DB
+  //     preSignUp: 'backend/src/auth/trigger/preSignUp.handler',
+  //   },
+  //   cdk: {
+  //     userPoolClient: {},
+  //     userPool: {
+  //       selfSignUpEnabled: false,
+  //       customAttributes: {
+  //         firstNameOriginal: new StringAttribute({ mutable: true }),
+  //         lastNameOriginal: new StringAttribute({ mutable: true }),
+  //         headline: new StringAttribute({ mutable: true }),
+  //         vanityName: new StringAttribute({ mutable: true }),
+  //       },
+  //     },
+  //   },
+  // });
+  // const userPool = auth.cdk.userPool;
+
+  const userPool = new UserPool(stack, 'UserPool', {
+    selfSignUpEnabled: false,
+
+    // what users can sign in with
+    // ⚠️ The Cognito service prevents changing the signInAlias property for an existing user pool.
+    signInAliases: { email: true, phone: false },
+    // allow users to verify their email themselves
+    autoVerify: { email: true, phone: false },
+
+    userPoolName: app.logicalPrefixedName('auth'),
+    customAttributes: {
+      firstNameOriginal: new StringAttribute({ mutable: true }),
+      lastNameOriginal: new StringAttribute({ mutable: true }),
+      headline: new StringAttribute({ mutable: true }),
+      vanityName: new StringAttribute({ mutable: true }),
     },
-    triggers: {
-      // save user in DB
-      preSignUp: 'backend/src/auth/trigger/preSignUp.handler',
-    },
-    cdk: {
-      userPoolClient: {},
-      userPool: {
-        selfSignUpEnabled: false,
-        customAttributes: {
-          firstNameOriginal: new StringAttribute({ mutable: true }),
-          lastNameOriginal: new StringAttribute({ mutable: true }),
-          headline: new StringAttribute({ mutable: true }),
-          vanityName: new StringAttribute({ mutable: true }),
-        },
-      },
+    lambdaTriggers: {
+      // ....
     },
   });
-  const userPool = auth.cdk.userPool;
 
   // custom domain
   const domainName = dns.domainName;
   if (dns.hostedZone && dns.certificateGlobal && domainName) {
     const domain = userPool.addDomain('CustomDomain', {
       customDomain: {
-        domainName,
+        domainName: 'auth.' + domainName,
         certificate: dns.certificateGlobal,
       },
     });
@@ -75,11 +97,12 @@ export function Auth({ stack, app }: StackContext) {
   const cognitoBaseUrl = cognitoDomain.baseUrl().replace('https://', '');
   const cognitoDomainName = dns.hostedZone ? `${app.stage}-auth.${dns.hostedZone.zoneName}` : cognitoBaseUrl;
 
+  // create LinkedIn provider
   const linkedIn = new LinkedInOidc(stack, 'LinkedInOidc', {
     secrets: use(Secrets).secret,
     signingKey,
     userPool,
-    cognitoDomain: cognitoDomainName,
+    cognitoDomainName,
   });
 
   // create cognito client
@@ -96,10 +119,10 @@ export function Auth({ stack, app }: StackContext) {
   });
 
   return {
-    auth,
     userPool,
     domainName,
     webClient,
     linkedInIssuer: linkedIn.api.url,
+    cognitoDomainName,
   };
 }

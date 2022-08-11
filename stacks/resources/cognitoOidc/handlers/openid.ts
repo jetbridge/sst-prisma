@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getPublicKey } from './crypto';
 import { getOidcSecrets } from './secret';
 
@@ -12,32 +13,29 @@ export class OpenID {
     return { keys: [await getPublicKey()] };
   }
 
-  getUserInfo(accessToken: string) {
-    return getOidcSecrets().then((secrets: any) => {
-      return this.service(secrets).getUserInfo(accessToken);
-    });
+  async getUserInfo(accessToken: string) {
+    const secrets = await getOidcSecrets();
+    return this.service(secrets).getUserInfo(accessToken);
   }
 
-  getAuthorizeUrl(client_id: any, scope: any, state: any, response_type: any) {
-    return getOidcSecrets().then((secrets) =>
-      this.service(secrets).getAuthorizeUrl(client_id, scope, state, response_type)
-    );
+  async getAuthorizeUrl(client_id: any, scope: any, state: any, response_type: any) {
+    const secrets = await getOidcSecrets();
+    return this.service(secrets).getAuthorizeUrl(client_id, scope, state, response_type);
   }
 
-  getTokens(code: any, state: any, host: any) {
-    return getOidcSecrets().then((secrets: any) => {
-      return this.service(secrets).getToken(code, state, host);
-    });
+  async getTokens(code: any, state: any, host: any) {
+    const secrets = await getOidcSecrets();
+    return this.service(secrets).getToken(code, state, host);
   }
 
   getConfigFor(host: any) {
     return {
       issuer: `https://${host}`,
       authorization_endpoint: `https://${host}/auth/oidc/authorize`,
-      token_endpoint: `https://${host}/token`,
+      token_endpoint: `https://${host}/auth/oidc/token`,
       token_endpoint_auth_methods_supported: ['client_secret_basic', 'private_key_jwt'],
       token_endpoint_auth_signing_alg_values_supported: ['RS256'],
-      userinfo_endpoint: `https://${host}/userinfo`,
+      userinfo_endpoint: `https://${host}/auth/oidc/userinfo`,
       // check_session_iframe: 'https://server.example.com/connect/check_session',
       // end_session_endpoint: 'https://server.example.com/connect/end_session',
       jwks_uri: `https://${host}/.well-known/jwks.json`,

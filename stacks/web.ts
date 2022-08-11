@@ -6,7 +6,7 @@ import { Dns } from './dns';
 import { Secrets } from './secrets';
 
 export function Web({ stack }: StackContext) {
-  const { userPool, webClient } = use(Auth);
+  const { userPool, webClient, cognitoDomainName } = use(Auth);
   const appSyncApi = use(AppSyncApi);
   const dns = use(Dns);
   const secrets = use(Secrets);
@@ -23,6 +23,7 @@ export function Web({ stack }: StackContext) {
       NEXT_PUBLIC_APPSYNC_ENDPOINT: appSyncApi.api.url,
       NEXT_PUBLIC_COGNITO_CLIENT_ID: webClient.userPoolClientId,
       NEXT_PUBLIC_COGNITO_USER_POOL_ID: userPool.userPoolId,
+      NEXT_PUBLIC_COGNITO_DOMAIN_NAME: cognitoDomainName,
     },
     cdk: {
       distribution: {

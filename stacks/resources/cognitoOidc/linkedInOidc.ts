@@ -22,18 +22,18 @@ export interface LinkedInOidcProps {
   userPool: IUserPool;
   secrets: Secret;
   signingKey: Key;
-  cognitoDomain: string;
+  cognitoDomainName: string;
 }
 
 export class LinkedInOidc extends Construct {
   public userPoolIdentityProviderOidc;
   public api;
 
-  constructor(scope: Construct, id: string, { userPool, secrets, signingKey, cognitoDomain }: LinkedInOidcProps) {
+  constructor(scope: Construct, id: string, { userPool, secrets, signingKey, cognitoDomainName }: LinkedInOidcProps) {
     super(scope, id);
 
-    const clientSecret = secrets.secretValueFromJson(secret('LINKEDIN_CLIENT_ID')).toString();
-    const clientId = secrets.secretValueFromJson(secret('LINKEDIN_CLIENT_SECRET')).toString();
+    const clientSecret = secrets.secretValueFromJson(secret('LINKEDIN_CLIENT_SECRET')).toString();
+    const clientId = secrets.secretValueFromJson(secret('LINKEDIN_CLIENT_ID')).toString();
 
     // API for us to do the translation between LinkedIn and Cognito using OIDC
     const api = new Api(scope, 'Api', {
@@ -45,7 +45,7 @@ export class LinkedInOidc extends Construct {
           environment: {
             [ENV_SIGNING_KEY_ARN]: signingKey.keyArn,
             [ENV_SECRET_NAME]: secrets.secretName,
-            [ENV_COGNITO_REDIRECT_URI]: `https://${cognitoDomain}/oauth2/idpresponse`,
+            [ENV_COGNITO_REDIRECT_URI]: `https://${cognitoDomainName}/oauth2/idpresponse`,
             [ENV_OIDC_PROVIDER]: 'LINKEDIN' as OidcProvider,
           },
         },
@@ -54,7 +54,7 @@ export class LinkedInOidc extends Construct {
         'GET /.well-known/openid-configuration': 'handlers.openIdConfiguration',
         'GET /.well-known/jwks.json': 'handlers.jwks',
         'GET /auth/oidc/authorize': 'handlers.authorize',
-        'GET /auth/oidc/token': 'handlers.token',
+        'POST /auth/oidc/token': 'handlers.token',
         'GET /auth/oidc/userinfo': 'handlers.userinfo',
       },
     });
