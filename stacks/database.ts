@@ -15,7 +15,7 @@ export function Database({ stack, app }: StackContext) {
     engine: 'postgresql10.14',
     defaultDatabaseName,
     scaling: {
-      autoPause: IS_PRODUCTION ? false : Duration.hours(10).toMinutes(),
+      autoPause: IS_PRODUCTION ? false : Duration.hours(5).toMinutes(),
       minCapacity: 'ACU_2',
       maxCapacity: 'ACU_4',
     },

@@ -8,6 +8,7 @@ import { Layers } from './layers';
 import { Secrets } from './secrets';
 import { Database } from './database';
 import { RestApi } from './restApi';
+import { Dns } from './dns';
 
 export default function main(app: sst.App) {
   app.setDefaultFunctionProps({
@@ -20,6 +21,7 @@ export default function main(app: sst.App) {
 
   app
     .stack(Network)
+    .stack(Dns)
     .stack(Layers)
     .stack(Database)
     .stack(Secrets)

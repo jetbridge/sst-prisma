@@ -3,29 +3,33 @@ import {
   IUserPool,
   OidcAttributeRequestMethod,
   ProviderAttribute,
-  StringAttribute,
   UserPoolIdentityProviderOidc,
 } from 'aws-cdk-lib/aws-cognito';
+import { Effect, PolicyStatement } from 'aws-cdk-lib/aws-iam';
 import { Key } from 'aws-cdk-lib/aws-kms';
 import { Secret } from 'aws-cdk-lib/aws-secretsmanager';
 import { secret } from 'common';
 import { Construct } from 'constructs';
-import { dirname } from 'desm';
-import { ENV_OIDC_PROVIDER, ENV_SECRET_NAME, ENV_SIGNING_KEY_ARN, OidcProvider } from './types';
+import {
+  ENV_COGNITO_REDIRECT_URI,
+  ENV_OIDC_PROVIDER,
+  ENV_SECRET_NAME,
+  ENV_SIGNING_KEY_ARN,
+  OidcProvider,
+} from './types';
 
 export interface LinkedInOidcProps {
   userPool: IUserPool;
   secrets: Secret;
   signingKey: Key;
+  cognitoDomain: string;
 }
 
 export class LinkedInOidc extends Construct {
   public userPoolIdentityProviderOidc;
 
-  constructor(scope: Construct, id: string, { userPool, secrets, signingKey }: LinkedInOidcProps) {
+  constructor(scope: Construct, id: string, { userPool, secrets, signingKey, cognitoDomain }: LinkedInOidcProps) {
     super(scope, id);
-
-    // const app = App.of(scope) as App;
 
     const clientSecret = secrets.secretValueFromJson(secret('LINKEDIN_CLIENT_ID')).toString();
     const clientId = secrets.secretValueFromJson(secret('LINKEDIN_CLIENT_SECRET')).toString();
@@ -34,14 +38,13 @@ export class LinkedInOidc extends Construct {
     const restApi = new Api(scope, 'Api', {
       defaults: {
         function: {
-          srcPath: dirname(import.meta.url),
-          permissions: [
-            [secrets, 'grantRead'],
-            [signingKey, 'grantRead'],
-          ],
+          bundle: { format: 'esm' },
+          srcPath: 'stacks/resources/cognitoOidc/handlers',
+          permissions: [[secrets, 'grantRead']],
           environment: {
             [ENV_SIGNING_KEY_ARN]: signingKey.keyArn,
             [ENV_SECRET_NAME]: secrets.secretName,
+            [ENV_COGNITO_REDIRECT_URI]: `https://${cognitoDomain}/oauth2/idpresponse`,
             [ENV_OIDC_PROVIDER]: 'LINKEDIN' as OidcProvider,
           },
         },
@@ -54,16 +57,24 @@ export class LinkedInOidc extends Construct {
         'GET /auth/oidc/userinfo': 'handlers.userinfo',
       },
     });
+    restApi.attachPermissions([
+      new PolicyStatement({
+        actions: ['kms:GetPublicKey', 'kms:Sign'],
+        effect: Effect.ALLOW,
+        resources: [signingKey.keyArn],
+      }),
+    ]);
 
     const apiUrl = restApi.url;
 
     // LinkedIn OIDC auth
-    this.userPoolIdentityProviderOidc = new UserPoolIdentityProviderOidc(scope, 'LinkedInOidc', {
+    this.userPoolIdentityProviderOidc = new UserPoolIdentityProviderOidc(scope, 'LinkedInOidcProvider', {
+      name: 'linkedin',
+      scopes: ['openid', 'r_liteprofile', 'r_emailaddress'],
+      issuerUrl: apiUrl,
       clientId,
       clientSecret,
-      issuerUrl: 'issuerUrl',
       userPool,
-
       attributeMapping: {
         email: ProviderAttribute.other('email'),
         fullname: ProviderAttribute.other('name'),
@@ -75,22 +86,6 @@ export class LinkedInOidc extends Construct {
           lastNameOrig: ProviderAttribute.other('lastName'),
         },
       },
-      // // the properties below are optional
-      // attributeMapping: {
-      //   // sub: 'id',
-      //   // name: `${userDetails.localizedFirstName} ${userDetails.localizedLastName}`,
-      //   email: ProviderAttribute.other('email'),
-      //   // preferredUsername: 'vanityName',
-      //   // picture: parseImageUrl(pictureElements),
-      //   // locale: parseLocale(userDe() => 1ils.firserDetails.lastName),
-      //   // website: `https://www.linkedin.com/in/${userDetails.vanityName}`,
-
-      //   // custom attributes:
-      //   custom: {
-      //     firstNameOrig: ProviderAttribute.other('firstName'),
-      //     lastNameOrig: ProviderAttribute.other('lastName'),
-      //   },
-      // },
       attributeRequestMethod: OidcAttributeRequestMethod.GET,
       endpoints: {
         jwksUri: `${apiUrl}/.well-known/jwks.json`,
@@ -98,9 +93,6 @@ export class LinkedInOidc extends Construct {
         token: `${apiUrl}/auth/oidc/token`,
         userInfo: `${apiUrl}/auth/oidc/userinfo`,
       },
-      identifiers: ['identifiers'],
-      name: 'name',
-      scopes: ['openid', 'r_liteprofile', 'r_emailaddress'],
     });
   }
 }
