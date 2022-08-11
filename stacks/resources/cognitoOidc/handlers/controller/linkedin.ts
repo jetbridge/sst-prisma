@@ -156,7 +156,6 @@ export const linkedin = (secrets: LinkedInSecrets) => {
         // State may not be present, so we conditionally include it
         ...(state && { state }),
       };
-      console.log('DATA', data);
 
       const parameters = new URLSearchParams();
       Object.entries(data).forEach(([key, value]) => {
@@ -165,14 +164,13 @@ export const linkedin = (secrets: LinkedInSecrets) => {
 
       const url = `${urls.oauthToken}?${parameters.toString()}`;
       console.debug('Calling getToken', urls.oauthToken);
-      const linkedinToken = req.post(url);
-
+      const linkedinToken = await req.post(url);
       console.debug('Got linkedinToken');
 
       const payload = {
         // This was commented because Cognito times out in under a second
         // and generating the userInfo takes too long.
-        // It means the ID token is empty except for metadata.
+        // It means the ID token will be empty except for metadata.
         //  ...userInfo,
       };
       const idToken = await makeIdToken(payload, host, clientId);
