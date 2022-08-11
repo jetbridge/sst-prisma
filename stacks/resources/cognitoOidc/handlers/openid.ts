@@ -1,5 +1,5 @@
 import { getPublicKey } from './crypto';
-import { getSecrets } from './secret';
+import { getOidcSecrets } from './secret';
 
 export class OpenID {
   service: any;
@@ -13,19 +13,19 @@ export class OpenID {
   }
 
   getUserInfo(accessToken: string) {
-    return getSecrets().then((secrets: any) => {
+    return getOidcSecrets().then((secrets: any) => {
       return this.service(secrets).getUserInfo(accessToken);
     });
   }
 
   getAuthorizeUrl(client_id: any, scope: any, state: any, response_type: any) {
-    return getSecrets().then((secrets) =>
+    return getOidcSecrets().then((secrets) =>
       this.service(secrets).getAuthorizeUrl(client_id, scope, state, response_type)
     );
   }
 
   getTokens(code: any, state: any, host: any) {
-    return getSecrets().then((secrets: any) => {
+    return getOidcSecrets().then((secrets: any) => {
       return this.service(secrets).getToken(code, state, host);
     });
   }

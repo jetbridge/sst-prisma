@@ -6,6 +6,8 @@ if (!REGION) throw new Error('REGION is not set');
 if (!COGNITO_CLIENT_ID) throw new Error('COGNITO_CLIENT_ID is not set');
 if (!COGNITO_USER_POOL_ID) throw new Error('COGNITO_USER_POOL_ID is not set');
 
+console.log('NEXTAUTH_SECRET', process.env.NEXTAUTH_SECRET);
+
 export default NextAuth({
   providers: [
     CognitoProvider({

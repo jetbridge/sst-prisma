@@ -1,6 +1,6 @@
 import { GetSecretValueCommand, SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
 
-export const getSecrets = async () => {
+export const getOidcSecrets = async () => {
   const secretName = process.env.SECRET_NAME;
   if (!secretName) throw new Error(`Missing environment variable: SECRET_NAME`);
 
