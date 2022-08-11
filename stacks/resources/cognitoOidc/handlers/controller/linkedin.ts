@@ -5,7 +5,6 @@ import { ENV_COGNITO_REDIRECT_URI } from '../../types';
 import { makeIdToken } from '../crypto';
 import { filterOutScopesForLinkedin } from '../util';
 import * as req from './requests';
-import { parseResponse } from './requests';
 
 // `openid` is an scope required by Cognito
 // but Linkedin throws an error if this scope is passed as it is not recognized
@@ -38,18 +37,16 @@ const getApiEndpoints = (apiBaseUrl: string, loginBaseUrl: string) => {
 
 const urls = getApiEndpoints(linkedinApiUrl, linkedinLoginUrl);
 
-const getUserDetails = <RT>(accessToken: string): Promise<RT> => {
+const getUserDetails = async <RT>(accessToken: string): Promise<RT> => {
   const url = `${urls.userDetails}&oauth2_access_token=${accessToken}`;
-  return new Promise((resolve, reject) => {
-    got.get(url).then(parseResponse(resolve, reject));
-  });
+  const res = await got.get(url);
+  return JSON.parse(res.body);
 };
 
-const getUserEmails = (accessToken: string) => {
+const getUserEmails = async (accessToken: string) => {
   const url = `${urls.userEmails}&oauth2_access_token=${accessToken}`;
-  return new Promise((resolve, reject) => {
-    got.get(url).then(parseResponse(resolve, reject));
-  });
+  const res = await got.get(url);
+  return JSON.parse(res.body);
 };
 
 const parseOrigName = (name: any): string | null => {

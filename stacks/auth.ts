@@ -1,5 +1,5 @@
 import { StackContext, use } from '@serverless-stack/resources';
-import { Duration } from 'aws-cdk-lib';
+import { Duration, RemovalPolicy } from 'aws-cdk-lib';
 import { StringAttribute, UserPool, UserPoolClientIdentityProvider } from 'aws-cdk-lib/aws-cognito';
 import { Key, KeySpec, KeyUsage } from 'aws-cdk-lib/aws-kms';
 import { AaaaRecord, ARecord, RecordTarget } from 'aws-cdk-lib/aws-route53';
@@ -11,11 +11,12 @@ import { Secrets } from './secrets';
 export function Auth({ stack, app }: StackContext) {
   const dns = use(Dns);
 
-  const signingKey = new Key(stack, 'SigningKey2', {
+  const signingKey = new Key(stack, 'SigningKey', {
     // alias: app.logicalPrefixedName('signingkey'),
-    description: 'Signing key for JWT',
+    description: 'Signing key for OIDC',
     keyUsage: KeyUsage.SIGN_VERIFY,
     keySpec: KeySpec.RSA_2048,
+    removalPolicy: RemovalPolicy.DESTROY,
   });
 
   const hosts = [
@@ -102,7 +103,7 @@ export function Auth({ stack, app }: StackContext) {
   // create LinkedIn provider
   const linkedIn = new LinkedInOidc(stack, 'LinkedInOidc', {
     secrets: use(Secrets).secret,
-    signingKey,
+    signingKey: signingKey,
     userPool,
     cognitoDomainName,
   });

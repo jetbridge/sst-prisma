@@ -1,13 +1,5 @@
 import { got } from 'got';
 
-export const parseResponse = (resolve: any, reject: any) => (response: any) => {
-  if (response.body) {
-    resolve(JSON.parse(response.body));
-  } else {
-    reject({ reason: "response doesn't have a body" });
-  }
-};
-
 export const get = async (url: string, accessToken: string) => {
   const res = await got.get(url, {
     headers: {
@@ -18,7 +10,7 @@ export const get = async (url: string, accessToken: string) => {
   return JSON.parse(res.body);
 };
 
-export const post = async (url: string, data?: any) => {
+export const post = async (url: string, data?: unknown) => {
   const res = await got.post(url, {
     headers: {
       Accept: 'application/json',

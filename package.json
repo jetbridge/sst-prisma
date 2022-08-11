@@ -42,9 +42,12 @@
     "base64url": "^3.0.1",
     "common": "workspace:*",
     "desm": "^1.3.0",
+    "ecdsa-sig-formatter": "^1.0.11",
     "got": "^12.3.1",
+    "jose": "^4.8.3",
     "json-web-key": "^0.4.0",
     "jsonwebtoken": "^8.5.1",
+    "jsrsasign": "^10.5.26",
     "memoizee": "^0.4.15"
   },
   "devDependencies": {
@@ -56,8 +59,9 @@
     "@tsconfig/node16-strictest-esm": "^1.0.1",
     "@types/aws-lambda": "^8.10.102",
     "@types/jsonwebtoken": "^8.5.8",
+    "@types/jsrsasign": "^10.5.2",
     "@types/memoizee": "^0.4.7",
-    "@types/node": "<15.0.0",
+    "@types/node": "^16.0.0",
     "@typescript-eslint/eslint-plugin": "^5.26.0",
     "@typescript-eslint/parser": "^5.26.0",
     "aws-lambda": "^1.0.7",
