@@ -27,6 +27,7 @@ export interface LinkedInOidcProps {
 
 export class LinkedInOidc extends Construct {
   public userPoolIdentityProviderOidc;
+  public api;
 
   constructor(scope: Construct, id: string, { userPool, secrets, signingKey, cognitoDomain }: LinkedInOidcProps) {
     super(scope, id);
@@ -35,7 +36,7 @@ export class LinkedInOidc extends Construct {
     const clientId = secrets.secretValueFromJson(secret('LINKEDIN_CLIENT_SECRET')).toString();
 
     // API for us to do the translation between LinkedIn and Cognito using OIDC
-    const restApi = new Api(scope, 'Api', {
+    const api = new Api(scope, 'Api', {
       defaults: {
         function: {
           bundle: { format: 'esm' },
@@ -57,7 +58,7 @@ export class LinkedInOidc extends Construct {
         'GET /auth/oidc/userinfo': 'handlers.userinfo',
       },
     });
-    restApi.attachPermissions([
+    api.attachPermissions([
       new PolicyStatement({
         actions: ['kms:GetPublicKey', 'kms:Sign'],
         effect: Effect.ALLOW,
@@ -65,7 +66,8 @@ export class LinkedInOidc extends Construct {
       }),
     ]);
 
-    const apiUrl = restApi.url;
+    this.api = api;
+    const apiUrl = api.url;
 
     // LinkedIn OIDC auth
     this.userPoolIdentityProviderOidc = new UserPoolIdentityProviderOidc(scope, 'LinkedInOidcProvider', {
@@ -82,8 +84,10 @@ export class LinkedInOidc extends Construct {
         locale: ProviderAttribute.other('locale'),
         website: ProviderAttribute.other('website'),
         custom: {
-          firstNameOrig: ProviderAttribute.other('firstName'),
-          lastNameOrig: ProviderAttribute.other('lastName'),
+          firstNameOriginal: ProviderAttribute.other('firstName'),
+          lastNameOriginal: ProviderAttribute.other('lastName'),
+          headline: ProviderAttribute.other('headline'),
+          vanityName: ProviderAttribute.other('vanityName'),
         },
       },
       attributeRequestMethod: OidcAttributeRequestMethod.GET,

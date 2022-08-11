@@ -1,6 +1,9 @@
-import got, { RequestError } from 'got';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { got } from 'got';
 import { URLSearchParams } from 'url';
 import { ENV_COGNITO_REDIRECT_URI } from '../../types';
+import { makeIdToken } from '../crypto';
+import { filterOutScopesForLinkedin } from '../util';
 import * as req from './requests';
 import { parseResponse } from './requests';
 
@@ -85,12 +88,10 @@ const parseImageUrl = (imageElements: any[]): string | null => {
 };
 
 interface LinkedInSecrets {
-  JWT_KEY: string;
   LINKEDIN_CLIENT_ID: string;
   LINKEDIN_CLIENT_SECRET: string;
 }
 export const linkedin = (secrets: LinkedInSecrets) => {
-  const cert = secrets.JWT_KEY;
   const clientId = secrets.LINKEDIN_CLIENT_ID;
   const redirUrl = process.env[ENV_COGNITO_REDIRECT_URI];
   if (!redirUrl) throw new Error(`missing ${redirUrl} in env`);
@@ -112,19 +113,19 @@ export const linkedin = (secrets: LinkedInSecrets) => {
         getUserDetails<UserDetails>(accessToken).then((userDetails) => {
           console.debug(`userDetails: ${JSON.stringify(userDetails, undefined, 4)}`);
           const pictureElements = userDetails.profilePicture?.['displayImage~']?.elements || [];
-          // see: IDP_CONF
           return {
             sub: userDetails.id,
             name: `${userDetails.localizedFirstName} ${userDetails.localizedLastName}`,
             preferred_username: userDetails.vanityName || null,
             picture: parseImageUrl(pictureElements),
             locale: parseLocale(userDetails.firstName) || parseLocale(userDetails.lastName),
-            // website: `https://www.linkedin.com/in/${userDetails.vanityName}`,
+            website: `https://www.linkedin.com/in/${userDetails.vanityName}`,
 
             // custom attributes:
-            // 'custom:headline': userDetails.localizedHeadline,
-            'custom:first_name_orig': parseOrigName(userDetails.firstName),
-            'custom:last_name_orig': parseOrigName(userDetails.lastName),
+            'custom:firstNameOriginal': parseOrigName(userDetails.firstName),
+            'custom:lastNameOriginal': parseOrigName(userDetails.lastName),
+            'custom:headline': parseOrigName(userDetails.localizedHeadline),
+            'custom:vanityName': parseOrigName(userDetails.lastName),
           };
         }),
         getUserEmails(accessToken).then((userEmails: any) => {
@@ -144,10 +145,10 @@ export const linkedin = (secrets: LinkedInSecrets) => {
           throw Error(error);
         });
     },
-    getToken: (code: any, state: any, host: any) => {
+    getToken: async (code: any, state: any, host: any) => {
       const data = {
         grant_type: 'authorization_code',
-        redirect_uri: process.env[cognitoRedirectUri],
+        redirect_uri: process.env[ENV_COGNITO_REDIRECT_URI],
         client_id: secrets.LINKEDIN_CLIENT_ID,
         response_type: 'code',
         client_secret: secrets.LINKEDIN_CLIENT_SECRET,
@@ -163,34 +164,25 @@ export const linkedin = (secrets: LinkedInSecrets) => {
 
       const url = `${urls.oauthToken}?${parameters.toString()}`;
       console.debug('Calling getToken', urls.oauthToken);
-      return req
-        .post(url)
-        .then((linkedinToken: any) => {
-          console.debug('Got linkedinToken');
+      const linkedinToken = req.post(url);
 
-          return new Promise((resolve) => {
-            const payload = {
-              // This was commented because Cognito times out in under a second
-              // and generating the userInfo takes too long.
-              // It means the ID token is empty except for metadata.
-              //  ...userInfo,
-            };
-            const idToken = crypto.makeIdToken(payload, host, cert, clientId);
-            const tokenResponse = {
-              ...linkedinToken,
-              scope: linkedinScope,
-              token_type: 'bearer',
-              id_token: idToken,
-            };
-            // console.debug("Resolved token response: %j", tokenResponse, {})
-            resolve(tokenResponse);
-          });
-        })
-        .catch((err: RequestError) => {
-          console.error('Error calling getToken to', urls.oauthToken, '-', err);
-          console.error('Body', err.response?.body);
-          throw err;
-        });
+      console.debug('Got linkedinToken');
+
+      const payload = {
+        // This was commented because Cognito times out in under a second
+        // and generating the userInfo takes too long.
+        // It means the ID token is empty except for metadata.
+        //  ...userInfo,
+      };
+      const idToken = await makeIdToken(payload, host, clientId);
+      const tokenResponse = {
+        ...linkedinToken,
+        scope: linkedinScope,
+        token_type: 'bearer',
+        id_token: idToken,
+      };
+      console.debug('Resolved token response: %j', tokenResponse, {});
+      return tokenResponse;
     },
   };
 };

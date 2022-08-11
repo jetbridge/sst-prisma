@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { KMSClient, SignCommand, GetPublicKeyCommand } from '@aws-sdk/client-kms';
 import base64url from 'base64url';
 import { ENV_SIGNING_KEY_ARN } from '../types';
@@ -27,7 +28,7 @@ export const getPublicKey = async () => {
   };
 };
 
-export const makeIdToken = async (payload: any, host: string, cert: string, clientId: string) => {
+export const makeIdToken = async (payload: any, host: string, clientId: string) => {
   const enrichedPayload = {
     ...payload,
     iss: `https://${host}`,

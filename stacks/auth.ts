@@ -27,8 +27,10 @@ export function Auth({ stack, app }: StackContext) {
     cdk: {
       userPool: {
         customAttributes: {
-          first_name_orig: new StringAttribute({ mutable: true }),
-          last_name_orig: new StringAttribute({ mutable: true }),
+          firstNameOriginal: new StringAttribute({ mutable: true }),
+          lastNameOriginal: new StringAttribute({ mutable: true }),
+          headline: new StringAttribute({ mutable: true }),
+          vanityName: new StringAttribute({ mutable: true }),
         },
       },
     },
@@ -63,12 +65,18 @@ export function Auth({ stack, app }: StackContext) {
   const cognitoBaseUrl = cognitoDomain.baseUrl().replace('https://', '');
   const cognitoDomainName = dns.hostedZone ? `${app.stage}-auth.${dns.hostedZone.zoneName}` : cognitoBaseUrl;
 
-  new LinkedInOidc(stack, 'LinkedInOidc', {
+  const linkedIn = new LinkedInOidc(stack, 'LinkedInOidc', {
     secrets: use(Secrets).secret,
     signingKey,
     userPool,
     cognitoDomain: cognitoDomainName,
   });
 
-  return { auth, userPool: auth.cdk.userPool, domainName };
+  return {
+    auth,
+    userPool: auth.cdk.userPool,
+    domainName,
+    clientId: auth.userPoolClientId,
+    linkedInIssuer: linkedIn.api.url,
+  };
 }

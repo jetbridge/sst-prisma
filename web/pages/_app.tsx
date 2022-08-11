@@ -2,6 +2,7 @@ import { colors } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import type { AppProps } from 'next/app';
 import '../styles/globals.css';
+import { SessionProvider } from 'next-auth/react';
 
 const theme = createTheme({
   palette: {
@@ -17,23 +18,25 @@ const theme = createTheme({
   },
 });
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
-    <ThemeProvider theme={theme}>
-      <main
-        style={{
-          backgroundColor: '#2E3440',
-          padding: 20,
-          width: '100vw',
-          height: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <Component {...pageProps} />
-      </main>
-    </ThemeProvider>
+    <SessionProvider session={session}>
+      <ThemeProvider theme={theme}>
+        <main
+          style={{
+            backgroundColor: '#2E3440',
+            padding: 20,
+            width: '100vw',
+            height: '100vh',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Component {...pageProps} />
+        </main>
+      </ThemeProvider>
+    </SessionProvider>
   );
 }
 
