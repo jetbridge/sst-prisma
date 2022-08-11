@@ -1,6 +1,6 @@
 import { RDS, StackContext, use } from '@serverless-stack/resources';
 
-import { Duration } from 'aws-cdk-lib';
+import { Duration, RemovalPolicy } from 'aws-cdk-lib';
 import { APP_NAME, envVar } from 'common';
 import { Network } from 'stacks/network';
 import { IS_PRODUCTION } from './config';
@@ -11,7 +11,12 @@ export function Database({ stack, app }: StackContext) {
 
   const defaultDatabaseName = APP_NAME;
   const rds = new RDS(stack, 'DB', {
-    cdk: { cluster: { vpc: net.vpc } },
+    cdk: {
+      cluster: {
+        vpc: net.vpc,
+        removalPolicy: IS_PRODUCTION ? RemovalPolicy.SNAPSHOT : RemovalPolicy.DESTROY,
+      },
+    },
     engine: 'postgresql10.14',
     defaultDatabaseName,
     scaling: {
@@ -54,8 +59,9 @@ export function makeDatabaseUrl() {
   const prismaConnectionLimit = process.env.PRISMA_CONNECTION_LIMIT || 5;
 
   const rds = use(Database);
-  const dbUsername = rds.rds.cdk.cluster.secret?.secretValueFromJson('username');
-  const dbPassword = rds.rds.cdk.cluster.secret?.secretValueFromJson('password');
+  const cluster = rds.rds.cdk.cluster;
+  const dbUsername = cluster.secret?.secretValueFromJson('username');
+  const dbPassword = cluster.secret?.secretValueFromJson('password');
 
-  return `postgresql://${dbUsername}:${dbPassword}@${rds.rds.cdk.cluster.clusterEndpoint.hostname}/${rds.defaultDatabaseName}?connection_limit=${prismaConnectionLimit}`;
+  return `postgresql://${dbUsername}:${dbPassword}@${cluster.clusterEndpoint.hostname}/${rds.defaultDatabaseName}?connection_limit=${prismaConnectionLimit}`;
 }
