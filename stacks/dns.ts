@@ -1,9 +1,6 @@
 import { StackContext } from '@serverless-stack/resources';
 import { DnsValidatedCertificate, ICertificate } from 'aws-cdk-lib/aws-certificatemanager';
-import { Runtime } from 'aws-cdk-lib/aws-lambda';
 import { HostedZone } from 'aws-cdk-lib/aws-route53';
-
-export const RUNTIME = Runtime.NODEJS_16_X;
 
 export function Dns({ stack, app }: StackContext) {
   // route53 zone

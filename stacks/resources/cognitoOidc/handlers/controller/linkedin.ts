@@ -116,7 +116,7 @@ export const linkedin = (secrets: LinkedInSecrets) => {
           return {
             sub: userDetails.id,
             name: `${userDetails.localizedFirstName} ${userDetails.localizedLastName}`,
-            preferred_username: userDetails.vanityName || null,
+            vanityName: userDetails.vanityName || null,
             picture: parseImageUrl(pictureElements),
             locale: parseLocale(userDetails.firstName) || parseLocale(userDetails.lastName),
             website: `https://www.linkedin.com/in/${userDetails.vanityName}`,
@@ -124,8 +124,8 @@ export const linkedin = (secrets: LinkedInSecrets) => {
             // custom attributes:
             'custom:firstNameOriginal': parseOrigName(userDetails.firstName),
             'custom:lastNameOriginal': parseOrigName(userDetails.lastName),
-            'custom:headline': parseOrigName(userDetails.localizedHeadline),
-            'custom:vanityName': parseOrigName(userDetails.lastName),
+            'custom:headline': userDetails.localizedHeadline,
+            'custom:vanityName': userDetails.vanityName,
           };
         }),
         getUserEmails(accessToken).then((userEmails: any) => {

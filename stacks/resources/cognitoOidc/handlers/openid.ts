@@ -51,10 +51,11 @@ export class OpenID {
       claims_supported: [
         'sub',
         'name',
-        'preferred_username',
+        'vanityName',
         'profile',
         'picture',
         'website',
+        'locale',
         'email',
         'email_verified',
         'updated_at',
