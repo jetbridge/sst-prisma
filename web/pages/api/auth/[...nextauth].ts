@@ -63,10 +63,8 @@ export const authOptions: NextAuthOptions = {
         return token;
       }
 
-      // Access token has expired, try to update it
+      // Access token has expired, try to get a new one
       const refreshedTokens = await refreshCognitoAccessToken(token);
-      console.log('REFRESHED');
-
       return {
         ...token,
         accessToken: refreshedTokens?.AccessToken,
