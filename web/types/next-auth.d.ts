@@ -1,6 +1,6 @@
 // https://next-auth.js.org/getting-started/typescript#module-augmentation
 
-import NextAuth, { DefaultSession } from 'next-auth';
+import { DefaultSession } from 'next-auth';
 
 declare module 'next-auth' {
   /**
