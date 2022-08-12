@@ -5,11 +5,9 @@ import { ApolloGQL } from 'common';
 import { Button, LinearProgress } from '@mui/material';
 
 export const Profile: React.FC = () => {
+  // get current user
   const { data: session } = useSession();
   if (!session || !session.user) throw new Error('Session missing; cannot load Profile');
-
-  console.log('session', session);
-
   const { user } = session;
 
   // call greeter mutation
