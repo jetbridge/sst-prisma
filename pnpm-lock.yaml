@@ -296,7 +296,6 @@ importers:
       graphql: ^16.3.0
       happy-dom: ^6.0.4
       next: ^12.2.0
-      next-absolute-url: ^1.2.2
       next-auth: ^4.10.3
       nord: ^0.2.1
       postcss: ^8.4.14
@@ -335,7 +334,6 @@ importers:
       common: link:../common
       graphql: 16.5.0
       next: 12.2.3_77ezg3iqi2xcnqlocxlmm2tcqq
-      next-absolute-url: 1.2.2
       next-auth: 4.10.3_biqbaboplfbrettd7655fr4n2y
       nord: 0.2.1
       react: 18.2.0
@@ -18429,10 +18427,6 @@ packages:
   /new-github-issue-url/0.2.1:
     resolution: {integrity: sha512-md4cGoxuT4T4d/HDOXbrUHkTKrp/vp+m3aOA7XXVYwNsUNMK49g3SQicTSeV5GIz/5QVGAeYRAOlyp9OvlgsYA==}
     engines: {node: '>=10'}
-    dev: false
-
-  /next-absolute-url/1.2.2:
-    resolution: {integrity: sha512-Z2+LZXQTthhw2je9u4eq8QWXxXd57a6b54x9exBfQX4Dct6YxaMjcXZWNLHd9AOlCue84EsMpdSGP7wACqUnPg==}
     dev: false
 
   /next-auth/4.10.3_biqbaboplfbrettd7655fr4n2y:
