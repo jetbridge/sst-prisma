@@ -97,6 +97,7 @@ export function Auth({ stack, app }: StackContext) {
       UserPoolClientIdentityProvider.custom(linkedIn.userPoolIdentityProviderOidc.providerName),
     ],
     refreshTokenValidity: Duration.days(365),
+    accessTokenValidity: Duration.minutes(5),
     oAuth: {
       callbackUrls: callbackUrls,
       logoutUrls: callbackUrls,

@@ -8,6 +8,8 @@ export const Profile: React.FC = () => {
   const { data: session } = useSession();
   if (!session || !session.user) throw new Error('Session missing; cannot load Profile');
 
+  console.log('session', session);
+
   const { user } = session;
 
   // call greeter mutation

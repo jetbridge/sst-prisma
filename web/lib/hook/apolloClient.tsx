@@ -12,7 +12,7 @@ export function useApolloClient() {
   const session = useSession();
   session.data?.user;
 
-  const getCognitoAccessJwt = React.useCallback(async () => session.data?.user?.accessToken || '', [session]);
+  const getCognitoAccessJwt = React.useCallback(async () => session.data?.accessToken || '', [session]);
 
   return getApolloClient(getCognitoAccessJwt);
 }
