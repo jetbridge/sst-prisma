@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
         <ThemeProvider theme={theme}>
           <main
             style={{
-              backgroundColor: '#2E3440',
+              backgroundColor: '#cde',
               padding: 20,
               width: '100vw',
               height: '100vh',

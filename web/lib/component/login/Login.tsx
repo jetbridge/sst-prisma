@@ -13,12 +13,12 @@ export const Login: React.FC = () => {
   const { data: session } = useSession();
   if (session) {
     return (
-      <>
+      <div>
         <Profile />
-        <Button variant="contained" color="primary" onClick={() => signOut()}>
+        <Button variant="contained" color="secondary" onClick={() => signOut()}>
           Sign out
         </Button>
-      </>
+      </div>
     );
   }
 
@@ -31,7 +31,6 @@ export const Login: React.FC = () => {
         </div>
       )}
 
-      <h1>Sign In</h1>
       <LoginButton />
     </div>
   );
