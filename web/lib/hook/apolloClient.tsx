@@ -6,6 +6,7 @@ import { AUTH_TYPE, createAuthLink } from 'aws-appsync-auth-link';
 import { createSubscriptionHandshakeLink } from 'aws-appsync-subscription-link';
 import { useSession } from 'next-auth/react';
 import React from 'react';
+import { APPSYNC_ENDPOINT, REGION } from '../config/next';
 
 export function useApolloClient() {
   const session = useSession();
@@ -22,9 +23,8 @@ export const ApolloClientProvider: React.FC = ({ children }) => {
 };
 
 export function getAppSyncConfig() {
-  const region = process.env.NEXT_PUBLIC_REGION;
-  const appsyncEndpoint = process.env.NEXT_PUBLIC_APPSYNC_ENDPOINT;
-
+  const region = REGION;
+  const appsyncEndpoint = APPSYNC_ENDPOINT;
   if (!region) throw new Error('NEXT_PUBLIC_REGION is not set');
   if (!appsyncEndpoint) throw new Error('NEXT_PUBLIC_APPSYNC_ENDPOINT is not set');
 
