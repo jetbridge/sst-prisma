@@ -7,7 +7,8 @@ export type ENV_VARS_BACKEND =
   | 'CLUSTER_ARN'
   | 'APP_SECRET_ARN'
   | 'DB_SECRET_ARN'
-  | 'STAGE';
+  | 'SST_APP'
+  | 'SST_STAGE';
 
 /**
  * Environment variables that should be present in our frontend.
@@ -33,6 +34,6 @@ export function requireEnvVar(envVar: EnvVar): string {
 
 // get current stage
 export const STAGE_PROD = 'prod';
-export const isProd = (stage?: string) => (stage || getEnvName()) === STAGE_PROD;
-export type EnvironmentName = string;
-export const getEnvName = () => process.env['STAGE'] as EnvironmentName | undefined;
+export const isProd = (stage?: string) => (stage || getSstStage()) === STAGE_PROD;
+export const getSstStage = () => process.env[envVar('SST_STAGE')] || 'unknown';
+export const getSstApp = () => process.env[envVar('SST_APP')] || 'unknown';

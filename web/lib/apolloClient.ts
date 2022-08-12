@@ -49,12 +49,12 @@ export const getApolloClient = memoizee(() => {
     createSubscriptionHandshakeLink({ url: appsyncEndpoint, region, auth }, httpLink),
   ]);
 
-  new ApolloClient({
+  return new ApolloClient({
     link: apolloLink,
     cache: new InMemoryCache(),
     defaultOptions: {
       query: {
-        fetchPolicy: 'network-only',
+        // fetchPolicy: 'network-only',
       },
     },
   });

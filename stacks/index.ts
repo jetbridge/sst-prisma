@@ -1,14 +1,13 @@
 import * as sst from '@serverless-stack/resources';
-import { Web } from './web';
-import { Network } from './network';
-import { Auth } from './auth';
 import { AppSyncApi } from './appSyncApi';
-import { envVar } from 'common';
-import { Layers } from './layers';
-import { Secrets } from './secrets';
+import { Auth } from './auth';
 import { Database } from './database';
-import { RestApi } from './restApi';
 import { Dns } from './dns';
+import { Layers } from './layers';
+import { Network } from './network';
+import { RestApi } from './restApi';
+import { Secrets } from './secrets';
+import { Web } from './web';
 
 // deal with dynamic imports of node built-ins (e.g. "crypto")
 // from https://github.com/evanw/esbuild/pull/2067#issuecomment-1073039746
@@ -18,9 +17,6 @@ export const ESM_REQUIRE_SHIM = `await(async()=>{let{dirname:e}=await import("pa
 export default function main(app: sst.App) {
   app.setDefaultFunctionProps({
     runtime: 'nodejs16.x',
-    environment: {
-      [envVar('STAGE')]: app.stage,
-    },
     // N.B. bundle settings are defined in Layers
   });
 

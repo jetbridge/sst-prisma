@@ -2,9 +2,11 @@
 // https://awslabs.github.io/aws-lambda-powertools-typescript/latest/core/metrics/
 
 import { Metrics, MetricUnits } from '@aws-lambda-powertools/metrics';
-import { APP_NAME } from 'common';
+import { APP_NAME, getSstApp, getSstStage } from 'common';
 
-export const metrics = new Metrics({ serviceName: APP_NAME });
+const stage = getSstStage();
+const app = getSstApp();
+export const metrics = new Metrics({ serviceName: APP_NAME, namespace: `${app}/${stage}` });
 
 // add your custom metric names here
 export type MetricName = 'SaidHello';
