@@ -18,7 +18,7 @@ export function Auth({ stack, app }: StackContext) {
   const dns = use(Dns);
 
   const signingKey = new Key(stack, 'SigningKey', {
-    // alias: app.logicalPrefixedName('signingkey'),
+    alias: app.logicalPrefixedName('auth-oidc-signingkey'),
     description: 'Signing key for OIDC',
     keyUsage: KeyUsage.SIGN_VERIFY,
     keySpec: KeySpec.RSA_2048,
@@ -91,7 +91,9 @@ export function Auth({ stack, app }: StackContext) {
   // create cognito client
   const webClient = userPool.addClient('WebClient', {
     supportedIdentityProviders: [
-      // UserPoolClientIdentityProvider.COGNITO,
+      UserPoolClientIdentityProvider.COGNITO,
+
+      // OPTIONAL: enable LinkedIn
       UserPoolClientIdentityProvider.custom(linkedIn.userPoolIdentityProviderOidc.providerName),
     ],
     refreshTokenValidity: Duration.days(365),
