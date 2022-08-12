@@ -1,11 +1,9 @@
 import { colors } from '@mui/material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import type { AppProps } from 'next/app';
-import '../styles/globals.css';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { SessionProvider } from 'next-auth/react';
-import { ApolloProvider } from '@apollo/client/react';
-import { getApolloClient } from 'web/lib/apolloClient';
-import { ApolloClientProvider, useApolloClient } from 'web/lib/hook/apolloClient';
+import type { AppProps } from 'next/app';
+import { ApolloClientProvider } from 'web/lib/hook/apolloClient';
+import '../styles/globals.css';
 
 const theme = createTheme({
   palette: {
