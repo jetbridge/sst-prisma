@@ -37,8 +37,8 @@ Click links to learn more and view documentation.
 - 🔋 [Aurora Serverless RDS](https://aws.amazon.com/rds/aurora/serverless/) PostgreSQL
 - 🖥 [NextJS](https://nextjs.org/) frontend w/ Material-UI
 - ⚡️ [Live local lambda development](https://docs.serverless-stack.com/live-lambda-development) (`pnpm start`)
-- 📦 [pnpm](https://pnpm.io/) package manager
-- 🚅 Fast tests with [vitest](https://vitest.dev/)
+- 📦 [pnpm](https://pnpm.io/) - fast and correct package manager
+- 🚅 [vitest](https://vitest.dev/) - fast tests
 - 🐛 [ES Modules](https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/)
 - 🔧 [ESBuild](https://esbuild.github.io/) - fast code bundling on backend (under the hood) with tree-shaking
 - 🫙 [Middy](https://middy.js.org/) - middleware for Lambda functions
@@ -58,12 +58,6 @@ pnpm start
 
 ```shell
 pnpm start:web
-```
-
-### Start frontend + backend dev server
-
-```shell
-pnpm fullstack
 ```
 
 ### Run/generate DB migrations locally

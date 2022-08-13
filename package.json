@@ -6,7 +6,6 @@
   "scripts": {
     "start": "sst start",
     "start:web": "pnpm run -C web dev",
-    "fullstack": "pnpm run -C web dev",
     "watch": "pnpm run tsc:watch",
     "tsc": "tsc -b",
     "tsc:watch": "tsc -b --watch",
