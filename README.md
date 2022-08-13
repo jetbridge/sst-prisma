@@ -54,6 +54,12 @@ Please see [package.json](blob/master/package.json) `scripts` for more.
 pnpm start
 ```
 
+### Start Nextjs frontend dev server
+
+```shell
+pnpm start:web
+```
+
 ### Start frontend + backend dev server
 
 ```shell
