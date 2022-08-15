@@ -27,3 +27,5 @@ yarn-error.log*
 
 # TSC build output
 /dist
+
+/tmp
