@@ -5,10 +5,16 @@ import React, { ReactNode } from 'react';
 import { getApolloClient } from '../client/apollo';
 
 export function useApolloClient() {
-  return React.useMemo(() => getApolloClient(), []);
+  try {
+    return React.useMemo(() => getApolloClient(), []);
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
 }
 
 export const ApolloClientProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const client = useApolloClient();
+  if (!client) return <div>Missing configuration</div>;
   return <ApolloProvider client={client}>{children}</ApolloProvider>;
 };

@@ -12,6 +12,7 @@ const theme = createTheme({
     // adjust!
     primary: colors.lime,
     secondary: colors.teal,
+    text: { primary: '#b7bfdb' },
   },
   typography: {
     fontFamily: 'SourceSansPro',
@@ -26,7 +27,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
         <ThemeProvider theme={theme}>
           <main
             style={{
-              backgroundColor: '#cde',
+              backgroundColor: '#272f36',
               padding: 20,
               width: '100vw',
               height: '100vh',

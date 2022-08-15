@@ -39,6 +39,7 @@
     "@aws-sdk/client-secrets-manager": "~3.145.0",
     "@serverless-stack/cli": "^1.6.10",
     "@serverless-stack/resources": "^1.6.10",
+    "@sls-next/lambda-at-edge": "^3.8.0-alpha.0",
     "aws-cdk-lib": "2.32.0",
     "base64url": "^3.0.1",
     "common": "workspace:*",
@@ -48,7 +49,6 @@
     "memoizee": "^0.4.15"
   },
   "devDependencies": {
-    "@sls-next/lambda-at-edge": "https://github.com/jetbridge/serverless-next.js/raw/pkg/packages/libs/lambda-at-edge/sls-next-lambda-at-edge-3.8.0-alpha.1.tgz",
     "@apollo/client": "^3.6.5",
     "@aws-cdk/aws-appsync-alpha": "2.32.0-alpha.0",
     "@serverless-stack/core": "^1.6.10",
@@ -78,6 +78,7 @@
     "husky": "^7.0.4",
     "lint-staged": "^12.3.8",
     "prettier": "^2.6.2",
+    "rimraf": "^3.0.2",
     "typescript": "^4.7.2",
     "vite": "^3.0.3",
     "vite-tsconfig-paths": "^3.5.0",
