@@ -1,7 +1,30 @@
 import * as sst from '@serverless-stack/resources';
-import { WebStack } from './web';
-import { Backend } from './backend';
+import { Web } from './web';
+import { Network } from './network';
+import { Auth } from './auth';
+import { AppSyncApi } from './appSyncApi';
+import { envVar } from 'common';
+import { Layers } from './layers';
+import { Secrets } from './secrets';
+import { Database } from './database';
+import { RestApi } from './restApi';
 
 export default function main(app: sst.App) {
-  app.stack(Backend).stack(WebStack);
+  app.setDefaultFunctionProps({
+    runtime: 'nodejs16.x',
+    environment: {
+      [envVar('STAGE')]: app.stage,
+    },
+    // N.B. bundle settings are defined in Layers
+  });
+
+  app
+    .stack(Network)
+    .stack(Layers)
+    .stack(Database)
+    .stack(Secrets)
+    .stack(Auth)
+    .stack(RestApi)
+    .stack(AppSyncApi)
+    .stack(Web);
 }

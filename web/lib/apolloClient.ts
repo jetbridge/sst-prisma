@@ -1,30 +1,38 @@
 // from https://github.com/awslabs/aws-mobile-appsync-sdk-js#creating-a-client
 
-import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client';
-import { Auth } from '@aws-amplify/auth';
+import { ApolloClient, ApolloLink, createHttpLink, InMemoryCache } from '@apollo/client';
 import { SentryLink } from 'apollo-link-sentry';
-import { createAuthLink } from 'aws-appsync-auth-link';
+import { AUTH_TYPE, createAuthLink } from 'aws-appsync-auth-link';
 import { createSubscriptionHandshakeLink } from 'aws-appsync-subscription-link';
 import memoizee from 'memoizee';
-import { requireEnvVar } from 'common';
 
 // TODO: move me somewhere better
 async function getCognitoAccessJwt(): Promise<string> {
   try {
-    return (await Auth.currentSession()).getAccessToken().getJwtToken();
+    return ''; // here we should return our cognito JWT
   } catch (e) {
     console.debug(e);
   }
   return '';
 }
+export function getAppSyncConfig() {
+  const region = process.env.NEXT_PUBLIC_REGION;
+  const appsyncEndpoint = process.env.NEXT_PUBLIC_APPSYNC_ENDPOINT;
+
+  if (!region) throw new Error('NEXT_PUBLIC_REGION is not set');
+  if (!appsyncEndpoint) throw new Error('NEXT_PUBLIC_APPSYNC_ENDPOINT is not set');
+
+  return { region, appsyncEndpoint };
+}
 
 export const getApolloClient = memoizee(() => {
-  const uri = requireEnvVar('GRAPHQL_ENDPOINT');
-  // const region = appSyncConfig.region;
-  // const auth = {
-  //   type: appSyncConfig.authenticationType as any,
-  //   jwtToken: getCognitoAccessJwt,
-  // };
+  const { region, appsyncEndpoint } = getAppSyncConfig();
+  const auth = {
+    region,
+    type: AUTH_TYPE.AMAZON_COGNITO_USER_POOLS,
+    jwtToken: getCognitoAccessJwt,
+  } as const;
+  const httpLink = createHttpLink({ uri: appsyncEndpoint });
 
   const apolloLink = ApolloLink.from([
     new SentryLink({
@@ -35,10 +43,10 @@ export const getApolloClient = memoizee(() => {
         includeError: true,
       },
       setTransaction: true,
-      uri,
+      uri: appsyncEndpoint,
     }),
-    // createAuthLink({ url:uri, region, auth: auth as any }),
-    // createSubscriptionHandshakeLink({ url: uri, region, auth }, httpLink),
+    createAuthLink({ url: appsyncEndpoint, region, auth: auth }),
+    createSubscriptionHandshakeLink({ url: appsyncEndpoint, region, auth }, httpLink),
   ]);
 
   new ApolloClient({

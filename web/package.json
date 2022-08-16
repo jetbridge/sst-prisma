@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "@apollo/client": "^3.6.5",
-    "@aws-amplify/auth": "^4.5.6",
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.5.1",
@@ -33,6 +32,7 @@
     "common": "workspace:*",
     "graphql": "^16.3.0",
     "next": "^12.2.0",
+    "next-auth": "^4.10.3",
     "nord": "^0.2.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",

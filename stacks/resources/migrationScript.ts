@@ -2,7 +2,7 @@ import { App, Function, Script } from '@serverless-stack/resources';
 import { RemovalPolicy } from 'aws-cdk-lib';
 import { Vpc } from 'aws-cdk-lib/aws-ec2';
 import { Construct } from 'constructs';
-import { PRISMA_VERSION } from './layers';
+import { PRISMA_VERSION } from '../layers';
 import { PrismaLayer } from './prismaLayer';
 
 interface DbMigrationScriptProps {
@@ -40,13 +40,13 @@ export class DbMigrationScript extends Construct {
         ],
         externalModules: migrationLayer.externalModules,
       },
-      timeout: '10 minutes',
+      timeout: '5 minutes',
     });
 
     // script to run migrations for us during deployment
-    new Script(this, 'MigrationScript', {
-      onCreate: migrationFunction,
-      onUpdate: migrationFunction,
-    });
+    // new Script(this, 'MigrationScript', {
+    //   onCreate: migrationFunction,
+    //   onUpdate: migrationFunction,
+    // });
   }
 }
