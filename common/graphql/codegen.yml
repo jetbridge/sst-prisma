@@ -8,36 +8,34 @@ generates:
     config:
       maybeValue: T | undefined
       enumsAsTypes: true
-      gqlImport: 'graphql-tag#gql'
       strictScalars: true
       scalars:
-        AWSDate: any
-        AWSDateTime: any
-        AWSEmail: any
-        AWSIPAddress: any
-        AWSJSON: any
-        AWSPhone: any
-        AWSTime: any
-        AWSTimestamp: any
-        AWSURL: any
+        AWSJSON: string
+        AWSDate: string
+        AWSTime: string
+        AWSDateTime: string
+        AWSTimestamp: number
+        AWSEmail: string
+        AWSURL: string
+        AWSPhone: string
+        AWSIPAddress: string
     plugins:
       - 'typescript'
   graphql/generated/gql-apollo.ts:
     config:
       maybeValue: T | undefined
       enumsAsTypes: true
-      gqlImport: 'graphql-tag#gql'
       strictScalars: true
       scalars:
-        AWSDate: any
-        AWSDateTime: any
-        AWSEmail: any
-        AWSIPAddress: any
-        AWSJSON: any
-        AWSPhone: any
-        AWSTime: any
-        AWSTimestamp: any
-        AWSURL: any
+        AWSJSON: string
+        AWSDate: string
+        AWSTime: string
+        AWSDateTime: string
+        AWSTimestamp: number
+        AWSEmail: string
+        AWSURL: string
+        AWSPhone: string
+        AWSIPAddress: string
     plugins:
       - 'typescript'
       - 'typescript-operations'
