@@ -8,6 +8,6 @@ services:
       - '5438:5432'
     environment:
       POSTGRES_PORT: 5432
-      POSTGRES_USER: myapp
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: pass
       POSTGRES_DB: myapp

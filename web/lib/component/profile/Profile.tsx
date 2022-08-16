@@ -1,7 +1,7 @@
 import Avatar from '@mui/material/Avatar';
 import { useSession } from 'next-auth/react';
 import React from 'react';
-import { ApolloGQL } from 'common';
+import { GQL } from 'common';
 import { Button, LinearProgress } from '@mui/material';
 
 export const Profile: React.FC = () => {
@@ -10,8 +10,8 @@ export const Profile: React.FC = () => {
   const user = session?.user;
 
   // call greeter mutation
-  const [greetResponse, setGreetResponse] = React.useState<ApolloGQL.GreetingResponse>();
-  const [greet, { loading: greetingLoading }] = ApolloGQL.useGreetMutation();
+  const [greetResponse, setGreetResponse] = React.useState<GQL.GreetingResponse>();
+  const [greet, { loading: greetingLoading }] = GQL.useGreetMutation();
   const handleGreet = React.useCallback(async () => {
     if (!user) return;
 

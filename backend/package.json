@@ -5,7 +5,6 @@
   "type": "module",
   "scripts": {
     "lint": "eslint --ext .js,.ts,.tsx src",
-    "start": " dotenv -e .env.sst.start sst start",
     "format": "prisma format",
     "migrate": "pnpm run migrate:dev",
     "migrate:dev": "pnpm run format && prisma migrate dev",

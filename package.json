@@ -13,8 +13,8 @@
     "postinstall": "pnpm run generate",
     "test": "pnpm testall",
     "test:ci": "pnpm test",
-    "testall": "pnpm start:db && pnpm test:backend && pnpm test:web",
-    "test:backend": "pnpm start:db && pnpm generate && pnpm run -C backend migrate:test && vitest run",
+    "testall": "pnpm db:start && pnpm test:backend && pnpm test:web",
+    "test:backend": "pnpm db:start && pnpm generate && pnpm run -C backend migrate:test && vitest run",
     "test:web": "pnpm run -C web test",
     "lint": "pnpm run --recursive --aggregate-output lint && pnpm lint:toplevel",
     "lint:toplevel": "eslint --ext .js,.ts,.tsx stacks",
@@ -28,8 +28,9 @@
     "remove": "sst remove",
     "prettier:exc": "./node_modules/.bin/prettier --config .prettierrc.yaml --write",
     "prettier": "pnpm run prettier:exc -- '**/*.{js,ts,tsx,css,json,yaml,yml,md}'",
-    "start:db": "docker-compose up -d",
-    "stop:db": "docker-compose down",
+    "db:migrate:dev": "pnpm db:start && pnpm -C backend migrate:dev",
+    "db:start": "bin/startLocalDb.sh",
+    "db:stop": "docker-compose down",
     "clean": "tsc -b --clean && rm -rf .build .sst dist common/graphql/generated && pnpm run --recursive --if-present clean"
   },
   "dependencies": {
