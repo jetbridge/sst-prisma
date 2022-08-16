@@ -5,7 +5,7 @@ import { SentryLink } from 'apollo-link-sentry';
 import { AUTH_TYPE, createAuthLink } from 'aws-appsync-auth-link';
 import { createSubscriptionHandshakeLink } from 'aws-appsync-subscription-link';
 import { getSession } from 'next-auth/react';
-import { APPSYNC_ENDPOINT, REGION } from '../config/next';
+import { APPSYNC_ENDPOINT, AWS_REGION } from '../config/next';
 
 const getCognitoAccessJwt = async () => {
   const session = await getSession();
@@ -13,7 +13,7 @@ const getCognitoAccessJwt = async () => {
 };
 
 export function getAppSyncConfig() {
-  const region = REGION;
+  const region = AWS_REGION;
   const appsyncEndpoint = APPSYNC_ENDPOINT;
   if (!region) throw new Error('NEXT_PUBLIC_REGION is not set');
   if (!appsyncEndpoint) throw new Error('NEXT_PUBLIC_APPSYNC_ENDPOINT is not set');

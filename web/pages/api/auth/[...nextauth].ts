@@ -1,6 +1,6 @@
 import NextAuth, { NextAuthOptions, Session } from 'next-auth';
 import CognitoProvider from 'next-auth/providers/cognito';
-import { COGNITO_CLIENT_ID, COGNITO_USER_POOL_ID, REGION } from 'web/lib/config/next';
+import { COGNITO_CLIENT_ID, COGNITO_USER_POOL_ID, AWS_REGION } from 'web/lib/config/next';
 import {
   AuthFlowType,
   CognitoIdentityProviderClient,
@@ -8,12 +8,12 @@ import {
 } from '@aws-sdk/client-cognito-identity-provider';
 import { JWT } from 'next-auth/jwt';
 
-if (!REGION) throw new Error('REGION is not set');
+if (!AWS_REGION) throw new Error('REGION is not set');
 if (!COGNITO_CLIENT_ID) throw new Error('COGNITO_CLIENT_ID is not set');
 if (!COGNITO_USER_POOL_ID) throw new Error('COGNITO_USER_POOL_ID is not set');
 
 const refreshCognitoAccessToken = async (token: JWT) => {
-  const client = new CognitoIdentityProviderClient({ region: REGION });
+  const client = new CognitoIdentityProviderClient({ region: AWS_REGION });
   const command = new InitiateAuthCommand({
     AuthFlow: AuthFlowType.REFRESH_TOKEN_AUTH,
     ClientId: COGNITO_CLIENT_ID,
@@ -29,7 +29,7 @@ export const authOptions: NextAuthOptions = {
   providers: [
     CognitoProvider({
       clientId: COGNITO_CLIENT_ID,
-      issuer: `https://cognito-idp.${REGION}.amazonaws.com/${COGNITO_USER_POOL_ID}`,
+      issuer: `https://cognito-idp.${AWS_REGION}.amazonaws.com/${COGNITO_USER_POOL_ID}`,
 
       // use cognito for token signing
       // https://github.com/nextauthjs/next-auth/issues/4707
