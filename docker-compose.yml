@@ -2,7 +2,7 @@ version: '3.6'
 
 services:
   local-db:
-    image: postgres:12
+    image: postgres:11
     container_name: sst-local
     ports:
       - '5438:5432'
