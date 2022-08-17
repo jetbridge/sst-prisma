@@ -9,7 +9,8 @@
     "format": "prisma format",
     "migrate": "pnpm run migrate:dev",
     "migrate:dev": "pnpm run format && prisma migrate dev",
-    "migrate:test": "prisma migrate dev --skip-seed --skip-generate",
+    "migrate:test": "pnpm init:db:test && dotenv -e .env.vitest -- prisma migrate dev --skip-seed --skip-generate",
+    "init:db:test": "docker-compose exec -T jbplatform-local-db dropdb -U postgres --if-exists tests && docker-compose exec -T jbplatform-local-db createdb -U postgres tests",
     "generate": "prisma generate"
   },
   "dependencies": {
