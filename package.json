@@ -4,9 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "pnpm db:migrate:dev && sst start",
+    "start": "pnpm db:migrate:dev && pnpm start:sst",
+    "start:sst": "sst start",
     "start:web": "pnpm run -C web dev",
-    "fullstack": "concurrently --kill-others --names 'SST,WEB' -c 'bgBlue.bold,bgGreen.bold' 'pnpm start' 'pnpm start:web'",
+    "fullstack": "pnpm db:migrate:dev && concurrently --kill-others --names 'SST,WEB' -c 'bgBlue.bold,bgGreen.bold' 'pnpm start:sst' 'pnpm start:web'",
     "watch": "pnpm run tsc:watch",
     "tsc": "tsc -b",
     "tsc:watch": "tsc -b --watch",
