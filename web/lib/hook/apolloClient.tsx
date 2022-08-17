@@ -1,5 +1,3 @@
-// from https://github.com/awslabs/aws-mobile-appsync-sdk-js#creating-a-client
-
 import { ApolloProvider } from '@apollo/client';
 import React, { ReactNode } from 'react';
 import { getApolloClient } from '../client/apollo';
