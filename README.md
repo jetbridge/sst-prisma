@@ -15,7 +15,7 @@ Assumes you have [Node 16](https://nodejs.org/en/download/current/) installed an
 ```shell
 npm i -g pnpm  # install pnpm globally
 pnpm i  # install dependencies + generate types from DB and GQL schemas
-pnpm start  # start backend + frontend dev servers
+pnpm start  # start backend
 ```
 
 ## Features
