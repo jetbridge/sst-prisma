@@ -70,7 +70,7 @@ pnpm fullstack
 ### Run/generate DB migrations locally
 
 ```shell
-pnpm db:migrate
+pnpm db:migrate:dev
 ```
 
 ### Just watch and perform type-checking

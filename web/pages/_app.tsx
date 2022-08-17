@@ -3,7 +3,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { SessionProvider } from 'next-auth/react';
 import type { AppProps } from 'next/app';
 import { ApolloClientProvider } from 'web/lib/hook/apolloClient';
-import { ApolloClientProvider } from 'web/lib/hook/apolloClient';
 import '../styles/globals.css';
 
 const theme = createTheme({
@@ -21,7 +20,7 @@ const theme = createTheme({
   },
 });
 
-function MyApp({ Component, pageProps: { session, ...pageProps }: { session, ...pageProps } }: AppProps) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <SessionProvider session={session}>
       <ApolloClientProvider>

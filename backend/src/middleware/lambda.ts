@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { injectLambdaContext } from '@aws-lambda-powertools/logger';
 import { logMetrics } from '@aws-lambda-powertools/metrics';
 import { captureLambdaHandler } from '@aws-lambda-powertools/tracer';
-
 import { logger } from '@backend/util/logger';
 import { metrics } from '@backend/util/metrics';
 import { tracer } from '@backend/util/tracer';

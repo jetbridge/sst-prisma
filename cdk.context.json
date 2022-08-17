@@ -1,5 +1,26 @@
 {
-  "availability-zones:account=887085912587:region=eu-west-1": ["eu-west-1a", "eu-west-1b", "eu-west-1c"],
-  "availability-zones:account=887085912587:region=eu-central-1": ["eu-central-1a", "eu-central-1b", "eu-central-1c"],
-  "availability-zones:account=887085912587:region=us-west-2": ["us-west-2a", "us-west-2b", "us-west-2c", "us-west-2d"]
+  "availability-zones:account=887085912587:region=eu-west-1": [
+    "eu-west-1a",
+    "eu-west-1b",
+    "eu-west-1c"
+  ],
+  "availability-zones:account=887085912587:region=eu-central-1": [
+    "eu-central-1a",
+    "eu-central-1b",
+    "eu-central-1c"
+  ],
+  "availability-zones:account=887085912587:region=us-west-2": [
+    "us-west-2a",
+    "us-west-2b",
+    "us-west-2c",
+    "us-west-2d"
+  ],
+  "availability-zones:account=887085912587:region=us-east-1": [
+    "us-east-1a",
+    "us-east-1b",
+    "us-east-1c",
+    "us-east-1d",
+    "us-east-1e",
+    "us-east-1f"
+  ]
 }
