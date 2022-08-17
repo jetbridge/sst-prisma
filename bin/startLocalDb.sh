@@ -4,7 +4,7 @@ set -exo pipefail
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 if [[ -n "${CI}" ]]; then
-	echo "Running migrations in CI"
+	echo "DB is started by CI"
 else
 	echo "Starting DB"
 	docker-compose  --project-directory "${SCRIPT_DIR}/.." up -d
