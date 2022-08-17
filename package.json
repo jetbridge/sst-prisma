@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "sst start",
+    "start": "pnpm db:migrate:dev && sst start",
     "start:web": "pnpm run -C web dev",
     "watch": "pnpm run tsc:watch",
     "tsc": "tsc -b",
@@ -28,8 +28,9 @@
     "remove": "sst remove",
     "prettier:exc": "./node_modules/.bin/prettier --config .prettierrc.yaml --write",
     "prettier": "pnpm run prettier:exc -- '**/*.{js,ts,tsx,css,json,yaml,yml,md}'",
-    "start:db": "docker-compose up -d",
-    "stop:db": "docker-compose down",
+    "db:migrate:dev": "pnpm db:start && pnpm -C backend migrate:dev",
+    "db:start": "bin/startLocalDb.sh",
+    "db:stop": "docker-compose down",
     "clean": "tsc -b --clean && rm -rf .build .sst dist common/graphql/generated && pnpm run --recursive --if-present clean"
   },
   "dependencies": {
