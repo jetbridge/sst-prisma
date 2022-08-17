@@ -5,7 +5,7 @@
 // https://devblogs.microsoft.com/typescript/announcing-typescript-4-7-beta/#package-json-exports-imports-and-self-referencing
 export * from './env.js';
 export * from './gql.js';
-export * as ApolloGQL from './apollo.js';
+export { GQL as ApolloGQL } from './apollo.js';
 
 // change this
 export const APP_NAME = 'myapp';

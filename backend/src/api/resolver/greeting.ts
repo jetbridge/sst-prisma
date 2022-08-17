@@ -1,3 +1,4 @@
+import { defaultAppSyncMiddleware } from '@backend/middleware/lambda';
 import { logger } from '@backend/util/logger';
 import { incrementMetric } from '@backend/util/metrics';
 import { AppSyncResolverEvent } from 'aws-lambda';
@@ -11,7 +12,9 @@ export const getGreeting = (): GQL.GreetingState => ({
 });
 
 // sample mutation
-export const greet = ({ arguments: { name } }: AppSyncResolverEvent<GQL.MutationGreetArgs>): GQL.GreetingResponse => {
+export const greetInner = async ({
+  arguments: { name },
+}: AppSyncResolverEvent<GQL.MutationGreetArgs>): Promise<GQL.GreetingResponse> => {
   incrementMetric('SaidHello');
   logger.debug('Saying greeting to', { name });
 
@@ -19,3 +22,4 @@ export const greet = ({ arguments: { name } }: AppSyncResolverEvent<GQL.Mutation
     greeting: `${GREETING}, ${name}!`,
   };
 };
+export const greet = defaultAppSyncMiddleware()(greetInner);

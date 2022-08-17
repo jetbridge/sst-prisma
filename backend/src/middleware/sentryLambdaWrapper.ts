@@ -6,11 +6,11 @@
  */
 import { AWSLambda } from '@sentry/serverless';
 import { Handler } from 'aws-lambda';
-import { envVar } from 'common';
+import { getSstStage } from 'common';
 
 if (process.env['_HANDLER']) {
   AWSLambda.init({
-    environment: envVar('STAGE'),
+    environment: getSstStage(),
     maxBreadcrumbs: 30,
     debug: false,
   });
