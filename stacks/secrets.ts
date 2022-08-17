@@ -8,8 +8,12 @@ export function Secrets({ stack, app }: StackContext) {
     description: app.logicalPrefixedName('app'),
     generateSecretString: {
       secretStringTemplate: JSON.stringify({
-        // DB URL in secrets
+        // DB connection info
         [secretEnv('DATABASE_URL')]: makeDatabaseUrl(),
+
+        // optional
+        [secretEnv('LINKEDIN_CLIENT_ID')]: 'changeme',
+        [secretEnv('LINKEDIN_CLIENT_SECRET')]: 'changeme',
       }),
       generateStringKey: secretEnv('APP'),
     },

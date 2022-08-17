@@ -1,7 +1,7 @@
 import { testCallResolver } from '../../util/testResolver';
 import { GREETING } from './greeting';
 
-const { getGreeting, greet } = await import('./greeting');
+const { getGreeting, greetInner } = await import('./greeting');
 
 describe('Greeting resolvers', () => {
   it('gets current greeting', async () => {
@@ -15,7 +15,7 @@ describe('Greeting resolvers', () => {
   it('greets user by name', async () => {
     const greeting = await testCallResolver({
       args: { name: 'Lebowski' },
-      resolverFunc: greet,
+      resolverFunc: greetInner,
     });
     expect(greeting.greeting).toBe(`${GREETING}, Lebowski!`);
   });
