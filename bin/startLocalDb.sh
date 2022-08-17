@@ -7,7 +7,7 @@ if [[ -n "${CI}" ]]; then
 	echo "DB is started by CI"
 else
 	echo "Starting DB"
-	docker-compose  --project-directory "${SCRIPT_DIR}/.." up -d --remove-orphans
+	docker-compose --project-directory "${SCRIPT_DIR}/.." up -d --remove-orphans
 	"$SCRIPT_DIR/waitForPg.sh"
 fi
 

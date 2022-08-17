@@ -10,7 +10,7 @@
     "migrate": "pnpm run migrate:dev",
     "migrate:dev": "pnpm run format && prisma migrate dev",
     "migrate:test": "pnpm init:db:test && dotenv -e .env.vitest -- prisma migrate dev --skip-seed --skip-generate",
-    "init:db:test": "[ -n \"$CI\" ] || docker-compose exec -T sst-local-db dropdb -U postgres --if-exists tests && docker-compose exec -T sst-local-db createdb -U postgres tests",
+    "init:db:test": "[ -n \"$CI\" ] || (docker-compose exec -T sst-local-db dropdb -U postgres --if-exists tests && docker-compose exec -T sst-local-db createdb -U postgres tests)",
     "generate": "prisma generate"
   },
   "dependencies": {
