@@ -15,35 +15,42 @@ const getCognitoAccessJwt = async () => {
 export function getAppSyncConfig() {
   const region = REGION;
   const appsyncEndpoint = APPSYNC_ENDPOINT;
-  if (!region) throw new Error('NEXT_PUBLIC_REGION is not set');
-  if (!appsyncEndpoint) throw new Error('NEXT_PUBLIC_APPSYNC_ENDPOINT is not set');
+  if (!region || !appsyncEndpoint) {
+    console.debug('NEXT_PUBLIC_REGION and NEXT_PUBLIC_APPSYNC_ENDPOINT are not set; not authenticating with AppSync');
+    return undefined;
+  }
 
   return { region, appsyncEndpoint };
 }
 
 export const getApolloClient = () => {
-  const { region, appsyncEndpoint } = getAppSyncConfig();
-  const auth = {
-    region,
-    type: AUTH_TYPE.AMAZON_COGNITO_USER_POOLS,
-    jwtToken: getCognitoAccessJwt,
-  } as const;
-  const httpLink = createHttpLink({ uri: appsyncEndpoint });
+  const appsyncConfig = getAppSyncConfig();
 
-  const apolloLink = ApolloLink.from([
-    new SentryLink({
-      attachBreadcrumbs: {
-        includeQuery: true,
-        includeVariables: true,
-        includeFetchResult: true,
-        includeError: true,
-      },
-      setTransaction: true,
-      uri: appsyncEndpoint,
-    }),
-    createAuthLink({ url: appsyncEndpoint, region, auth: auth }),
-    createSubscriptionHandshakeLink({ url: appsyncEndpoint, region, auth }, httpLink),
-  ]);
+  let apolloLink;
+  if (appsyncConfig) {
+    const { region, appsyncEndpoint } = appsyncConfig;
+    const auth = {
+      region,
+      type: AUTH_TYPE.AMAZON_COGNITO_USER_POOLS,
+      jwtToken: getCognitoAccessJwt,
+    } as const;
+    const httpLink = createHttpLink({ uri: appsyncEndpoint });
+
+    apolloLink = ApolloLink.from([
+      new SentryLink({
+        attachBreadcrumbs: {
+          includeQuery: true,
+          includeVariables: true,
+          includeFetchResult: true,
+          includeError: true,
+        },
+        setTransaction: true,
+        uri: appsyncEndpoint,
+      }),
+      createAuthLink({ url: appsyncEndpoint, region, auth: auth }),
+      createSubscriptionHandshakeLink({ url: appsyncEndpoint, region, auth }, httpLink),
+    ]);
+  }
 
   return new ApolloClient({
     link: apolloLink,
