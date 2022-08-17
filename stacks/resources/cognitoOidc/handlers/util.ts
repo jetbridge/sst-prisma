@@ -37,7 +37,7 @@ export const getIssuer = (event: APIGatewayProxyEventV2) => {
 };
 
 export const parseBody = (event: APIGatewayProxyEventV2) => {
-  const body = event.isBase64Encoded ? Buffer.from(event.body!, 'base64').toString('utf-8') : event.body;
+  const body = event.isBase64Encoded && event.body ? Buffer.from(event.body, 'base64').toString('utf-8') : event.body;
   const contentType = event.headers['content-type'];
   if (!body) return {};
   if (contentType?.startsWith('application/x-www-form-urlencoded')) {

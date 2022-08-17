@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const Responder = {
   success: (response: any) => {
     console.info('Success response');
