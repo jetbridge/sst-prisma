@@ -1,10 +1,29 @@
-import NextAuth, { NextAuthOptions } from 'next-auth';
+import NextAuth, { NextAuthOptions, Session } from 'next-auth';
 import CognitoProvider from 'next-auth/providers/cognito';
 import { COGNITO_CLIENT_ID, COGNITO_USER_POOL_ID, REGION } from 'web/lib/config/next';
+import {
+  AuthFlowType,
+  CognitoIdentityProviderClient,
+  InitiateAuthCommand,
+} from '@aws-sdk/client-cognito-identity-provider';
+import { JWT } from 'next-auth/jwt';
 
 if (!REGION) throw new Error('REGION is not set');
 if (!COGNITO_CLIENT_ID) throw new Error('COGNITO_CLIENT_ID is not set');
 if (!COGNITO_USER_POOL_ID) throw new Error('COGNITO_USER_POOL_ID is not set');
+
+const refreshCognitoAccessToken = async (token: JWT) => {
+  const client = new CognitoIdentityProviderClient({ region: REGION });
+  const command = new InitiateAuthCommand({
+    AuthFlow: AuthFlowType.REFRESH_TOKEN_AUTH,
+    ClientId: COGNITO_CLIENT_ID,
+    AuthParameters: {
+      REFRESH_TOKEN: token.refreshToken as string,
+    },
+  });
+  const response = await client.send(command);
+  return response.AuthenticationResult;
+};
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -25,11 +44,33 @@ export const authOptions: NextAuthOptions = {
     signIn: '/login',
   },
   callbacks: {
-    jwt: async ({ token, account }) => {
-      // save token to session for authenticating to AWS
-      // https://next-auth.js.org/configuration/callbacks#jwt-callback
-      if (account) token.accessToken = account.access_token;
-      return token;
+    // need to handle token refresh https://next-auth.js.org/tutorials/refresh-token-rotation
+    jwt: async ({ token, account, user }) => {
+      // Initial sign in
+      if (account && user) {
+        return {
+          // save token to session for authenticating to AWS
+          // https://next-auth.js.org/configuration/callbacks#jwt-callback
+          accessToken: account.access_token,
+          accessTokenExpires: account.expires_at ? account.expires_at * 1000 : 0,
+          refreshToken: account.refresh_token,
+          user,
+        };
+      }
+
+      // Return previous token if the access token has not expired yet
+      if (Date.now() < (token as Session).accessTokenExpires) {
+        return token;
+      }
+
+      // Access token has expired, try to get a new one
+      const refreshedTokens = await refreshCognitoAccessToken(token);
+      return {
+        ...token,
+        accessToken: refreshedTokens?.AccessToken,
+        accessTokenExpires: refreshedTokens?.ExpiresIn ? Date.now() + refreshedTokens?.ExpiresIn * 1000 : 0,
+        refreshToken: refreshedTokens?.RefreshToken ?? token.refreshToken, // Fall back to old refresh token
+      };
     },
 
     session: async ({ session, token }) => {
@@ -37,8 +78,9 @@ export const authOptions: NextAuthOptions = {
         console.error('No accessToken found on token or session');
         return session;
       }
-      session.user.id = token.sub as string;
-      session.user.accessToken = token.accessToken as string;
+      session.user = token.user as Session['user'];
+      session.accessToken = token.accessToken as string;
+      session.error = token.error as string | undefined;
 
       return session;
     },
