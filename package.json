@@ -6,6 +6,7 @@
   "scripts": {
     "start": "pnpm db:migrate:dev && sst start",
     "start:web": "pnpm run -C web dev",
+    "fullstack": "concurrently --kill-others --names 'SST,WEB' -c 'bgBlue.bold,bgGreen.bold' 'pnpm start' 'pnpm start:web'",
     "watch": "pnpm run tsc:watch",
     "tsc": "tsc -b",
     "tsc:watch": "tsc -b --watch",
@@ -64,6 +65,7 @@
     "@typescript-eslint/parser": "^5.26.0",
     "aws-lambda": "^1.0.7",
     "chalk": "^5.0.1",
+    "concurrently": "^7.3.0",
     "constructs": "^10.1.17",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.0",
