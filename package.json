@@ -14,7 +14,7 @@
     "postinstall": "pnpm run generate",
     "test": "pnpm testall",
     "test:ci": "pnpm test",
-    "testall": "pnpm db:start && pnpm test:backend && pnpm test:web",
+    "testall": "pnpm tsc && pnpm db:start && pnpm test:backend && pnpm test:web",
     "test:backend": "pnpm db:start && pnpm generate && pnpm run -C backend migrate:test && vitest run",
     "test:web": "pnpm run -C web test",
     "lint": "pnpm run --recursive --aggregate-output lint && pnpm lint:toplevel",
