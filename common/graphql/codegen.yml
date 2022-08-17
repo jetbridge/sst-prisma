@@ -9,6 +9,7 @@ generates:
       maybeValue: T | undefined
       enumsAsTypes: true
       strictScalars: true
+      gqlImport: "graphql-tag#gql"
       scalars:
         AWSJSON: string
         AWSDate: string
