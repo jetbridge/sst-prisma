@@ -27,6 +27,8 @@ interface UserDetails {
 
 const getApiEndpoints = (apiBaseUrl: string, loginBaseUrl: string) => {
   return {
+    // explained here:
+    // https://docs.microsoft.com/en-us/linkedin/shared/api-guide/concepts/projections?view=li-lms-2022-08
     // https://docs.microsoft.com/en-us/linkedin/shared/references/v2/profile/lite-profile
     userDetails: `${apiBaseUrl}/v2/me?projection=(id,vanityName,localizedFirstName,localizedLastName,profilePicture(displayImage~digitalmediaAsset:playableStreams),firstName,lastName)`,
     userEmails: `${apiBaseUrl}/v2/clientAwareMemberHandles?q=members&projection=(elements*(primary,type,handle~))`,

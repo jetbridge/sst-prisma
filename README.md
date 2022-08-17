@@ -46,7 +46,7 @@ Click links to learn more and view documentation.
 
 ## Package scripts
 
-Please see [package.json](blob/master/package.json) `scripts` for more.
+Please see [package.json](package.json) `scripts` for more.
 
 ### Start live backend dev server with AWS
 
