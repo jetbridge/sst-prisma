@@ -7,18 +7,23 @@ import { Button, LinearProgress } from '@mui/material';
 export const Profile: React.FC = () => {
   // get current user
   const { data: session } = useSession();
-  if (!session || !session.user) throw new Error('Session missing; cannot load Profile');
-  const { user } = session;
+  const user = session?.user;
 
   // call greeter mutation
   const [greetResponse, setGreetResponse] = React.useState<ApolloGQL.GreetingResponse>();
   const [greet, { loading: greetingLoading }] = ApolloGQL.useGreetMutation();
   const handleGreet = React.useCallback(async () => {
+    if (!user) return;
+
     const username = user.name || user.email;
     if (!username) throw new Error('User missing name or email in session');
     const { data } = await greet({ variables: { name: username } });
     setGreetResponse(data?.greet);
   }, [greet, user]);
+
+  // temp: until middleware is fixed
+  if (!user) return null;
+  if (!user) throw new Error('Session missing; cannot load Profile');
 
   return (
     <div style={{ width: 400, margin: '3rem auto 0 auto' }}>

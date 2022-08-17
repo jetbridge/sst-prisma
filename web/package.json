@@ -10,7 +10,8 @@
     "start": "next start",
     "lint": "next lint",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "clean": "rimraf .build .next"
   },
   "dependencies": {
     "@apollo/client": "^3.6.5",
@@ -32,7 +33,7 @@
     "classnames": "^2.3.1",
     "common": "workspace:*",
     "graphql": "^16.3.0",
-    "next": "^12.2.0",
+    "next": "^12.2.5",
     "next-auth": "^4.10.3",
     "nord": "^0.2.1",
     "react": "^18.0.0",

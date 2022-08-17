@@ -3,6 +3,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { SessionProvider } from 'next-auth/react';
 import type { AppProps } from 'next/app';
 import { ApolloClientProvider } from 'web/lib/hook/apolloClient';
+import { ApolloClientProvider } from 'web/lib/hook/apolloClient';
 import '../styles/globals.css';
 
 const theme = createTheme({
@@ -12,6 +13,7 @@ const theme = createTheme({
     // adjust!
     primary: colors.lime,
     secondary: colors.teal,
+    text: { primary: '#b7bfdb' },
   },
   typography: {
     fontFamily: 'SourceSansPro',
@@ -19,14 +21,14 @@ const theme = createTheme({
   },
 });
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+function MyApp({ Component, pageProps: { session, ...pageProps }: { session, ...pageProps } }: AppProps) {
   return (
     <SessionProvider session={session}>
       <ApolloClientProvider>
         <ThemeProvider theme={theme}>
           <main
             style={{
-              backgroundColor: '#cde',
+              backgroundColor: '#272f36',
               padding: 20,
               width: '100vw',
               height: '100vh',
