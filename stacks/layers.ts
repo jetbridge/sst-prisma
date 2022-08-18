@@ -3,7 +3,10 @@ import { RemovalPolicy } from 'aws-cdk-lib';
 import { ESM_REQUIRE_SHIM } from 'stacks';
 import { PrismaLayer } from './resources/prismaLayer';
 
-export const PRISMA_VERSION = '4.0.0';
+export const PRISMA_VERSION = '4.2.1';
+
+// default externalModules (not bundled with lambda function code)
+export const LAYER_MODULES = ['aws-sdk', 'encoding', '@prisma/client/runtime'];
 
 export function Layers({ stack, app }: StackContext) {
   // shared prisma lambda layer
@@ -25,7 +28,7 @@ export function Layers({ stack, app }: StackContext) {
     bundle: {
       format: 'esm',
       copyFiles: [{ from: 'backend/prisma/schema.prisma', to: 'src/schema.prisma' }],
-      externalModules: prismaLayer.externalModules,
+      externalModules: LAYER_MODULES.concat(prismaLayer.externalModules),
       banner: ESM_REQUIRE_SHIM,
     },
   });
