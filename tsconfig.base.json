@@ -1,6 +1,7 @@
 {
   "extends": "@tsconfig/node16-strictest-esm/tsconfig.json",
   "compilerOptions": {
+    "module": "ES2022",
     "composite": true,
     "moduleResolution": "node",
     "incremental": true,

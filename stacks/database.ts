@@ -4,7 +4,6 @@ import { Duration, RemovalPolicy } from 'aws-cdk-lib';
 import { APP_NAME, envVar } from 'common';
 import { Network } from 'stacks/network';
 import { IS_PRODUCTION } from './config';
-import { DbMigrationScript } from './resources/migrationScript';
 
 export function Database({ stack, app }: StackContext) {
   const net = use(Network);
@@ -45,9 +44,6 @@ export function Database({ stack, app }: StackContext) {
       [envVar('DATABASE_URL')]: localDatabaseUrl,
     });
   }
-
-  // DB migrations
-  new DbMigrationScript(stack, 'MigrationScript', { vpc: net.vpc });
 
   return { rds, defaultDatabaseName };
 }

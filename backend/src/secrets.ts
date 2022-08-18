@@ -1,6 +1,6 @@
-import { SecretsManagerClient, GetSecretValueCommand } from '@aws-sdk/client-secrets-manager';
+import { GetSecretValueCommand, SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
+import { APP_SECRETS, requireEnvVar } from 'common';
 import memoize from 'memoizee';
-import { APP_SECRETS, envVar } from 'common';
 
 type SecretValue = string | undefined; // technically can be any json value type (but it's probably always a string)
 type SecretMap = Record<APP_SECRETS, SecretValue>;
@@ -8,8 +8,7 @@ type SecretMap = Record<APP_SECRETS, SecretValue>;
 // load multiple key/values from AWS Secrets Manager
 async function getSecrets_(): Promise<SecretMap> {
   // get the secret name from environment
-  const secretName = process.env[envVar('APP_SECRET_ARN')];
-  if (!secretName) throw new Error(`Secret ${secretName} is missing in environment`);
+  const secretName = requireEnvVar('APP_SECRET_ARN');
 
   const client = new SecretsManagerClient({});
   const req = new GetSecretValueCommand({ SecretId: secretName });

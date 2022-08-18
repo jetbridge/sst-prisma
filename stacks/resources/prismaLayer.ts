@@ -1,20 +1,21 @@
 import { AssetHashType, IgnoreMode } from 'aws-cdk-lib';
-import { Code, LayerVersion, LayerVersionProps, Runtime } from 'aws-cdk-lib/aws-lambda';
+import { Code, LayerVersion, LayerVersionProps } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 import crypto from 'crypto';
 import path from 'path';
+import { RUNTIME } from '..';
 
 // TODO: when SST fixes asset hashing/caching we can delete the layer zip files
 // https://github.com/serverless-stack/serverless-stack/issues/1121
 
 // modules to mark as "external" when bundling
 // added to prismaModules
-const PRISMA_LAYER_EXTERNAL = ['@prisma/engines', '@prisma/engines-version', '@prisma/sdk', '@prisma/migrate'];
+const PRISMA_LAYER_EXTERNAL = ['@prisma/engines', '@prisma/engines-version', '@prisma/internals'];
 
 type PrismaEngine = 'introspection-engine' | 'migration-engine' | 'prisma-fmt' | 'libquery_engine';
 
 export interface PrismaLayerProps extends Omit<LayerVersionProps, 'code'> {
-  // e.g. 3.14.0
+  // e.g. 4.2.0
   prismaVersion?: string;
 
   // some more modules to add to the layer
@@ -62,7 +63,7 @@ export class PrismaLayer extends LayerVersion {
     const layerDir = '/asset-output/nodejs';
     const nm = `${layerDir}/node_modules`;
     const engineDir = `${nm}/@prisma/engines`;
-    const sdkDir = `${nm}/@prisma/sdk`;
+    const internalsDir = `${nm}/@prisma/internals`;
     const clientDir = `${nm}/@prisma/client`;
 
     // what are we asking npm to install?
@@ -91,14 +92,10 @@ export class PrismaLayer extends LayerVersion {
         `cd ${layerDir} && HOME=/tmp /tmp/npm/node_modules/.bin/npm install --omit dev --omit peer --omit optional ${modulesToInstallArgs}`,
         // delete unneeded engines
         ...deleteEngineCmds,
-        // sdk sux
-        `rm -f ${sdkDir}/dist/libquery_engine*`,
-        `rm -rf ${sdkDir}/node_modules/@prisma/engines`,
-        `rm -rf ${sdkDir}/node_modules/@prisma/sdk/node_modules/@prisma/engines`,
-        `rm -rf ${sdkDir}/node_modules/@prisma/sdk/dist/get-generators`,
-        `rm -rf ${sdkDir}/node_modules/@prisma/sdk/dist/libquery_engine-*`,
-        `rm -rf ${sdkDir}/node_modules/@prisma/engine-core/node_modules/@prisma`,
-        `rm -rf ${sdkDir}/dist/get-generators/*engine*`,
+        // internals sux
+        `rm -f ${internalsDir}/dist/libquery_engine*`,
+        `rm -f ${internalsDir}/dist/get-generators/libquery_engine*`,
+        `rm -rf ${internalsDir}/dist/get-generators/engines`,
         // get rid of some junk
         `rm -rf ${engineDir}/download`,
         `rm -rf ${clientDir}/generator-build`,
@@ -130,8 +127,7 @@ export class PrismaLayer extends LayerVersion {
         assetHash: bundleCommandHash.digest('hex'),
 
         bundling: {
-          // image: RUNTIME.bundlingImage,
-          image: Runtime.NODEJS_14_X.bundlingImage,
+          image: RUNTIME.bundlingImage,
           command: createBundleCommand,
         },
       });

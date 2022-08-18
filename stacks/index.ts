@@ -1,7 +1,9 @@
 import * as sst from '@serverless-stack/resources';
+import { Runtime } from 'aws-cdk-lib/aws-lambda';
 import { AppSyncApi } from './appSyncApi';
 import { Auth } from './auth';
 import { Database } from './database';
+import { DatabaseMigrations } from './databaseMigrations';
 import { Dns } from './dns';
 import { Layers } from './layers';
 import { Network } from './network';
@@ -13,6 +15,8 @@ import { Web } from './web';
 // from https://github.com/evanw/esbuild/pull/2067#issuecomment-1073039746
 // and hardcode __dirname for https://github.com/prisma/prisma/issues/14484
 export const ESM_REQUIRE_SHIM = `await(async()=>{let{dirname:e}=await import("path"),{fileURLToPath:i}=await import("url");if(typeof globalThis.__filename>"u"&&(globalThis.__filename=i(import.meta.url)),typeof globalThis.__dirname>"u"&&(globalThis.__dirname='/var/task'),typeof globalThis.require>"u"){let{default:a}=await import("module");globalThis.require=a.createRequire(import.meta.url)}})();`;
+
+export const RUNTIME = Runtime.NODEJS_16_X;
 
 export default function main(app: sst.App) {
   app.setDefaultFunctionProps({
@@ -26,6 +30,7 @@ export default function main(app: sst.App) {
     .stack(Layers)
     .stack(Database)
     .stack(Secrets)
+    .stack(DatabaseMigrations)
     .stack(Auth)
     .stack(RestApi)
     .stack(AppSyncApi)
