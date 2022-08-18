@@ -17,7 +17,7 @@ export const handler = async (): Promise<string> => {
   const migrate = new Migrate(schemaPath);
   const wasDbCreated = await ensureDatabaseExists('apply', true, schemaPath);
   if (wasDbCreated) {
-    console.info(); // empty line
+    console.info(''); // empty line
     console.info(wasDbCreated);
   }
 
