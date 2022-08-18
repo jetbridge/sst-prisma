@@ -12,10 +12,10 @@ CREATE TABLE "client" (
 CREATE TABLE "user" (
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "name" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
     "username" TEXT NOT NULL,
-    "avatar_url" TEXT NOT NULL,
+    "name" TEXT,
+    "email" TEXT,
+    "avatar_url" TEXT,
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("id")
 );

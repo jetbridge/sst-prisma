@@ -26,12 +26,11 @@
     "build:common": "pnpm run -C common build",
     "build:web": "pnpm run -C web build",
     "deploy": "pnpm generate && pnpm build:common && sst deploy",
-    "deploy:main": "pnpm build:common && sst deploy main",
-    "deploy:verbose": "sst deploy --verbose",
     "remove": "sst remove",
     "prettier:exc": "./node_modules/.bin/prettier --config .prettierrc.yaml --write",
     "prettier": "pnpm run prettier:exc -- '**/*.{js,ts,tsx,css,json,yaml,yml,md}'",
     "db:migrate:dev": "pnpm db:start && pnpm -C backend migrate:dev",
+    "db:migrate:test": "pnpm db:start && pnpm -C backend migrate:test",
     "db:start": "bin/startLocalDb.sh",
     "db:stop": "docker-compose down",
     "clean": "tsc -b --clean && rm -rf .build .sst dist common/graphql/generated && pnpm run --recursive --if-present clean"
@@ -87,9 +86,9 @@
     "prettier": "^2.6.2",
     "rimraf": "^3.0.2",
     "typescript": "^4.7.2",
-    "vite": "^3.0.3",
+    "vite": "^3.0.8",
     "vite-tsconfig-paths": "^3.5.0",
-    "vitest": "^0.19.1"
+    "vitest": "^0.22.1"
   },
   "engines": {
     "node": ">=0.16",
