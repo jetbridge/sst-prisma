@@ -88,7 +88,7 @@ pnpm deploy
 ### Deploy to specific AWS environment (region/profile)
 
 ```shell
-pnpm deploy -- --region eu-west-1 --profile dev
+pnpm deploy --region eu-west-1 --profile dev
 ```
 
 ### All SST/CDK commands
