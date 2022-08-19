@@ -8,9 +8,10 @@ export function DatabaseMigrations({ stack }: StackContext) {
   const net = use(Network);
   const { cluster } = use(Database);
 
-  // make sure DB is running before applying migrations
-  new WakeDB(stack, 'WakeDB', { cluster });
+  // make sure DB is running before applying migration
+  const wakeUp = new WakeDB(stack, 'WakeDB', { cluster });
 
   // run migrations
-  new DbMigrationScript(stack, 'MigrationScript', { vpc: net.vpc });
+  const dbMigrationScript = new DbMigrationScript(stack, 'MigrationScript', { vpc: net.vpc });
+  dbMigrationScript.node.addDependency(wakeUp);
 }
