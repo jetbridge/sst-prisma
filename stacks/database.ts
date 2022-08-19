@@ -38,10 +38,11 @@ export function Database({ stack, app }: StackContext) {
     [envVar('DB_SECRET_ARN')]: rds.secretArn,
   });
   stack.addOutputs({
-    DBName: defaultDatabaseName,
-
-    // quick way to grab DB connection info and credentials from the command line
-    GetSecretsCmd: `aws secretsmanager get-secret-value --secret-id ${rds.secretArn} --query SecretString --output text`,
+    DBName: { value: defaultDatabaseName, description: 'Name of the default database' },
+    GetSecretsCmd: {
+      value: `aws secretsmanager get-secret-value --secret-id ${rds.secretArn} --query SecretString --output text`,
+      description: 'Command to get DB connection info and credentials',
+    },
   });
   app.addDefaultFunctionPermissions([rds]);
 
