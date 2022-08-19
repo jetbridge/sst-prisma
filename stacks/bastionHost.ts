@@ -20,7 +20,7 @@ export const BastionHost = ({ stack, app }: StackContext) => {
   const keypairName = process.env['SSH_KEYPAIR_NAME'];
 
   const { vpc, defaultLambdaSecurityGroup } = use(Network);
-  const { rds } = use(Database);
+  const { rds, cluster } = use(Database);
   const { hostedZone } = use(Dns);
 
   const host = new BastionHostLinux(stack, 'LinuxHost', {
@@ -70,6 +70,10 @@ export const BastionHost = ({ stack, app }: StackContext) => {
   new CfnOutput(stack, 'BastionSSHCmd', {
     description: 'Bastion SSH command-line',
     value: `ssh -i ~/.ssh/${keypairName}.cer ec2-user@${publicHost}`,
+  });
+  new CfnOutput(stack, 'BastionSSHTunnelDBCmd', {
+    description: 'Create SSH tunnel to DB',
+    value: `ssh -i ~/.ssh/${keypairName}.cer ec2-user@${publicHost} -L 5431:${cluster.clusterEndpoint}:5432`,
   });
 
   return { host };
