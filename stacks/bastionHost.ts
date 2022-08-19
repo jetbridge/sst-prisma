@@ -1,5 +1,5 @@
 import { StackContext, use } from '@serverless-stack/resources';
-import { CfnOutput, Duration } from 'aws-cdk-lib';
+import { Duration } from 'aws-cdk-lib';
 import {
   BastionHostLinux,
   CfnEIP,
