@@ -3,15 +3,40 @@
 
   Not really using a public API.
 */
+import { sleep } from 'common';
 import { Migrate } from '@prisma/migrate/dist/Migrate.js';
 import { ensureDatabaseExists } from '@prisma/migrate/dist/utils/ensureDatabaseExists';
 import { printFilesFromMigrationIds } from '@prisma/migrate/dist/utils/printFiles';
 import chalk from 'chalk';
-import { loadDatabaseUrl } from './client';
+import { getPrisma, loadDatabaseUrl } from './client';
 
 export const handler = async (): Promise<string> => {
-  const schemaPath = './prisma/schema.prisma';
+  const schemaPath = './schema.prisma';
   const dbUrl = await loadDatabaseUrl();
+
+  // get DB connection
+  try {
+    const client = await getPrisma();
+    await client.$connect();
+  } catch (ex) {
+    const message = (ex as any).message;
+
+    if (message.includes('P1001')) {
+      // timed out waiting to reach DB server
+      // it might be waking up from slumber
+      // so retry in a short bit
+      console.warn('Database not yet available, retrying...');
+      await sleep(15_000);
+      console.info('Retrying...');
+
+      const client = await getPrisma();
+      await client.$connect();
+    } else {
+      console.error('Failed to run database migrations');
+      throw ex;
+    }
+  }
+
   process.env.DATABASE_URL = dbUrl;
 
   const migrate = new Migrate(schemaPath);

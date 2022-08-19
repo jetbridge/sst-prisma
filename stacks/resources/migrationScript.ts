@@ -40,7 +40,9 @@ export class DbMigrationScript extends Construct {
           beforeBundling: () => [],
           beforeInstall: () => [],
           afterBundling: (inputDir, outputDir) => [
-            `cp -r "${inputDir}/backend/prisma" "${outputDir}"`,
+            `cp "${inputDir}/backend/prisma/schema.prisma" "${outputDir}"`,
+            `cp -r "${inputDir}/backend/prisma/migrations" "${outputDir}"`,
+
             // @prisma/migrate wants this package.json to exist
             `cp -r "${inputDir}/package.json" "${outputDir}/backend/src"`,
           ],

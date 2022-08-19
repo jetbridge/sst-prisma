@@ -24,9 +24,3 @@ export function mockSecret(secretName: APP_SECRETS, val: string) {
 export function areWeTestingWithVite(): boolean {
   return !!process.env.VITEST_WORKER_ID;
 }
-
-export const sleep = (ms: number) => {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-};

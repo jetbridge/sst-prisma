@@ -1,4 +1,4 @@
-import type { PrismaClient as PrismaClientType } from '@prisma/client';
+import type { Prisma, PrismaClient as PrismaClientType } from '@prisma/client';
 import { PrismaClient } from '@prisma/client';
 import memoize from 'memoizee';
 import { requireSecret } from '../secrets';
@@ -9,8 +9,8 @@ export const loadDatabaseUrl = async (): Promise<string> => {
   return databaseUrl;
 };
 
-export const getPrisma = memoize(async (): Promise<PrismaClientType> => {
+export const getPrisma = memoize(async (opts?: Prisma.PrismaClientOptions): Promise<PrismaClientType> => {
   await loadDatabaseUrl();
 
-  return new PrismaClient();
+  return new PrismaClient(opts);
 });

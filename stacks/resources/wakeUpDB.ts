@@ -31,7 +31,7 @@ export class WakeDB extends Construct {
         physicalResourceId: PhysicalResourceId.of(Date.now().toString()), // Update physical id to always fetch the latest version
       },
       policy: AwsCustomResourcePolicy.fromSdkCalls({
-        resources: AwsCustomResourcePolicy.ANY_RESOURCE,
+        resources: [cluster.clusterArn],
       }),
     });
   }
