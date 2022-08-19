@@ -46,8 +46,8 @@ export const BastionHost = ({ stack, app }: StackContext) => {
     eip: eip.ref,
     instanceId: host.instanceId,
   });
-  new CfnOutput(stack, 'BastionIP', {
-    value: eip.ref,
+  stack.addOutputs({
+    BastionHostIp: { value: eip.ref, description: 'IP address of the bastion host' },
   });
 
   let publicHost = eip.ref;
@@ -60,20 +60,22 @@ export const BastionHost = ({ stack, app }: StackContext) => {
       recordName: `bastion.${hostedZone.zoneName}`,
       ttl: Duration.minutes(2),
     });
-    new CfnOutput(stack, 'BastionHost', {
-      value: aRec.domainName,
+    stack.addOutputs({
+      BastionHost: { value: aRec.domainName, description: 'Bastion hostname' },
     });
     publicHost = aRec.domainName;
   }
 
   // copy and paste SSH command-line
-  new CfnOutput(stack, 'BastionSSHCmd', {
-    description: 'Bastion SSH command-line',
-    value: `ssh -i ~/.ssh/${keypairName}.cer ec2-user@${publicHost}`,
-  });
-  new CfnOutput(stack, 'BastionSSHTunnelDBCmd', {
-    description: 'Create SSH tunnel to DB',
-    value: `ssh -i ~/.ssh/${keypairName}.cer ec2-user@${publicHost} -L 5431:${cluster.clusterEndpoint}:5432`,
+  stack.addOutputs({
+    BastionHostSSHCommand: {
+      description: 'Bastion SSH command-line',
+      value: `ssh -i ~/.ssh/${keypairName}.cer ec2-user@${publicHost}`,
+    },
+    BastionHostSSHTunnelCommand: {
+      description: 'Create SSH tunnel to DB',
+      value: `ssh -i ~/.ssh/${keypairName}.cer ec2-user@${publicHost} -L 5431:${cluster.clusterEndpoint.hostname}:${cluster.clusterEndpoint.port}`,
+    },
   });
 
   return { host };
