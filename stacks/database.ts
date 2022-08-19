@@ -19,21 +19,27 @@ export function Database({ stack, app }: StackContext) {
     engine: 'postgresql10.14',
     defaultDatabaseName,
     scaling: {
-      autoPause: IS_PRODUCTION ? false : Duration.hours(5).toMinutes(),
+      autoPause: IS_PRODUCTION
+        ? false
+        : // go to sleep after this length of inactivity
+          Duration.hours(4).toMinutes(),
       minCapacity: 'ACU_2',
       maxCapacity: 'ACU_4',
     },
   });
 
-  rds.cdk.cluster.connections.allowDefaultPortFrom(
-    net.defaultLambdaSecurityGroup,
-    'Allow access from lambda functions'
-  );
+  const { cluster } = rds.cdk;
+
+  cluster.connections.allowDefaultPortFrom(net.defaultLambdaSecurityGroup, 'Allow access from lambda functions');
 
   app.addDefaultFunctionEnv({
     [envVar('DATABASE')]: defaultDatabaseName,
     [envVar('CLUSTER_ARN')]: rds.clusterArn,
     [envVar('DB_SECRET_ARN')]: rds.secretArn,
+  });
+  stack.addOutputs({
+    DB: defaultDatabaseName,
+    DBUsername: cluster.secret?.secretValueFromJson('username').toString() || 'unset',
   });
   app.addDefaultFunctionPermissions([rds]);
 
@@ -45,7 +51,7 @@ export function Database({ stack, app }: StackContext) {
     });
   }
 
-  return { rds, defaultDatabaseName };
+  return { rds, cluster, defaultDatabaseName };
 }
 
 /**

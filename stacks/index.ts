@@ -2,6 +2,7 @@ import * as sst from '@serverless-stack/resources';
 import { Runtime } from 'aws-cdk-lib/aws-lambda';
 import { AppSyncApi } from './appSyncApi';
 import { Auth } from './auth';
+import { BastionHost } from './bastionHost';
 import { Database } from './database';
 import { DatabaseMigrations } from './databaseMigrations';
 import { Dns } from './dns';
@@ -29,6 +30,7 @@ export default function main(app: sst.App) {
     .stack(Dns)
     .stack(Layers)
     .stack(Database)
+    .stack(BastionHost)
     .stack(Secrets)
     .stack(DatabaseMigrations)
     .stack(Auth)
