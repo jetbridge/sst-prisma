@@ -67,7 +67,7 @@ export const BastionHost = ({ stack, app }: StackContext) => {
   }
 
   // copy and paste SSH command-line
-  new CfnOutput(stack, 'BastionSSH', {
+  new CfnOutput(stack, 'BastionSSHCmd', {
     description: 'Bastion SSH command-line',
     value: `ssh -i ~/.ssh/${keypairName}.cer ec2-user@${publicHost}`,
   });
