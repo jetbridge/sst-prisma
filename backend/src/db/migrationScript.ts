@@ -20,13 +20,14 @@ export const handler = async (): Promise<string> => {
     await client.$connect();
   } catch (ex) {
     const message = (ex as any).message;
+    console.error(message);
 
     if (message.includes('P1001')) {
       // timed out waiting to reach DB server
       // it might be waking up from slumber
       // so retry in a short bit
       console.warn('Database not yet available, retrying...');
-      await sleep(15_000);
+      await sleep(25_000);
       console.info('Retrying...');
 
       const client = await getPrisma();
