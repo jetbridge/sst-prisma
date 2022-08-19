@@ -19,6 +19,13 @@ export const BastionHost = ({ stack, app }: StackContext) => {
   // set this to enable a bastion host
   const keypairName = process.env['SSH_KEYPAIR_NAME'];
 
+  if (!keypairName) {
+    stack.addOutputs({
+      Enabled: { value: 'false', description: 'SSH_KEYPAIR_NAME is not set' },
+    });
+    return;
+  }
+
   const { vpc, defaultLambdaSecurityGroup } = use(Network);
   const { rds, cluster } = use(Database);
   const { hostedZone } = use(Dns);
