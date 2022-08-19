@@ -9,6 +9,7 @@ import { ensureDatabaseExists } from '@prisma/migrate/dist/utils/ensureDatabaseE
 import { printFilesFromMigrationIds } from '@prisma/migrate/dist/utils/printFiles';
 import chalk from 'chalk';
 import { getPrisma, loadDatabaseUrl } from './client';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 
 export const handler = async (): Promise<string> => {
   const schemaPath = './schema.prisma';
@@ -21,8 +22,10 @@ export const handler = async (): Promise<string> => {
   } catch (ex) {
     const message = (ex as any).message;
     console.error(message);
+    const errorCode = (ex as PrismaClientKnownRequestError).code;
+    console.error({ errorCode });
 
-    if (message.includes('P1001')) {
+    if (errorCode == 'P1001') {
       // timed out waiting to reach DB server
       // it might be waking up from slumber
       // so retry in a short bit
