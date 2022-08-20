@@ -3,17 +3,13 @@
 
   Not really using a public API.
 */
-import { sleep } from 'common';
+import { PrismaClientInitializationError } from '@prisma/client/runtime';
 import { Migrate } from '@prisma/migrate/dist/Migrate.js';
 import { ensureDatabaseExists } from '@prisma/migrate/dist/utils/ensureDatabaseExists';
 import { printFilesFromMigrationIds } from '@prisma/migrate/dist/utils/printFiles';
 import chalk from 'chalk';
+import { sleep } from 'common';
 import { getPrisma, loadDatabaseUrl } from './client';
-import {
-  PrismaClientInitializationError,
-  PrismaClientKnownRequestError,
-  PrismaClientValidationError,
-} from '@prisma/client/runtime';
 
 export const handler = async (): Promise<string> => {
   const schemaPath = './schema.prisma';
