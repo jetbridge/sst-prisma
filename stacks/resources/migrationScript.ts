@@ -1,13 +1,13 @@
 import { App, Function, Script } from '@serverless-stack/resources';
 import { RemovalPolicy } from 'aws-cdk-lib';
-import { Vpc } from 'aws-cdk-lib/aws-ec2';
+import { IVpc } from 'aws-cdk-lib/aws-ec2';
 import { Construct } from 'constructs';
 import { ESM_REQUIRE_SHIM } from 'stacks';
 import { LAYER_MODULES, PRISMA_VERSION } from '../layers';
 import { PrismaLayer } from './prismaLayer';
 
 interface DbMigrationScriptProps {
-  vpc: Vpc;
+  vpc?: IVpc;
 }
 
 export class DbMigrationScript extends Construct {
