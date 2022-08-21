@@ -48,13 +48,6 @@ export function Database({ stack, app }: StackContext) {
       description: 'Command to get DB connection info and credentials',
     },
   });
-  stack.addOutputs({
-    DBName: { value: defaultDatabaseName, description: 'Name of the default database' },
-    GetSecretsCommand: {
-      value: `aws secretsmanager get-secret-value --region ${stack.region} --secret-id ${rds.secretArn} --query SecretString --output text`,
-      description: 'Command to get DB connection info and credentials',
-    },
-  });
   app.addDefaultFunctionPermissions([rds]);
   app.setDefaultFunctionProps({ config: configs });
 

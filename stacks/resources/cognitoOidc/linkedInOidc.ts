@@ -7,11 +7,13 @@ import {
 } from 'aws-cdk-lib/aws-cognito';
 import { Effect, PolicyStatement } from 'aws-cdk-lib/aws-iam';
 import { Key } from 'aws-cdk-lib/aws-kms';
+import { Secret } from 'aws-cdk-lib/aws-secretsmanager';
 import { Construct } from 'constructs';
 import { OidcProvider } from './types';
 
 export interface LinkedInOidcProps {
   userPool: IUserPool;
+  secrets: Secret;
   signingKey: Key;
   cognitoDomainName: string;
 }
@@ -20,11 +22,14 @@ export class LinkedInOidc extends Construct {
   public userPoolIdentityProviderOidc;
   public api;
 
-  constructor(scope: Construct, id: string, { userPool, signingKey, cognitoDomainName }: LinkedInOidcProps) {
+  constructor(scope: Construct, id: string, { userPool, secrets, signingKey, cognitoDomainName }: LinkedInOidcProps) {
     super(scope, id);
 
-    const clientId = new Config.Secret(this, 'LINKEDIN_CLIENT_ID');
-    const clientSecret = new Config.Secret(this, 'LINKEDIN_CLIENT_SECRET');
+    // TODO - not supported reading Secret in CDK-land yet
+    // const clientId = new Config.Secret(this, 'LINKEDIN_CLIENT_ID');
+    // const clientSecret = new Config.Secret(this, 'LINKEDIN_CLIENT_SECRET');
+    const clientSecret = secrets.secretValueFromJson('LINKEDIN_CLIENT_SECRET').toString();
+    const clientId = secrets.secretValueFromJson('LINKEDIN_CLIENT_ID').toString();
     const signingKeyArn = new Config.Parameter(this, 'SIGNING_KEY_ARN', { value: signingKey.keyArn });
     const oidcProvider = new Config.Parameter(this, 'OIDC_PROVIDER', { value: 'LINKEDIN' as OidcProvider });
     const cognitoRedirectUri = new Config.Parameter(this, 'COGNITO_REDIRECT_URI', {
@@ -37,7 +42,7 @@ export class LinkedInOidc extends Construct {
         function: {
           bundle: { format: 'esm' },
           srcPath: 'stacks/resources/cognitoOidc/handlers',
-          config: [clientId, clientSecret, signingKeyArn, cognitoRedirectUri, oidcProvider],
+          // config: [clientId, clientSecret, signingKeyArn, cognitoRedirectUri, oidcProvider],
         },
       },
       routes: {
