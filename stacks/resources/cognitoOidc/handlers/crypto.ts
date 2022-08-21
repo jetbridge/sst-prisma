@@ -1,14 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { GetPublicKeyCommand, KMSClient, SignCommand } from '@aws-sdk/client-kms';
+import { Config } from '@serverless-stack/node/config';
 import base64url from 'base64url';
 import { exportJWK, importSPKI } from 'jose';
-import { ENV_SIGNING_KEY_ARN } from '../types';
 
-const getKeyArn = () => {
-  const arn = process.env[ENV_SIGNING_KEY_ARN];
-  if (!arn) throw new Error(`${ENV_SIGNING_KEY_ARN} is not set`);
-  return arn;
-};
+const getKeyArn = () => Config.SIGNING_KEY_ARN;
 
 // convert binary x509 DER to PEM
 const formatPublicKey = (key: Uint8Array) =>

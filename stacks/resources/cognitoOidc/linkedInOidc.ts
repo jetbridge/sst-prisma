@@ -1,4 +1,4 @@
-import { Api } from '@serverless-stack/resources';
+import { Api, Config } from '@serverless-stack/resources';
 import {
   IUserPool,
   OidcAttributeRequestMethod,
@@ -7,20 +7,11 @@ import {
 } from 'aws-cdk-lib/aws-cognito';
 import { Effect, PolicyStatement } from 'aws-cdk-lib/aws-iam';
 import { Key } from 'aws-cdk-lib/aws-kms';
-import { Secret } from 'aws-cdk-lib/aws-secretsmanager';
-import { secret } from 'common';
 import { Construct } from 'constructs';
-import {
-  ENV_COGNITO_REDIRECT_URI,
-  ENV_OIDC_PROVIDER,
-  ENV_SECRET_NAME,
-  ENV_SIGNING_KEY_ARN,
-  OidcProvider,
-} from './types';
+import { OidcProvider } from './types';
 
 export interface LinkedInOidcProps {
   userPool: IUserPool;
-  secrets: Secret;
   signingKey: Key;
   cognitoDomainName: string;
 }
@@ -29,11 +20,16 @@ export class LinkedInOidc extends Construct {
   public userPoolIdentityProviderOidc;
   public api;
 
-  constructor(scope: Construct, id: string, { userPool, secrets, signingKey, cognitoDomainName }: LinkedInOidcProps) {
+  constructor(scope: Construct, id: string, { userPool, signingKey, cognitoDomainName }: LinkedInOidcProps) {
     super(scope, id);
 
-    const clientSecret = secrets.secretValueFromJson(secret('LINKEDIN_CLIENT_SECRET')).toString();
-    const clientId = secrets.secretValueFromJson(secret('LINKEDIN_CLIENT_ID')).toString();
+    const clientId = new Config.Secret(this, 'LINKEDIN_CLIENT_ID');
+    const clientSecret = new Config.Secret(this, 'LINKEDIN_CLIENT_SECRET');
+    const signingKeyArn = new Config.Parameter(this, 'SIGNING_KEY_ARN', { value: signingKey.keyArn });
+    const oidcProvider = new Config.Parameter(this, 'OIDC_PROVIDER', { value: 'LINKEDIN' as OidcProvider });
+    const cognitoRedirectUri = new Config.Parameter(this, 'COGNITO_REDIRECT_URI', {
+      value: `https://${cognitoDomainName}/oauth2/idpresponse`,
+    });
 
     // API for us to do the translation between LinkedIn and Cognito using OIDC
     const api = new Api(scope, 'Api', {
@@ -41,13 +37,7 @@ export class LinkedInOidc extends Construct {
         function: {
           bundle: { format: 'esm' },
           srcPath: 'stacks/resources/cognitoOidc/handlers',
-          permissions: [[secrets, 'grantRead']],
-          environment: {
-            [ENV_SIGNING_KEY_ARN]: signingKey.keyArn,
-            [ENV_SECRET_NAME]: secrets.secretName,
-            [ENV_COGNITO_REDIRECT_URI]: `https://${cognitoDomainName}/oauth2/idpresponse`,
-            [ENV_OIDC_PROVIDER]: 'LINKEDIN' as OidcProvider,
-          },
+          config: [clientId, clientSecret, signingKeyArn, cognitoRedirectUri, oidcProvider],
         },
       },
       routes: {
@@ -74,8 +64,8 @@ export class LinkedInOidc extends Construct {
       name: 'linkedin',
       scopes: ['openid', 'r_liteprofile', 'r_emailaddress'],
       issuerUrl: apiUrl,
-      clientId,
-      clientSecret,
+      clientId: clientId.toString(),
+      clientSecret: clientSecret.toString(),
       userPool,
       attributeMapping: {
         email: ProviderAttribute.other('email'),

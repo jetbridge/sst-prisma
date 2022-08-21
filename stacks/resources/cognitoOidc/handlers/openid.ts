@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getPublicKey } from './crypto';
-import { getOidcSecrets } from './secret';
 
 export class OpenID {
   service: any;
@@ -14,18 +13,15 @@ export class OpenID {
   }
 
   async getUserInfo(accessToken: string) {
-    const secrets = await getOidcSecrets();
-    return this.service(secrets).getUserInfo(accessToken);
+    return this.service().getUserInfo(accessToken);
   }
 
   async getAuthorizeUrl(client_id: any, scope: any, state: any, response_type: any) {
-    const secrets = await getOidcSecrets();
-    return this.service(secrets).getAuthorizeUrl(client_id, scope, state, response_type);
+    return this.service().getAuthorizeUrl(client_id, scope, state, response_type);
   }
 
   async getTokens(code: any, state: any, host: any) {
-    const secrets = await getOidcSecrets();
-    return this.service(secrets).getToken(code, state, host);
+    return this.service().getToken(code, state, host);
   }
 
   // might be unused

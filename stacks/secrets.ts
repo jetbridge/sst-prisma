@@ -1,6 +1,5 @@
-import { StackContext } from '@serverless-stack/resources';
+import { Config, StackContext } from '@serverless-stack/resources';
 import { Secret } from 'aws-cdk-lib/aws-secretsmanager';
-import { envVar, secret as secretEnv } from 'common';
 import { makeDatabaseUrl } from './database';
 
 export function Secrets({ stack, app }: StackContext) {
@@ -9,20 +8,15 @@ export function Secrets({ stack, app }: StackContext) {
     generateSecretString: {
       secretStringTemplate: JSON.stringify({
         // DB connection info
-        [secretEnv('DATABASE_URL')]: makeDatabaseUrl(),
-
-        // optional
-        [secretEnv('LINKEDIN_CLIENT_ID')]: 'changeme',
-        [secretEnv('LINKEDIN_CLIENT_SECRET')]: 'changeme',
+        DATABASE_URL: makeDatabaseUrl(),
       }),
-      generateStringKey: secretEnv('APP'),
+      generateStringKey: 'APP',
     },
   });
 
-  app.addDefaultFunctionEnv({
-    [envVar('APP_SECRET_ARN')]: secret.secretArn,
-  });
+  const appSecretArn = new Config.Parameter(stack, 'APP_SECRET_ARN', { value: secret.secretArn });
   app.addDefaultFunctionPermissions([[secret, 'grantRead']]);
+  app.setDefaultFunctionProps({ config: [appSecretArn] });
 
   return { secret };
 }

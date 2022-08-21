@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { got } from 'got';
 import { URLSearchParams } from 'url';
-import { ENV_COGNITO_REDIRECT_URI } from '../../types';
 import { makeIdToken } from '../crypto';
 import { filterOutScopesForLinkedin } from '../util';
 import * as req from './requests';
+import { Config } from '@serverless-stack/node/config';
 
 // `openid` is an scope required by Cognito
 // but Linkedin throws an error if this scope is passed as it is not recognized
@@ -86,13 +86,9 @@ const parseImageUrl = (imageElements: any[]): string | null => {
   return best.identifiers?.[0]?.identifier || null;
 };
 
-interface LinkedInSecrets {
-  LINKEDIN_CLIENT_ID: string;
-  LINKEDIN_CLIENT_SECRET: string;
-}
-export const linkedin = (secrets: LinkedInSecrets) => {
-  const clientId = secrets.LINKEDIN_CLIENT_ID;
-  const redirUrl = process.env[ENV_COGNITO_REDIRECT_URI];
+export const linkedin = () => {
+  const clientId = Config.LINKEDIN_CLIENT_ID;
+  const redirUrl = Config.COGNITO_REDIRECT_URI;
   if (!redirUrl) throw new Error(`missing ${redirUrl} in env`);
   return {
     getAuthorizeUrl: (client_id: any, scope: any, state: any, response_type: any) => {
@@ -147,10 +143,10 @@ export const linkedin = (secrets: LinkedInSecrets) => {
     getToken: async (code: any, state: any, host: any) => {
       const data = {
         grant_type: 'authorization_code',
-        redirect_uri: process.env[ENV_COGNITO_REDIRECT_URI],
-        client_id: secrets.LINKEDIN_CLIENT_ID,
+        redirect_uri: Config.COGNITO_REDIRECT_URI,
+        client_id: Config.LINKEDIN_CLIENT_ID,
         response_type: 'code',
-        client_secret: secrets.LINKEDIN_CLIENT_SECRET,
+        client_secret: Config.LINKEDIN_CLIENT_SECRET,
         code,
         // State may not be present, so we conditionally include it
         ...(state && { state }),
