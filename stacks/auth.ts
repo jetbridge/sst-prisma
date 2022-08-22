@@ -86,6 +86,7 @@ export function Auth({ stack, app }: StackContext) {
     signingKey,
     userPool,
     cognitoDomainName,
+    secrets: use(Secrets).secret,
   });
 
   // create cognito client

@@ -1,6 +1,5 @@
 import { StackContext } from '@serverless-stack/resources';
 import { Secret } from 'aws-cdk-lib/aws-secretsmanager';
-import { makeDatabaseUrl } from './database';
 
 export function Secrets({ stack, app }: StackContext) {
   const secret = new Secret(stack, 'Secret', {
@@ -16,7 +15,7 @@ export function Secrets({ stack, app }: StackContext) {
   });
 
   app.addDefaultFunctionEnv({
-    [envVar('APP_SECRET_ARN')]: secret.secretArn,
+    ['APP_SECRET_ARN']: secret.secretArn,
   });
   app.addDefaultFunctionPermissions([[secret, 'grantRead']]);
 

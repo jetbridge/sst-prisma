@@ -25,7 +25,7 @@ export class LinkedInOidc extends Construct {
   constructor(scope: Construct, id: string, { userPool, secrets, signingKey, cognitoDomainName }: LinkedInOidcProps) {
     super(scope, id);
 
-    // TODO - not supported reading Secret in CDK-land yet
+    // TODO - not supported to read from sst.Secret in CDK-land yet
     // const clientId = new Config.Secret(this, 'LINKEDIN_CLIENT_ID');
     // const clientSecret = new Config.Secret(this, 'LINKEDIN_CLIENT_SECRET');
     const clientSecret = secrets.secretValueFromJson('LINKEDIN_CLIENT_SECRET').toString();
@@ -42,7 +42,12 @@ export class LinkedInOidc extends Construct {
         function: {
           bundle: { format: 'esm' },
           srcPath: 'stacks/resources/cognitoOidc/handlers',
-          // config: [clientId, clientSecret, signingKeyArn, cognitoRedirectUri, oidcProvider],
+          config: [
+            //clientId, clientSecret,
+            signingKeyArn,
+            cognitoRedirectUri,
+            oidcProvider,
+          ],
         },
       },
       routes: {

@@ -34,7 +34,7 @@ export function Database({ stack, app }: StackContext) {
 
   const prismaConnectionLimit = process.env.PRISMA_CONNECTION_LIMIT || 5;
 
-  const configs = [
+  const config = [
     new Config.Parameter(stack, 'DATABASE_NAME', { value: defaultDatabaseName }),
     new Config.Parameter(stack, 'CLUSTER_ARN', { value: rds.clusterArn }),
     new Config.Parameter(stack, 'DB_SECRET_ARN', { value: rds.secretArn }),
@@ -49,7 +49,7 @@ export function Database({ stack, app }: StackContext) {
     },
   });
   app.addDefaultFunctionPermissions([rds]);
-  app.setDefaultFunctionProps({ config: configs });
+  app.setDefaultFunctionProps({ config });
 
   // DB connection for local dev can be overridden
   const localDatabaseUrl = process.env[envVar('DATABASE_URL')];
