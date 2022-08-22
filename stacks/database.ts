@@ -1,7 +1,7 @@
 import { Config, RDS, StackContext, use } from '@serverless-stack/resources';
 
 import { Duration, RemovalPolicy } from 'aws-cdk-lib';
-import { APP_NAME, envVar } from 'common';
+import { APP_NAME } from 'common';
 import { Network } from 'stacks/network';
 import { IS_PRODUCTION } from './config';
 
@@ -52,10 +52,11 @@ export function Database({ stack, app }: StackContext) {
   app.setDefaultFunctionProps({ config });
 
   // DB connection for local dev can be overridden
-  const localDatabaseUrl = process.env[envVar('DATABASE_URL')];
-  if (process.env.IS_LOCAL_DEV && localDatabaseUrl) {
+  // https://docs.sst.dev/environment-variables#is_local
+  const localDatabaseUrl = process.env['DATABASE_URL'];
+  if (process.env.IS_LOCAL && localDatabaseUrl) {
     app.addDefaultFunctionEnv({
-      [envVar('DATABASE_URL')]: localDatabaseUrl,
+      ['DATABASE_URL']: localDatabaseUrl,
     });
   }
 
