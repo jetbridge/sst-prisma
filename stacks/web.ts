@@ -18,7 +18,6 @@ export function Web({ stack }: StackContext) {
         }
       : undefined,
     environment: {
-      NEXTAUTH_SECRET: 'insecure', // needed? unclear
       NEXTAUTH_URL: 'http://localhost:6020', // FIXME: how to pass in this URL?
       NEXT_PUBLIC_REGION: stack.region,
       NEXT_PUBLIC_APPSYNC_ENDPOINT: appSyncApi.api.url,
