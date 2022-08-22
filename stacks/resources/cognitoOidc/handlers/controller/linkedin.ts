@@ -25,6 +25,20 @@ interface UserDetails {
   vanityName?: string;
 }
 
+// temporary: https://github.com/serverless-stack/sst/issues/1984
+import { GetSecretValueCommand, SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
+
+export const getOidcSecrets = async () => {
+  const secretName = process.env['APP_SECRET_ARN'];
+  if (!secretName) throw new Error(`Missing environment variable: ${secretName}`);
+
+  const client = new SecretsManagerClient({});
+  const req = new GetSecretValueCommand({ SecretId: secretName });
+  const res = await client.send(req);
+  if (!res.SecretString) throw new Error(`Missing secretString in ${secretName}`);
+  return JSON.parse(res.SecretString || '{}');
+};
+
 const getApiEndpoints = (apiBaseUrl: string, loginBaseUrl: string) => {
   return {
     // explained here:
@@ -86,10 +100,15 @@ const parseImageUrl = (imageElements: any[]): string | null => {
   return best.identifiers?.[0]?.identifier || null;
 };
 
+// TODO: replace with SST
+const { LINKEDIN_CLIENT_ID, LINKEDIN_CLIENT_SECRET } = await getOidcSecrets();
+
 export const linkedin = () => {
-  const clientId = Config.LINKEDIN_CLIENT_ID;
+  const clientId = LINKEDIN_CLIENT_ID; // Config.LINKEDIN_CLIENT_ID;
+  const clientSecret = LINKEDIN_CLIENT_SECRET; // Config.LINKEDIN_CLIENT_SECRET;
   const redirUrl = Config.COGNITO_REDIRECT_URI;
   if (!redirUrl) throw new Error(`missing ${redirUrl} in env`);
+
   return {
     getAuthorizeUrl: (client_id: any, scope: any, state: any, response_type: any) => {
       const newScope: string = filterOutScopesForLinkedin(scope);
@@ -144,9 +163,9 @@ export const linkedin = () => {
       const data = {
         grant_type: 'authorization_code',
         redirect_uri: Config.COGNITO_REDIRECT_URI,
-        client_id: Config.LINKEDIN_CLIENT_ID,
+        client_id: clientId,
         response_type: 'code',
-        client_secret: Config.LINKEDIN_CLIENT_SECRET,
+        client_secret: clientSecret,
         code,
         // State may not be present, so we conditionally include it
         ...(state && { state }),
