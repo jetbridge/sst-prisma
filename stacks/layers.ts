@@ -6,7 +6,6 @@ import { PrismaLayer } from './resources/prismaLayer';
 export const PRISMA_VERSION = '4.2.1';
 
 // default externalModules (not bundled with lambda function code)
-// export const LAYER_MODULES = ['aws-sdk', 'encoding', '@prisma/client/runtime'];
 export const LAYER_MODULES = ['encoding', '@prisma/client/runtime'];
 
 export function Layers({ stack, app }: StackContext) {
