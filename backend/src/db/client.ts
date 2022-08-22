@@ -8,6 +8,7 @@ export const loadDatabaseUrl = async (): Promise<string> => {
   let databaseUrl = process.env.DATABASE_URL;
   if (databaseUrl) return databaseUrl;
 
+  // load database secret
   const secretArn = Config.DB_SECRET_ARN;
   const client = new SecretsManagerClient({});
   const req = new GetSecretValueCommand({ SecretId: secretArn });
@@ -17,6 +18,7 @@ export const loadDatabaseUrl = async (): Promise<string> => {
   const { host, username, password, port, dbname } = secrets;
   if (!host) throw new Error('Missing host in secrets');
 
+  // construct database url
   databaseUrl = `postgresql://${username}:${password}@${host}:${port}/${dbname}?connection_limit=${
     Config.PRISMA_CONNECTION_LIMIT || ''
   }`;
