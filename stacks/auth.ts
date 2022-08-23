@@ -55,21 +55,22 @@ export function Auth({ stack, app }: StackContext) {
   // custom domain
   const domainName = dns.domainName;
   if (dns.hostedZone && dns.certificateGlobal && domainName) {
+    const authDomain = 'auth.' + domainName;
     const domain = userPool.addDomain('CustomDomain', {
       customDomain: {
-        domainName: 'auth.' + domainName,
+        domainName: authDomain,
         certificate: dns.certificateGlobal,
       },
     });
     new ARecord(stack, 'Domain4', {
       zone: dns.hostedZone,
       target: RecordTarget.fromAlias(new UserPoolDomainTarget(domain)),
-      recordName: domainName,
+      recordName: authDomain,
     });
     new AaaaRecord(stack, 'Domain6', {
       zone: dns.hostedZone,
       target: RecordTarget.fromAlias(new UserPoolDomainTarget(domain)),
-      recordName: domainName,
+      recordName: authDomain,
     });
   }
 

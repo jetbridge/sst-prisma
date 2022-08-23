@@ -11,11 +11,15 @@ export function Web({ stack }: StackContext) {
   const dns = use(Dns);
   const secrets = use(Secrets);
 
-  // Web
   // docs: https://docs.serverless-stack.com/constructs/NextjsSite
   const frontendSite = new NextjsSite(stack, 'Web', {
     path: 'web',
-    customDomain: dns.domainName,
+    customDomain: dns.domainName
+      ? {
+          domainName: dns.domainName,
+          domainAlias: 'www.' + dns.domainName,
+        }
+      : undefined,
     environment: {
       NEXTAUTH_SECRET: secrets.secret.secretValueFromJson(secret('APP')).toString(),
       NEXTAUTH_URL: 'http://localhost:6020', // FIXME: how to pass in this URL?
