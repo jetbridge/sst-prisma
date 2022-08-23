@@ -19,7 +19,7 @@ const Splash = () => {
             <div
               className={styles.drop}
               key={`tile-${techIndex.current}`}
-              style={{ left: getRandomNumber(0, rootRef.current?.clientWidth || 600), top: getRandomNumber(100, 200) }}
+              style={{ left: getRandomNumber(0, rootRef.current?.clientWidth || 600), top: getRandomNumber(50, 300) }}
               onAnimationEnd={() => setDrops((c) => c.slice(1))}
             >
               {STACK[techIndex.current++ % STACK.length]}
@@ -37,8 +37,8 @@ const Splash = () => {
       <div className={styles.background}>{drops}</div>
       <h1>Next+SST</h1>
       <p>
-        Powered by{' '}
-        <a href="https://jetbridge.com" target="_blank" rel="noopener noreferrer">
+        Provided by {/* eslint-disable-next-line react/jsx-no-target-blank */}
+        <a href="https://jetbridge.com" target="_blank" rel="noopener">
           JetBridge
         </a>
       </p>
