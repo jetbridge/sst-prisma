@@ -15,7 +15,7 @@ export const handler = async (): Promise<string> => {
 
   // add longer connection timeout in case the DB is sleeping
   const url = new URL(dbUrl);
-  url.searchParams.set('pool_timeout', '60');
+  url.searchParams.set('pool_timeout', '120');
 
   // get DB connection
   process.env.DATABASE_URL = url.toString();
