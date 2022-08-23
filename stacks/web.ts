@@ -21,7 +21,7 @@ export function Web({ stack }: StackContext) {
         }
       : undefined,
     environment: {
-      NEXTAUTH_SECRET: secrets.secret.secretValueFromJson(secret('APP')).toString(),
+      NEXTAUTH_SECRET: secrets.secret.secretValueFromJson(secret('APP')).toString(), // FIXME https://github.com/nextauthjs/next-auth/discussions/5145 & https://github.com/serverless-stack/sst/issues/1986
       NEXTAUTH_URL: 'http://localhost:6020', // FIXME: how to pass in this URL?
       NEXT_PUBLIC_REGION: stack.region,
       NEXT_PUBLIC_APPSYNC_ENDPOINT: appSyncApi.api.url,
