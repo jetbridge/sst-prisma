@@ -12,7 +12,7 @@
     "noUncheckedIndexedAccess": false,
     "noPropertyAccessFromIndexSignature": false,
     "exactOptionalPropertyTypes": false,
-    "types": ["vitest/globals"],
+    "types": ["vitest/globals", "@types/serverless-stack__node"],
     "baseUrl": ".",
     "paths": {
       "@backend/*": ["./backend/src/*"],
