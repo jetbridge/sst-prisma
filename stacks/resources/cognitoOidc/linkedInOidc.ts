@@ -10,6 +10,7 @@ import { Key } from 'aws-cdk-lib/aws-kms';
 import { Secret } from 'aws-cdk-lib/aws-secretsmanager';
 import { secret } from 'common';
 import { Construct } from 'constructs';
+import { linkedinScope } from './handlers/controller/linkedin';
 import {
   ENV_COGNITO_REDIRECT_URI,
   ENV_OIDC_PROVIDER,
@@ -72,7 +73,7 @@ export class LinkedInOidc extends Construct {
     // LinkedIn OIDC auth
     this.userPoolIdentityProviderOidc = new UserPoolIdentityProviderOidc(scope, 'LinkedInOidcProvider', {
       name: 'linkedin',
-      scopes: ['openid', 'r_liteprofile', 'r_emailaddress'],
+      scopes: linkedinScope,
       issuerUrl: apiUrl,
       clientId,
       clientSecret,
