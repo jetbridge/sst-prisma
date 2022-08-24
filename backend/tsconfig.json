@@ -5,7 +5,7 @@
     "outDir": "./dist",
     "module": "esnext",
     "target": "es2021",
-    "types": ["vitest/globals", "@types/serverless-stack__node"]
+    "types": ["vitest/globals"]
   },
   "references": [{ "path": "../common" }]
 }

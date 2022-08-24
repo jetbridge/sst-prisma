@@ -25,6 +25,7 @@
     "build": "pnpm build:common && sst build",
     "build:common": "pnpm run -C common build",
     "build:web": "pnpm run -C web build",
+    "build:ci": "pnpm run build --stage test",
     "deploy": "pnpm generate && pnpm build:common && sst deploy",
     "remove": "sst remove",
     "prettier:exc": "./node_modules/.bin/prettier --config .prettierrc.yaml --write",

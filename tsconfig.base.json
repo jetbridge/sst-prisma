@@ -22,5 +22,6 @@
   },
 
   "include": ["stacks"],
+  "files": ["./index.d.ts"],
   "references": [{ "path": "common" }, { "path": "web" }, { "path": "backend" }]
 }
