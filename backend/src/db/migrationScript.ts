@@ -3,24 +3,41 @@
 
   Not really using a public API.
 */
+import { PrismaClientInitializationError } from '@prisma/client/runtime';
 import { Migrate } from '@prisma/migrate/dist/Migrate.js';
 import { ensureDatabaseExists } from '@prisma/migrate/dist/utils/ensureDatabaseExists';
 import { printFilesFromMigrationIds } from '@prisma/migrate/dist/utils/printFiles';
 import chalk from 'chalk';
+import { sleep } from 'common';
 import { getPrisma, loadDatabaseUrl } from './client';
 
 export const handler = async (): Promise<string> => {
   const schemaPath = './schema.prisma';
   const dbUrl = await loadDatabaseUrl();
 
-  // add longer connection timeout in case the DB is sleeping
-  const url = new URL(dbUrl);
-  url.searchParams.set('pool_timeout', '120');
-
   // get DB connection
-  process.env.DATABASE_URL = url.toString();
-  const client = await getPrisma();
-  await client.$connect();
+  try {
+    const client = await getPrisma();
+    await client.$connect();
+  } catch (ex) {
+    const errorCode = (ex as PrismaClientInitializationError).errorCode;
+    if (errorCode == 'P1001') {
+      // timed out waiting to reach DB server
+      // it might be waking up from slumber
+      // so retry in a short bit
+      console.warn('Database not yet available, retrying...');
+      await sleep(25_000);
+      console.info('Retrying...');
+
+      const client = await getPrisma();
+      await client.$connect();
+    } else {
+      console.error('Failed to run database migrations');
+      throw ex;
+    }
+  }
+
+  process.env.DATABASE_URL = dbUrl;
 
   const migrate = new Migrate(schemaPath);
   const wasDbCreated = await ensureDatabaseExists('apply', true, schemaPath);
