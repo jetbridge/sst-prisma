@@ -10,10 +10,10 @@ importers:
       '@aws-lambda-powertools/logger': ^0.8.0
       '@aws-sdk/client-kms': ~3.145.0
       '@aws-sdk/client-secrets-manager': ~3.145.0
-      '@serverless-stack/cli': ^1.8.1
-      '@serverless-stack/core': ^1.8.1
-      '@serverless-stack/resources': ^1.8.1
-      '@serverless-stack/static-site-env': ^1.8.1
+      '@serverless-stack/cli': ^1.9.1
+      '@serverless-stack/core': ^1.9.1
+      '@serverless-stack/resources': ^1.9.1
+      '@serverless-stack/static-site-env': ^1.9.1
       '@sls-next/lambda-at-edge': ^3.8.0-alpha.0
       '@tsconfig/node16-strictest-esm': ^1.0.1
       '@types/aws-lambda': ^8.10.102
@@ -58,8 +58,8 @@ importers:
       '@aws-lambda-powertools/logger': 0.8.1
       '@aws-sdk/client-kms': 3.145.0
       '@aws-sdk/client-secrets-manager': 3.145.0
-      '@serverless-stack/cli': 1.8.1_constructs@10.1.78
-      '@serverless-stack/resources': 1.8.1
+      '@serverless-stack/cli': 1.9.1_constructs@10.1.78
+      '@serverless-stack/resources': 1.9.1
       '@sls-next/lambda-at-edge': 3.8.0-alpha.0_typescript@4.7.4
       aws-cdk-lib: 2.32.0_constructs@10.1.78
       base64url: 3.0.1
@@ -71,8 +71,8 @@ importers:
     devDependencies:
       '@apollo/client': 3.6.9_graphql@16.6.0
       '@aws-cdk/aws-appsync-alpha': 2.32.0-alpha.0_x7s4b2vl3cacefqvepxeg3woqm
-      '@serverless-stack/core': 1.8.1
-      '@serverless-stack/static-site-env': 1.8.1
+      '@serverless-stack/core': 1.9.1
+      '@serverless-stack/static-site-env': 1.9.1
       '@tsconfig/node16-strictest-esm': 1.0.3
       '@types/aws-lambda': 8.10.102
       '@types/memoizee': 0.4.8
@@ -5631,6 +5631,7 @@ packages:
 
   /@pothos/core/3.15.0_graphql@16.6.0:
     resolution: {integrity: sha512-vDdllrL4fWuBGyQab5d87DJZFd5AWeYTHJAW1/ppOvYA9J9iij7R87nvY3feJmwwA2cpgF3NrRxo4+4ZSYW+Xg==}
+    requiresBuild: true
     peerDependencies:
       graphql: '>=15.1.0'
     dependencies:
@@ -6032,13 +6033,13 @@ packages:
       - bluebird
       - supports-color
 
-  /@serverless-stack/cli/1.8.1_constructs@10.1.78:
-    resolution: {integrity: sha512-RP7pObUhxBLBGVlPIcEXKeoJ7+pJ97sJvjcR0DDOVJWjT++onK2pLvgda1T9yTFo+HqZy5HgoVp11O43BI0EgA==}
+  /@serverless-stack/cli/1.9.1_constructs@10.1.78:
+    resolution: {integrity: sha512-LDysS9Aycz34Qp/Gejtgrq5eSQsujbRsBtmzT9UjL4bQIdPaFI3J9DyXPFaKNxxsZIZp2CjkgUphc5jkk3As7Q==}
     hasBin: true
     dependencies:
       '@aws-cdk/aws-apigatewayv2-alpha': 2.32.0-alpha.0_x7s4b2vl3cacefqvepxeg3woqm
-      '@serverless-stack/core': 1.8.1
-      '@serverless-stack/resources': 1.8.1
+      '@serverless-stack/core': 1.9.1
+      '@serverless-stack/resources': 1.9.1
       aws-cdk: 2.32.0
       aws-cdk-lib: 2.32.0_constructs@10.1.78
       aws-sdk: 2.1197.0
@@ -6072,8 +6073,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@serverless-stack/core/1.8.1:
-    resolution: {integrity: sha512-u+DTKCodr5Xqzv3KBcuISs4JFE09EesRsqNBIUs/DYBnaYqENBZ8ujrz90kPhy0k3JMeYyvAgxvRAxSrgSxqcQ==}
+  /@serverless-stack/core/1.9.1:
+    resolution: {integrity: sha512-LYUaYMFgaESjShG6dqzDiiPF18odsUKEtLaxUaKf8W+Cph1gcm7rD4nPallaoElvKNGTK/weid7A1CLsSu9Kzg==}
     dependencies:
       '@rmp135/sql-ts': 1.13.0
       '@serverless-stack/aws-lambda-ric': 2.0.13
@@ -6128,14 +6129,14 @@ packages:
       - tedious
       - utf-8-validate
 
-  /@serverless-stack/resources/1.8.1:
-    resolution: {integrity: sha512-5BdISb2al782/2U4mVUiaJlDE6m/sOLTEglTMHqDhMspyP8epOUhclM2r82oDGe/a2BPSDw2AiMEhxW1yBooGQ==}
+  /@serverless-stack/resources/1.9.1:
+    resolution: {integrity: sha512-AgKE6m83rJ/6l7zmpjQaiMOlNFipJLRrum1worMrEd0Mw+4gGPa6Cq12FOliFZ4oeKaETyyYqzu3kN4oNu3Plg==}
     dependencies:
       '@aws-cdk/aws-apigatewayv2-alpha': 2.32.0-alpha.0_x7s4b2vl3cacefqvepxeg3woqm
       '@aws-cdk/aws-apigatewayv2-authorizers-alpha': 2.32.0-alpha.0_ed67lj6w4fdut6u2r3ddbtzeym
       '@aws-cdk/aws-apigatewayv2-integrations-alpha': 2.32.0-alpha.0_ed67lj6w4fdut6u2r3ddbtzeym
       '@aws-cdk/aws-appsync-alpha': 2.32.0-alpha.0_x7s4b2vl3cacefqvepxeg3woqm
-      '@serverless-stack/core': 1.8.1
+      '@serverless-stack/core': 1.9.1
       archiver: 5.3.1
       aws-cdk-lib: 2.32.0_constructs@10.1.78
       chalk: 4.1.2
@@ -6163,8 +6164,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@serverless-stack/static-site-env/1.8.1:
-    resolution: {integrity: sha512-J4/WIwT3RppTvJ35mnzwvHkQ2StCOmPBErmIHiJk2cMylGfIdPlkCZZ6FSjF/F0k1jz6beiEc81Vm2eVOXmxpQ==}
+  /@serverless-stack/static-site-env/1.9.1:
+    resolution: {integrity: sha512-Lv0Jz9pIF7zvI2gfq4S+ExbdL4FoGW1P9WmJan89QLolUVidyf4Hftf6FC/9l8xycRt9p1g+L3+nx8fPBn0eRg==}
     hasBin: true
     dependencies:
       cross-spawn: 7.0.3
