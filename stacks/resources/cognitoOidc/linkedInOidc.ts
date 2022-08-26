@@ -10,14 +10,14 @@ import { Key } from 'aws-cdk-lib/aws-kms';
 import { Secret } from 'aws-cdk-lib/aws-secretsmanager';
 import { secret } from 'common';
 import { Construct } from 'constructs';
-import { linkedinScope } from './handlers/controller/linkedin';
+import { linkedinScope } from 'backend/src/auth/oidc/controller/linkedin';
 import {
   ENV_COGNITO_REDIRECT_URI,
   ENV_OIDC_PROVIDER,
   ENV_SECRET_NAME,
   ENV_SIGNING_KEY_ARN,
   OidcProvider,
-} from './types';
+} from 'backend/src/auth/oidc/types';
 
 export interface LinkedInOidcProps {
   userPool: IUserPool;

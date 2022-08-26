@@ -1,5 +1,5 @@
 // import { github } from './github';
-import { ENV_OIDC_PROVIDER, OidcProvider } from '../../types';
+import { ENV_OIDC_PROVIDER, OidcProvider } from '../types';
 import { OpenID } from '../openid';
 import { Controller } from './controllers';
 import { linkedin } from './linkedin';

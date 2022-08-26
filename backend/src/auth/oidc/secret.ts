@@ -1,5 +1,5 @@
 import { GetSecretValueCommand, SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
-import { ENV_SECRET_NAME } from '../types';
+import { ENV_SECRET_NAME } from './types';
 
 export const getOidcSecrets = async () => {
   const secretName = process.env[ENV_SECRET_NAME];

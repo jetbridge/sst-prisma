@@ -22,6 +22,8 @@ export const RUNTIME = Runtime.NODEJS_16_X;
 export default function main(app: sst.App) {
   app.setDefaultFunctionProps({
     runtime: 'nodejs16.x',
+    srcPath: 'backend/src',
+
     // N.B. bundle settings are defined in Layers
   });
 

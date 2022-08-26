@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { got } from 'got';
 import { URLSearchParams } from 'url';
-import { ENV_COGNITO_REDIRECT_URI } from '../../types';
+import { ENV_COGNITO_REDIRECT_URI } from '../types';
 import { makeIdToken } from '../crypto';
 import { filterOutScopesForLinkedin } from '../util';
 import * as req from './requests';

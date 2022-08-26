@@ -2,7 +2,7 @@
 import { GetPublicKeyCommand, KMSClient, SignCommand } from '@aws-sdk/client-kms';
 import base64url from 'base64url';
 import { exportJWK, importSPKI } from 'jose';
-import { ENV_SIGNING_KEY_ARN } from '../types';
+import { ENV_SIGNING_KEY_ARN } from './types';
 
 const getKeyArn = () => {
   const arn = process.env[ENV_SIGNING_KEY_ARN];
