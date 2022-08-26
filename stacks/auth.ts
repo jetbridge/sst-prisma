@@ -30,7 +30,7 @@ export function Auth({ stack, app }: StackContext) {
   const auth = new SstAuth(stack, 'Auth', {
     triggers: {
       // save user in DB
-      preSignUp: 'backend/src/auth/trigger/preSignUp.handler',
+      preSignUp: 'auth/trigger/preSignUp.handler',
     },
     cdk: {
       userPoolClient: {},

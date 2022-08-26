@@ -34,6 +34,7 @@ export class DbMigrationScript extends Construct {
       enableLiveDev: false,
       handler: 'backend/src/db/migrationScript.handler',
       layers: [migrationLayer],
+      srcPath: '.',
       bundle: {
         format: 'esm',
         commandHooks: {
@@ -44,7 +45,7 @@ export class DbMigrationScript extends Construct {
             `cp -r "${inputDir}/backend/prisma/migrations" "${outputDir}"`,
 
             // @prisma/migrate wants this package.json to exist
-            `cp -r "${inputDir}/package.json" "${outputDir}/backend/src"`,
+            `cp -r "${inputDir}/backend/package.json" "${outputDir}/backend/src"`,
           ],
         },
         externalModules: LAYER_MODULES.concat(migrationLayer.externalModules),
