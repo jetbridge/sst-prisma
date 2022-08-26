@@ -4,7 +4,6 @@
   "compilerOptions": {
     "outDir": "./dist",
     "module": "esnext",
-    "target": "es2021",
-    "types": ["vitest/globals"]
+    "target": "es2021"
   }
 }

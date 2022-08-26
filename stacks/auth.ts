@@ -84,7 +84,7 @@ export function Auth({ stack, app }: StackContext) {
   // create LinkedIn provider
   const linkedIn = new LinkedInOidc(stack, 'LinkedInOidc', {
     secrets: use(Secrets).secret,
-    signingKey: signingKey,
+    signingKey,
     userPool,
     cognitoDomainName,
   });
