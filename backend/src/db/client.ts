@@ -9,7 +9,8 @@ export const loadDatabaseUrl = async (): Promise<string> => {
   if (databaseUrl) return databaseUrl;
 
   // load database secret
-  const secretArn = Config.DB_SECRET_ARN;
+  // FIXME config
+  const secretArn = (Config as any).DB_SECRET_ARN;
   const client = new SecretsManagerClient({});
   const req = new GetSecretValueCommand({ SecretId: secretArn });
   const res = await client.send(req);
@@ -20,7 +21,8 @@ export const loadDatabaseUrl = async (): Promise<string> => {
 
   // construct database url
   databaseUrl = `postgresql://${username}:${password}@${host}:${port}/${dbname}?connection_limit=${
-    Config.PRISMA_CONNECTION_LIMIT || ''
+    // FIXME config
+    (Config as any).PRISMA_CONNECTION_LIMIT || ''
   }`;
   process.env.DATABASE_URL = databaseUrl;
   return databaseUrl;
