@@ -8,6 +8,7 @@ importers:
       '@aws-cdk/aws-appsync-alpha': 2.32.0-alpha.0
       '@serverless-stack/cli': ^1.9.1
       '@serverless-stack/core': ^1.9.1
+      '@serverless-stack/node': ^1.9.1
       '@serverless-stack/resources': ^1.9.1
       '@serverless-stack/static-site-env': ^1.9.1
       '@sls-next/lambda-at-edge': ^3.8.0-alpha.0
@@ -46,6 +47,7 @@ importers:
       vitest: ^0.22.1
     dependencies:
       '@serverless-stack/cli': 1.9.1_constructs@10.1.21
+      '@serverless-stack/node': 1.9.2
       '@serverless-stack/resources': 1.9.1
       '@sls-next/lambda-at-edge': 3.8.0-alpha.0_typescript@4.7.4
       aws-cdk-lib: 2.32.0_constructs@10.1.21
@@ -104,7 +106,6 @@ importers:
       '@prisma/internals': 4.2.1
       '@prisma/migrate': 4.2.1
       '@sentry/serverless': ^7.8.1
-      '@serverless-stack/node': ^1.9.1
       '@types/aws-lambda': ^8.10.70
       '@types/memoizee': ^0.4.7
       aws-lambda: ^1.0.7
@@ -133,7 +134,6 @@ importers:
       '@prisma/internals': 4.2.1
       '@prisma/migrate': 4.2.1_3f56fonnfgt4j6llzpqdbxxhpe
       '@sentry/serverless': 7.8.1
-      '@serverless-stack/node': 1.9.2
       aws-lambda: 1.0.7
       base64url: 3.0.1
       common: link:../common
