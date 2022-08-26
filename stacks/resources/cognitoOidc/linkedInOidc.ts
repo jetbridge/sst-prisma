@@ -9,6 +9,7 @@ import { Effect, PolicyStatement } from 'aws-cdk-lib/aws-iam';
 import { Key } from 'aws-cdk-lib/aws-kms';
 import { Secret } from 'aws-cdk-lib/aws-secretsmanager';
 import { Construct } from 'constructs';
+import { linkedinScope } from './handlers/controller/linkedin';
 import { OidcProvider } from './types';
 
 export interface LinkedInOidcProps {
@@ -72,7 +73,7 @@ export class LinkedInOidc extends Construct {
     // LinkedIn OIDC auth
     this.userPoolIdentityProviderOidc = new UserPoolIdentityProviderOidc(scope, 'LinkedInOidcProvider', {
       name: 'linkedin',
-      scopes: ['openid', 'r_liteprofile', 'r_emailaddress'],
+      scopes: linkedinScope,
       issuerUrl: apiUrl,
       clientId: clientId.toString(),
       clientSecret: clientSecret.toString(),

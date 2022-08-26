@@ -37,6 +37,7 @@ export const authOptions: NextAuthOptions = {
       client: {
         token_endpoint_auth_method: 'none',
       },
+      // authorization: { params: { identity_provider: 'linkedin' } }, // skip cognito hosted UI
     }),
   ],
   // debug: true,

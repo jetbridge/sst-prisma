@@ -130,7 +130,7 @@ export const linkedin = () => {
           return {
             sub: userDetails.id,
             name: `${userDetails.localizedFirstName} ${userDetails.localizedLastName}`,
-            vanityName: userDetails.vanityName || null,
+            vanityName: userDetails.vanityName || null, // won't be set unless the r_basicprofile scope is requested
             picture: parseImageUrl(pictureElements),
             locale: parseLocale(userDetails.firstName) || parseLocale(userDetails.lastName),
             website: `https://www.linkedin.com/in/${userDetails.vanityName}`,

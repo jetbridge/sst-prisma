@@ -1,0 +1,63 @@
+.root {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 700px;
+
+  .background {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 0;
+  }
+
+  h1 {
+    color: white;
+    font-size: 50px;
+    margin: 0;
+    position: relative;
+    text-shadow: 0 3px 5px black;
+  }
+
+  p {
+    margin: 0;
+    z-index: 1;
+
+    a {
+      text-shadow: 0px 0px 2px #b7bfdb;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .drop {
+    animation: fade 4s linear;
+    animation-fill-mode: forwards;
+    position: absolute;
+  }
+}
+
+@keyframes fade {
+  0% {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+
+  40% {
+    opacity: 0.3;
+  }
+
+  60% {
+    opacity: 0.3;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+}
