@@ -12,7 +12,6 @@
     "noUncheckedIndexedAccess": false,
     "noPropertyAccessFromIndexSignature": false,
     "exactOptionalPropertyTypes": false,
-    "types": ["vitest/globals"],
     "baseUrl": ".",
     "paths": {
       "@backend/*": ["./backend/src/*"],
