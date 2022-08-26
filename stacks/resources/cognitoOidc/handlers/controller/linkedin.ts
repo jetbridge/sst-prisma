@@ -106,7 +106,7 @@ const { LINKEDIN_CLIENT_ID, LINKEDIN_CLIENT_SECRET } = await getOidcSecrets();
 export const linkedin = () => {
   const clientId = LINKEDIN_CLIENT_ID; // Config.LINKEDIN_CLIENT_ID;
   const clientSecret = LINKEDIN_CLIENT_SECRET; // Config.LINKEDIN_CLIENT_SECRET;
-  const redirUrl = Config.COGNITO_REDIRECT_URI;
+  const redirUrl = (Config as any).COGNITO_REDIRECT_URI;
   if (!redirUrl) throw new Error(`missing ${redirUrl} in env`);
 
   return {
@@ -162,7 +162,7 @@ export const linkedin = () => {
     getToken: async (code: any, state: any, host: any) => {
       const data = {
         grant_type: 'authorization_code',
-        redirect_uri: Config.COGNITO_REDIRECT_URI,
+        redirect_uri: (Config as any).COGNITO_REDIRECT_URI,
         client_id: clientId,
         response_type: 'code',
         client_secret: clientSecret,

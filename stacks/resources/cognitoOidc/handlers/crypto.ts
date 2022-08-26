@@ -4,7 +4,7 @@ import { Config } from '@serverless-stack/node/config';
 import base64url from 'base64url';
 import { exportJWK, importSPKI } from 'jose';
 
-const getKeyArn = () => Config.SIGNING_KEY_ARN;
+const getKeyArn = () => (Config as any).SIGNING_KEY_ARN;
 
 // convert binary x509 DER to PEM
 const formatPublicKey = (key: Uint8Array) =>

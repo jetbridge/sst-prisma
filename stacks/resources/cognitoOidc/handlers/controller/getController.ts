@@ -7,7 +7,7 @@ import { Config } from '@serverless-stack/node/config';
 
 export function getOidcController() {
   // which provider are we handling?
-  const oidcProviderName = Config.OIDC_PROVIDER as OidcProvider;
+  const oidcProviderName = (Config as any).OIDC_PROVIDER as OidcProvider;
   switch (oidcProviderName) {
     // not yet supported (but easily added) https://github.com/jetbridge/cognito-oidc-cdk-construct/blob/master/src/github.ts
     // case 'GITHUB':
