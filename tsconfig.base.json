@@ -12,7 +12,6 @@
     "noUncheckedIndexedAccess": false,
     "noPropertyAccessFromIndexSignature": false,
     "exactOptionalPropertyTypes": false,
-    "types": ["vitest/globals"],
     "baseUrl": ".",
     "paths": {
       "@backend/*": ["./backend/src/*"],
@@ -22,5 +21,6 @@
   },
 
   "include": ["stacks"],
+  "files": ["./index.d.ts"],
   "references": [{ "path": "common" }, { "path": "web" }, { "path": "backend" }]
 }

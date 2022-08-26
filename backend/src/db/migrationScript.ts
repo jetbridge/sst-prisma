@@ -3,7 +3,7 @@
 
   Not really using a public API.
 */
-import { PrismaClientInitializationError } from '@prisma/client/runtime';
+import type { PrismaClientInitializationError } from '@prisma/client/runtime';
 import { Migrate } from '@prisma/migrate/dist/Migrate.js';
 import { ensureDatabaseExists } from '@prisma/migrate/dist/utils/ensureDatabaseExists';
 import { printFilesFromMigrationIds } from '@prisma/migrate/dist/utils/printFiles';

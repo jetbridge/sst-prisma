@@ -1,7 +1,7 @@
-import { RDS, StackContext, use } from '@serverless-stack/resources';
+import { Config, RDS, StackContext, use } from '@serverless-stack/resources';
 
 import { Duration, RemovalPolicy } from 'aws-cdk-lib';
-import { APP_NAME, envVar } from 'common';
+import { APP_NAME } from 'common';
 import { Network } from 'stacks/network';
 import { IS_PRODUCTION } from './config';
 
@@ -32,11 +32,15 @@ export function Database({ stack, app }: StackContext) {
 
   cluster.connections.allowDefaultPortFrom(net.defaultLambdaSecurityGroup, 'Allow access from lambda functions');
 
-  app.addDefaultFunctionEnv({
-    [envVar('DATABASE')]: defaultDatabaseName,
-    [envVar('CLUSTER_ARN')]: rds.clusterArn,
-    [envVar('DB_SECRET_ARN')]: rds.secretArn,
-  });
+  const prismaConnectionLimit = process.env.PRISMA_CONNECTION_LIMIT || 5;
+
+  const config = [
+    new Config.Parameter(stack, 'DATABASE_NAME', { value: defaultDatabaseName }),
+    new Config.Parameter(stack, 'CLUSTER_ARN', { value: rds.clusterArn }),
+    new Config.Parameter(stack, 'DB_SECRET_ARN', { value: rds.secretArn }),
+    new Config.Parameter(stack, 'PRISMA_CONNECTION_LIMIT', { value: prismaConnectionLimit.toString() ?? '' }),
+  ];
+
   stack.addOutputs({
     DBName: { value: defaultDatabaseName, description: 'Name of the default database' },
     GetSecretsCommand: {
@@ -45,12 +49,14 @@ export function Database({ stack, app }: StackContext) {
     },
   });
   app.addDefaultFunctionPermissions([rds]);
+  app.setDefaultFunctionProps({ config });
 
   // DB connection for local dev can be overridden
-  const localDatabaseUrl = process.env[envVar('DATABASE_URL')];
-  if (process.env.IS_LOCAL_DEV && localDatabaseUrl) {
+  // https://docs.sst.dev/environment-variables#is_local
+  const localDatabaseUrl = process.env['DATABASE_URL'];
+  if (process.env.IS_LOCAL && localDatabaseUrl) {
     app.addDefaultFunctionEnv({
-      [envVar('DATABASE_URL')]: localDatabaseUrl,
+      ['DATABASE_URL']: localDatabaseUrl,
     });
   }
 
@@ -64,9 +70,9 @@ export function makeDatabaseUrl() {
   const prismaConnectionLimit = process.env.PRISMA_CONNECTION_LIMIT || 5;
 
   const rds = use(Database);
-  const cluster = rds.rds.cdk.cluster;
+  const { cluster, defaultDatabaseName } = rds;
   const dbUsername = cluster.secret?.secretValueFromJson('username');
   const dbPassword = cluster.secret?.secretValueFromJson('password');
 
-  return `postgresql://${dbUsername}:${dbPassword}@${cluster.clusterEndpoint.hostname}/${rds.defaultDatabaseName}?connection_limit=${prismaConnectionLimit}`;
+  return `postgresql://${dbUsername}:${dbPassword}@${cluster.clusterEndpoint.hostname}/${defaultDatabaseName}?connection_limit=${prismaConnectionLimit}`;
 }
