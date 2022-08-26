@@ -41,7 +41,7 @@ export class LinkedInOidc extends Construct {
       defaults: {
         function: {
           bundle: { format: 'esm' },
-          srcPath: 'stacks/resources/cognitoOidc/handlers',
+          srcPath: 'backend/src/auth/oidc',
           permissions: [[secrets, 'grantRead']],
           environment: {
             [ENV_SIGNING_KEY_ARN]: signingKey.keyArn,
