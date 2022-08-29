@@ -4,6 +4,7 @@
 // this is still quite experimental though
 // https://devblogs.microsoft.com/typescript/announcing-typescript-4-7-beta/#package-json-exports-imports-and-self-referencing
 export * from './env.js';
+export * from './auth.js';
 export * from './gql.js';
 export * from './util/index.js';
 

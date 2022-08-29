@@ -8,9 +8,8 @@ import {
 import { Effect, PolicyStatement } from 'aws-cdk-lib/aws-iam';
 import { Key } from 'aws-cdk-lib/aws-kms';
 import { Secret } from 'aws-cdk-lib/aws-secretsmanager';
+import { linkedinScope, OidcProvider } from 'common';
 import { Construct } from 'constructs';
-import { linkedinScope } from 'backend/src/auth/oidc/controller/linkedin';
-import { OidcProvider } from 'backend/src/auth/oidc/types';
 
 export interface LinkedInOidcProps {
   userPool: IUserPool;
