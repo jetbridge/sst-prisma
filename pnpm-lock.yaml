@@ -6,10 +6,6 @@ importers:
     specifiers:
       '@apollo/client': ^3.6.5
       '@aws-cdk/aws-appsync-alpha': 2.32.0-alpha.0
-      '@aws-crypto/client-node': ^3.1.1
-      '@aws-lambda-powertools/logger': ^0.8.0
-      '@aws-sdk/client-kms': ~3.145.0
-      '@aws-sdk/client-secrets-manager': ~3.145.0
       '@serverless-stack/cli': ^1.9.1
       '@serverless-stack/core': ^1.9.1
       '@serverless-stack/node': ^1.9.1
@@ -18,13 +14,11 @@ importers:
       '@sls-next/lambda-at-edge': ^3.8.0-alpha.0
       '@tsconfig/node16-strictest-esm': ^1.0.1
       '@types/aws-lambda': ^8.10.102
-      '@types/memoizee': ^0.4.7
       '@types/node': ^16.0.0
       '@typescript-eslint/eslint-plugin': ^5.33.1
       '@typescript-eslint/parser': '^5.33.1 '
       aws-cdk-lib: 2.32.0
       aws-lambda: ^1.0.7
-      base64url: ^3.0.1
       chalk: ^5.0.1
       common: workspace:*
       concurrently: ^7.3.0
@@ -41,13 +35,10 @@ importers:
       eslint-plugin-react: ^7.30.0
       eslint-plugin-react-hooks: ^4.5.0
       fs-extra: ^10.1.0
-      got: ^12.3.1
       graphql: ^16.5.0
       graphql-tag: ^2.12.6
       husky: ^7.0.4
-      jose: ^4.8.3
       lint-staged: ^12.3.8
-      memoizee: ^0.4.15
       prettier: ^2.6.2
       rimraf: ^3.0.2
       typescript: ^4.7.2
@@ -55,21 +46,13 @@ importers:
       vite-tsconfig-paths: ^3.5.0
       vitest: ^0.22.1
     dependencies:
-      '@aws-crypto/client-node': 3.1.1
-      '@aws-lambda-powertools/logger': 0.8.1
-      '@aws-sdk/client-kms': 3.145.0
-      '@aws-sdk/client-secrets-manager': 3.145.0
       '@serverless-stack/cli': 1.9.1_constructs@10.1.21
       '@serverless-stack/node': 1.9.2
       '@serverless-stack/resources': 1.9.1
       '@sls-next/lambda-at-edge': 3.8.0-alpha.0_typescript@4.7.4
       aws-cdk-lib: 2.32.0_constructs@10.1.21
-      base64url: 3.0.1
       common: link:common
       desm: 1.3.0
-      got: 12.3.1
-      jose: 4.8.3
-      memoizee: 0.4.15
     devDependencies:
       '@apollo/client': 3.6.5_graphql@16.5.0
       '@aws-cdk/aws-appsync-alpha': 2.32.0-alpha.0_abfkyh2p4stavtizonc4nwuwna
@@ -77,7 +60,6 @@ importers:
       '@serverless-stack/static-site-env': 1.9.1
       '@tsconfig/node16-strictest-esm': 1.0.3
       '@types/aws-lambda': 8.10.102
-      '@types/memoizee': 0.4.8
       '@types/node': 16.11.36
       '@typescript-eslint/eslint-plugin': 5.33.1_vsoshirnpb7xw6mr7xomgfas2i
       '@typescript-eslint/parser': 5.33.1_4rv7y5c6xz3vfxwhbrcxxi73bq
@@ -109,9 +91,11 @@ importers:
 
   backend:
     specifiers:
+      '@aws-crypto/client-node': ^3.1.1
       '@aws-lambda-powertools/logger': ^0.8.1
       '@aws-lambda-powertools/metrics': ^0.9.1
       '@aws-lambda-powertools/tracer': ^0.9.1
+      '@aws-sdk/client-kms': ~3.145.0
       '@aws-sdk/client-secrets-manager': ~3.145.0
       '@aws-sdk/signature-v4-crt': ^3.130.0
       '@babel/core': '>=7.0.0 <8.0.0'
@@ -126,18 +110,23 @@ importers:
       '@types/memoizee': ^0.4.7
       aws-lambda: ^1.0.7
       aws-sdk-client-mock: ^1.0.0
+      base64url: ^3.0.1
       builtin-modules: 3.2.0
       common: workspace:*
       dotenv: ^16.0.0
       dotenv-cli: ^5.1.0
+      got: ^12.3.1
       graphql: ^16.5.0
       graphql-tag: ^2.12.6
+      jose: ^4.8.3
       memoizee: ^0.4.15
       prisma: 4.2.1
     dependencies:
+      '@aws-crypto/client-node': 3.1.1
       '@aws-lambda-powertools/logger': 0.8.1
       '@aws-lambda-powertools/metrics': 0.9.1
       '@aws-lambda-powertools/tracer': 0.9.1
+      '@aws-sdk/client-kms': 3.145.0
       '@aws-sdk/client-secrets-manager': 3.145.0
       '@aws-sdk/signature-v4-crt': 3.130.0
       '@middy/core': 2.5.7
@@ -146,7 +135,10 @@ importers:
       '@prisma/migrate': 4.2.1_3f56fonnfgt4j6llzpqdbxxhpe
       '@sentry/serverless': 7.8.1
       aws-lambda: 1.0.7
+      base64url: 3.0.1
       common: link:../common
+      got: 12.3.1
+      jose: 4.8.3
       memoizee: 0.4.15
     devDependencies:
       '@babel/core': 7.18.2
@@ -2194,11 +2186,6 @@ packages:
 
   /@aws-sdk/service-error-classification/3.54.0:
     resolution: {integrity: sha512-XWANvjJJZNqsYhGmccSSuhsvINIUX1KckfDmvYtUR6cKM6nM6QWOg/QJeTFageTEpruJ5TqzW9vY414bIE883w==}
-    engines: {node: '>= 12.0.0'}
-    dev: false
-
-  /@aws-sdk/service-error-classification/3.78.0:
-    resolution: {integrity: sha512-x7Lx8KWctJa01q4Q72Zb4ol9L/era3vy2daASu8l2paHHxsAPBE0PThkvLdUSLZSzlHSVdh3YHESIsT++VsK4w==}
     engines: {node: '>= 12.0.0'}
     dev: false
 
@@ -11311,7 +11298,7 @@ packages:
     resolution: {integrity: sha512-5pJnix2mNBshzBtVsJxus3YOX2gM8+AirjyAJ0U+4ZkLRAcofNzBJUabZyHZPoVKud/YjEmcRr36bh4T3vOL2A==}
     engines: {node: '>= 12.x'}
     dependencies:
-      '@aws-sdk/service-error-classification': 3.78.0
+      '@aws-sdk/service-error-classification': 3.127.0
       '@aws-sdk/types': 3.127.0
       '@types/cls-hooked': 4.3.3
       atomic-batcher: 1.0.2
@@ -16865,7 +16852,7 @@ packages:
     resolution: {integrity: sha512-mk0umAQ5lT+CaOJ+Qp01N6kz48sJG2kr2n1rX0koqKf6FIygQV0qLOdN9SCYID4IVeSigDOcPeGLozdMLYfb5g==}
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
     dependencies:
-      '@types/node': 17.0.36
+      '@types/node': 18.7.6
       merge-stream: 2.0.0
       supports-color: 8.1.1
     dev: false
@@ -22773,7 +22760,7 @@ packages:
     dependencies:
       '@types/chai': 4.3.3
       '@types/chai-subset': 1.3.3
-      '@types/node': 17.0.36
+      '@types/node': 18.7.6
       chai: 4.3.6
       debug: 4.3.4
       local-pkg: 0.4.2

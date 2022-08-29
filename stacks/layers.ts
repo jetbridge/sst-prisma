@@ -27,7 +27,7 @@ export function Layers({ stack, app }: StackContext) {
   app.setDefaultFunctionProps({
     bundle: {
       format: 'esm',
-      copyFiles: [{ from: 'backend/prisma/schema.prisma', to: 'src/schema.prisma' }],
+      copyFiles: [{ from: '../prisma/schema.prisma', to: 'src/schema.prisma' }],
       externalModules: LAYER_MODULES.concat(prismaLayer.externalModules),
       banner: ESM_REQUIRE_SHIM,
     },

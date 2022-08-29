@@ -13,14 +13,13 @@
     "noPropertyAccessFromIndexSignature": false,
     "exactOptionalPropertyTypes": false,
     "baseUrl": ".",
+    "types": ["vitest/globals"],
     "paths": {
       "@backend/*": ["./backend/src/*"],
-      "@web/*": ["./web/src/*"],
-      "@common/*": ["./common/src/*"]
+      "@web/*": ["./web/src/*"]
     }
   },
 
   "include": ["stacks"],
-  "files": ["./index.d.ts"],
-  "references": [{ "path": "common" }, { "path": "web" }, { "path": "backend" }]
+  "files": ["./index.d.ts"]
 }

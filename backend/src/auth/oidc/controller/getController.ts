@@ -1,9 +1,9 @@
 // import { github } from './github';
-import { OidcProvider } from '../../types';
 import { OpenID } from '../openid';
 import { Controller } from './controllers';
 import { linkedin } from './linkedin';
 import { Config } from '@serverless-stack/node/config';
+import { OidcProvider } from 'common';
 
 export function getOidcController() {
   // which provider are we handling?

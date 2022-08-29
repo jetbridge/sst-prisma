@@ -8,9 +8,8 @@ import {
 import { Effect, PolicyStatement } from 'aws-cdk-lib/aws-iam';
 import { Key } from 'aws-cdk-lib/aws-kms';
 import { Secret } from 'aws-cdk-lib/aws-secretsmanager';
+import { linkedinScope, OidcProvider } from 'common';
 import { Construct } from 'constructs';
-import { linkedinScope } from './handlers/controller/linkedin';
-import { OidcProvider } from './types';
 
 export interface LinkedInOidcProps {
   userPool: IUserPool;
@@ -42,7 +41,7 @@ export class LinkedInOidc extends Construct {
       defaults: {
         function: {
           bundle: { format: 'esm' },
-          srcPath: 'stacks/resources/cognitoOidc/handlers',
+          srcPath: 'backend/src/auth/oidc',
           config: [
             //clientId, clientSecret,
             signingKeyArn,
