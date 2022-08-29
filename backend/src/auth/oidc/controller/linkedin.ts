@@ -6,11 +6,6 @@ import { filterOutScopesForLinkedin } from '../util';
 import * as req from './requests';
 import { Config } from '@serverless-stack/node/config';
 
-// `openid` is an scope required by Cognito
-// but Linkedin throws an error if this scope is passed as it is not recognized
-// so it needs to be filtered out in the getAuthorizeUrl function
-export const linkedinScope = ['openid', 'r_liteprofile', 'r_emailaddress'];
-
 const linkedinApiUrl = 'https://api.linkedin.com';
 const linkedinLoginUrl = 'https://linkedin.com';
 
@@ -27,6 +22,7 @@ interface UserDetails {
 
 // temporary: https://github.com/serverless-stack/sst/issues/1984
 import { GetSecretValueCommand, SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
+import { linkedinScope } from 'common';
 
 export const getOidcSecrets = async () => {
   const secretName = process.env['APP_SECRET_ARN'];
