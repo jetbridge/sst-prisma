@@ -3,7 +3,6 @@ import { GetPublicKeyCommand, KMSClient, SignCommand } from '@aws-sdk/client-kms
 import { Config } from '@serverless-stack/node/config';
 import base64url from 'base64url';
 import { exportJWK, importSPKI } from 'jose';
-import { ENV_SIGNING_KEY_ARN } from './types';
 
 const getKeyArn = () => (Config as any).SIGNING_KEY_ARN;
 
