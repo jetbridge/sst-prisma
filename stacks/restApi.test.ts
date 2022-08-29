@@ -1,7 +1,6 @@
 import * as sst from '@serverless-stack/resources';
 import { getStack } from '@serverless-stack/resources';
 import { Template } from 'aws-cdk-lib/assertions';
-import { test } from 'vitest';
 import { RestApi } from './restApi';
 
 test('RestApi stack', () => {

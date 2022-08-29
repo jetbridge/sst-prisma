@@ -13,6 +13,7 @@
     "noPropertyAccessFromIndexSignature": false,
     "exactOptionalPropertyTypes": false,
     "baseUrl": ".",
+    "types": ["vitest/globals"],
     "paths": {
       "@backend/*": ["./backend/src/*"],
       "@web/*": ["./web/src/*"],

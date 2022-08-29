@@ -1,6 +1,5 @@
 import { testCallResolver } from '../../util/testResolver';
 import { GREETING } from './greeting';
-import { describe, expect, it } from 'vitest';
 
 const { getGreeting, greetInner } = await import('./greeting');
 

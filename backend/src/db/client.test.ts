@@ -2,7 +2,6 @@
 import { describeIntegrationTest } from './testUtil';
 
 import { Prisma } from '@prisma/client';
-import { expect, test } from 'vitest';
 import { getPrisma } from './client';
 import { prisma as prismaSync } from './client/sync';
 
