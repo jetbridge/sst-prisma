@@ -4,7 +4,7 @@
 
 If you want to build a serverless app with AWS CDK, Lambda, and Postgres, this is the template for you.
 
-You can click "Use this template" button in GitHub to fork this repo. You can merge in improvements in this repo to your project over time.
+You can click "Use this template" button in GitHub to fork this repo. You can [merge](https://stackoverflow.com/a/69563752) in improvements in this repo to your project over time.
 
 Clone your copy of this template, then do a search and replace for "myapp" to give it a name.
 
