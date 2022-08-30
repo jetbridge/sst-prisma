@@ -1,4 +1,4 @@
-import { Auth as SstAuth, StackContext, use } from '@serverless-stack/resources';
+import { Cognito, StackContext, use } from '@serverless-stack/resources';
 import { Duration, RemovalPolicy } from 'aws-cdk-lib';
 import { StringAttribute, UserPoolClientIdentityProvider } from 'aws-cdk-lib/aws-cognito';
 import { Key, KeySpec, KeyUsage } from 'aws-cdk-lib/aws-kms';
@@ -27,7 +27,7 @@ export function Auth({ stack, app }: StackContext) {
 
   const callbackUrls = ALLOWED_HOSTS.flatMap((h) => ALLOWED_URLS.map((url) => h + url));
 
-  const auth = new SstAuth(stack, 'Auth', {
+  const auth = new Cognito(stack, 'Auth', {
     triggers: {
       // save user in DB
       preSignUp: 'auth/trigger/preSignUp.handler',

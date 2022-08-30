@@ -37,9 +37,7 @@
     "clean": "tsc -b --clean && rm -rf .build .sst dist common/graphql/generated && pnpm run --recursive --if-present clean"
   },
   "dependencies": {
-    "@serverless-stack/cli": "^1.9.1",
-    "@serverless-stack/resources": "^1.9.1",
-    "@serverless-stack/node": "^1.9.1",
+    "@serverless-stack/node": "^1.10.0",
     "@sls-next/lambda-at-edge": "^3.8.0-alpha.0",
     "aws-cdk-lib": "2.32.0",
     "common": "workspace:*",
@@ -48,8 +46,10 @@
   "devDependencies": {
     "@apollo/client": "^3.6.5",
     "@aws-cdk/aws-appsync-alpha": "2.32.0-alpha.0",
-    "@serverless-stack/core": "^1.9.1",
-    "@serverless-stack/static-site-env": "^1.9.1",
+    "@serverless-stack/cli": "^1.10.1",
+    "@serverless-stack/resources": "^1.10.1",
+    "@serverless-stack/core": "^1.10.1",
+    "@serverless-stack/static-site-env": "^1.10.1",
     "@sls-next/lambda-at-edge": "^3.7.0",
     "@tsconfig/node16-strictest-esm": "^1.0.1",
     "@types/aws-lambda": "^8.10.102",
