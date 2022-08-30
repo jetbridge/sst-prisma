@@ -4,6 +4,10 @@
 
 If you want to build a serverless app with AWS CDK, Lambda, and Postgres, this is the template for you.
 
+You can click "Use this template" button in GitHub to fork this repo. You can [merge](https://stackoverflow.com/a/69563752) in improvements in this repo to your project over time.
+
+Clone your copy of this template, then do a search and replace for "myapp" to give it a name.
+
 ## Quickstart
 
 ### Prerequisites
@@ -30,7 +34,8 @@ Click links to learn more and view documentation.
   - ⇅ [AWS AppSync](https://docs.aws.amazon.com/appsync/latest/devguide/what-is-appsync.html) - serverless GraphQL AWS service
   - ✽ [Code generation](https://www.graphql-code-generator.com/) of [TypeScript](https://www.graphql-code-generator.com/docs/guides/front-end-typescript-only) + [apollo client](https://www.graphql-code-generator.com/plugins/typescript-react-apollo)
 - 🌐 [REST API gateway](https://docs.serverless-stack.com/api)
-- 🔓 [AWS Cognito](https://aws.amazon.com/cognito/) - authentication
+- 🔓 [AWS Cognito](https://aws.amazon.com/cognito/) - authentication backend
+- 🔓 [NextAuth.js](https://next-auth.js.org/) - authentication for NextJS
 - 💾 [Prisma ORM](https://www.prisma.io/docs/)
   - 📚 Prisma engine lambda layer
   - 📜 Prisma DB migration CDK script
