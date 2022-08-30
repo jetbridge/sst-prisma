@@ -1,0 +1,9 @@
+check_code_change: pnpm
+
+before_compile:
+  - n 16.17.0
+  - npm i -g pnpm
+
+compile:
+  - pnpm install --frozen-lockfile
+  - pnpm build:common
