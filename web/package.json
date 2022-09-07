@@ -46,6 +46,7 @@
     "zen-observable": "^0.8.15"
   },
   "devDependencies": {
+    "vite": "^3.0.0",
     "@babel/core": "^7.17.8",
     "@mui/system": "^5.2.8",
     "@nivo/tooltip": "^0.79.0",

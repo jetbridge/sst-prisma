@@ -19,11 +19,16 @@
     "@graphql-codegen/typescript": "^2.4.11",
     "@graphql-codegen/typescript-operations": "^2.4.0",
     "@graphql-codegen/typescript-react-apollo": "*",
+    "@apollo/client": "^3.6.5",
+    "graphql": "^16.5.0",
+    "@types/node": "^16.0.0",
+    "typescript": "^4.7.4",
     "graphql-tag": "^2.12.6"
   },
   "keywords": [],
   "author": "",
-  "dependencies": {
+  "peerDependencies": {
+    "@apollo/client": "^3.6.5",
     "graphql": "^16.5.0"
   }
 }
