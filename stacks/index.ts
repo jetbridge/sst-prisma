@@ -7,6 +7,7 @@ import { Database } from './database';
 import { DatabaseMigrations } from './databaseMigrations';
 import { Dns } from './dns';
 import { Layers } from './layers';
+import { Monitoring } from './monitoring';
 import { Network } from './network';
 import { RestApi } from './restApi';
 import { Secrets } from './secrets';
@@ -38,5 +39,6 @@ export default function main(app: sst.App) {
     .stack(Auth)
     .stack(RestApi)
     .stack(AppSyncApi)
-    .stack(Web);
+    .stack(Web)
+    .stack(Monitoring);
 }

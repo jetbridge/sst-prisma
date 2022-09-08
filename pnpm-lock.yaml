@@ -6,6 +6,7 @@ importers:
     specifiers:
       '@apollo/client': ^3.6.5
       '@aws-cdk/aws-appsync-alpha': 2.32.0-alpha.0
+      '@aws-cdk/aws-synthetics-alpha': 2.32.0-alpha.0
       '@serverless-stack/cli': ^1.10.1
       '@serverless-stack/core': ^1.10.1
       '@serverless-stack/node': ^1.10.0
@@ -54,6 +55,7 @@ importers:
     devDependencies:
       '@apollo/client': 3.6.5_graphql@16.5.0
       '@aws-cdk/aws-appsync-alpha': 2.32.0-alpha.0_abfkyh2p4stavtizonc4nwuwna
+      '@aws-cdk/aws-synthetics-alpha': 2.32.0-alpha.0_abfkyh2p4stavtizonc4nwuwna
       '@serverless-stack/cli': 1.10.1_constructs@10.1.21
       '@serverless-stack/core': 1.10.1
       '@serverless-stack/resources': 1.10.1
@@ -427,6 +429,17 @@ packages:
 
   /@aws-cdk/aws-appsync-alpha/2.32.0-alpha.0_abfkyh2p4stavtizonc4nwuwna:
     resolution: {integrity: sha512-ued6lAwL0zF4tqLeMJ1UPbRPDHdZbB+nPHF79bXiaJnYnW5x/bw/MBMySZrIljNidFWn8I+WSgEL717+fPsRbQ==}
+    engines: {node: '>= 14.15.0'}
+    peerDependencies:
+      aws-cdk-lib: ^2.32.0
+      constructs: ^10.0.0
+    dependencies:
+      aws-cdk-lib: 2.32.0_constructs@10.1.21
+      constructs: 10.1.21
+    dev: true
+
+  /@aws-cdk/aws-synthetics-alpha/2.32.0-alpha.0_abfkyh2p4stavtizonc4nwuwna:
+    resolution: {integrity: sha512-QU/x9TbI8j7NK505Mmn2F8bZzdlnh0hemuZyGU4tStbli/ZqSlo7cyDKOahDiP66qE44gSPpLl73pVwHXHsM5w==}
     engines: {node: '>= 14.15.0'}
     peerDependencies:
       aws-cdk-lib: ^2.32.0
