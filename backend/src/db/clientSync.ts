@@ -1,4 +1,4 @@
-import { getPrisma } from './client';
+import { getPrisma } from '@backend/db/client';
 
 /**
  * This will grab a connection to the database upon import (cold start).
