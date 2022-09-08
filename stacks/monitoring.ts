@@ -32,9 +32,6 @@ export function Monitoring({ stack, app }: StackContext) {
  * Docs:
  *  * https://docs.aws.amazon.com/cdk/api/v2/docs/aws-synthetics-alpha-readme.html
  *  * https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries.html
- * @param stack
- * @param app
- * @param alarmTopic
  */
 function createSynthetics(stack: Stack, app: App, alarmTopic: Topic) {
   const { webUrl } = use(Web);
