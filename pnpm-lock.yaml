@@ -102,6 +102,7 @@ importers:
       '@aws-sdk/signature-v4-crt': ^3.130.0
       '@babel/core': '>=7.0.0 <8.0.0'
       '@chax-at/transactional-prisma-testing': ^0.5.0
+      '@faker-js/faker': ^7.5.0
       '@middy/core': ^2.5.7
       '@prisma/client': 4.2.1
       '@prisma/generator-helper': '*'
@@ -110,6 +111,7 @@ importers:
       '@sentry/serverless': ^7.8.1
       '@types/aws-lambda': ^8.10.70
       '@types/memoizee': ^0.4.7
+      '@types/uuid': ^8.3.4
       aws-lambda: ^1.0.7
       aws-sdk-client-mock: ^1.0.0
       base64url: ^3.0.1
@@ -117,12 +119,14 @@ importers:
       common: workspace:*
       dotenv: ^16.0.0
       dotenv-cli: ^5.1.0
+      fishery: ^2.2.2
       got: ^12.3.1
       graphql: ^16.5.0
       graphql-tag: ^2.12.6
       jose: ^4.8.3
       memoizee: ^0.4.15
       prisma: 4.2.1
+      uuid: ^9.0.0
     dependencies:
       '@aws-crypto/client-node': 3.1.1
       '@aws-lambda-powertools/logger': 0.8.1
@@ -145,16 +149,20 @@ importers:
     devDependencies:
       '@babel/core': 7.18.2
       '@chax-at/transactional-prisma-testing': 0.5.0_@prisma+client@4.2.1
+      '@faker-js/faker': 7.5.0
       '@prisma/generator-helper': 3.14.0
       '@types/aws-lambda': 8.10.97
       '@types/memoizee': 0.4.8
+      '@types/uuid': 8.3.4
       aws-sdk-client-mock: 1.0.0
       builtin-modules: 3.2.0
       dotenv: 16.0.1
       dotenv-cli: 5.1.0
+      fishery: 2.2.2
       graphql: 16.5.0
       graphql-tag: 2.12.6_graphql@16.5.0
       prisma: 4.2.1
+      uuid: 9.0.0
 
   common:
     specifiers:
@@ -5837,6 +5845,11 @@ packages:
       - supports-color
     dev: true
 
+  /@faker-js/faker/7.5.0:
+    resolution: {integrity: sha512-8wNUCCUHvfvI0gQpDUho/3gPzABffnCn5um65F8dzQ86zz6dlt4+nmAA7PQUc8L+eH+9RgR/qzy5N/8kN0Ozdw==}
+    engines: {node: '>=14.0.0', npm: '>=6.0.0'}
+    dev: true
+
   /@fast-csv/format/4.3.5:
     resolution: {integrity: sha512-8iRn6QF3I8Ak78lNAa+Gdl5MJJBM5vRHivFtMRUWINdevNo00K7OXxS2PshawLKTejVwieIlPmK5YlLu6w4u8A==}
     dependencies:
@@ -10050,6 +10063,10 @@ packages:
 
   /@types/unist/2.0.6:
     resolution: {integrity: sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==}
+
+  /@types/uuid/8.3.4:
+    resolution: {integrity: sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==}
+    dev: true
 
   /@types/webpack-env/1.17.0:
     resolution: {integrity: sha512-eHSaNYEyxRA5IAG0Ym/yCyf86niZUIF/TpWKofQI/CVfh5HsMEUyfE2kwFxha4ow0s5g0LfISQxpDKjbRDrizw==}
@@ -15307,6 +15324,12 @@ packages:
       locate-path: 6.0.0
       path-exists: 4.0.0
 
+  /fishery/2.2.2:
+    resolution: {integrity: sha512-jeU0nDhPHJkupmjX+r9niKgVMTBDB8X+U/pktoGHAiWOSyNlMd0HhmqnjrpjUOCDPJYaSSu4Ze16h6dZOKSp2w==}
+    dependencies:
+      lodash.mergewith: 4.6.2
+    dev: true
+
   /flat-cache/3.0.4:
     resolution: {integrity: sha512-dm9s5Pw7Jc0GvMYbshN6zchCA9RgQlzzEZX3vylR9IqFfS8XciblUXOKfW6SiuJ0e13eDYZoZV5wdrev7P3Nwg==}
     engines: {node: ^10.12.0 || >=12.0.0}
@@ -17802,6 +17825,10 @@ packages:
 
   /lodash.merge/4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
+
+  /lodash.mergewith/4.6.2:
+    resolution: {integrity: sha512-GK3g5RPZWTRSeLSpgP8Xhra+pnjBC56q9FZYe1d5RN3TJ35dbkGy3YqBSMbyCrlbi+CM9Z3Jk5yTL7RCsqboyQ==}
+    dev: true
 
   /lodash.once/4.1.1:
     resolution: {integrity: sha512-Sb487aTOCr9drQVL8pIxOzVhafOjZN9UU54hiN8PU3uAiSV7lx1yYNpbNmex2PK6dSJoNTSJUUswT651yww3Mg==}
@@ -23069,6 +23096,11 @@ packages:
   /uuid/8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
+
+  /uuid/9.0.0:
+    resolution: {integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==}
+    hasBin: true
+    dev: true
 
   /v8-compile-cache/2.3.0:
     resolution: {integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==}
