@@ -10,6 +10,8 @@ import { Code } from 'aws-cdk-lib/aws-lambda';
 import path from 'path';
 import { dirname } from 'desm';
 import { Web } from './web';
+import { TreatMissingData } from 'aws-cdk-lib/aws-cloudwatch';
+import { SnsAction } from 'aws-cdk-lib/aws-cloudwatch-actions';
 
 /**
  * Alarms and monitoring for our resources.
@@ -39,7 +41,7 @@ function createSynthetics(stack: Stack, app: App, alarmTopic: Topic) {
   const __dirname = dirname(import.meta.url);
 
   // check if the website is up
-  new Canary(stack, 'WebsiteUp', {
+  const websiteUp = new Canary(stack, 'WebsiteUp', {
     schedule: Schedule.rate(Duration.minutes(5)),
     test: Test.custom({
       code: Code.fromAsset(path.join(__dirname, 'synthetics', 'websiteUp')),
@@ -51,6 +53,15 @@ function createSynthetics(stack: Stack, app: App, alarmTopic: Topic) {
       WEB_URL: webUrl,
     },
   });
+  websiteUp
+    .metricFailed()
+    .createAlarm(stack, 'WebsiteUpAlarm', {
+      evaluationPeriods: 1,
+      threshold: 1,
+      alarmDescription: `Cannot reach ${webUrl}`,
+      treatMissingData: TreatMissingData.BREACHING,
+    })
+    .addAlarmAction(new SnsAction(alarmTopic.cdk.topic));
 }
 
 /**
