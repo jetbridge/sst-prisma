@@ -1,6 +1,6 @@
 import { seedFakerSampleData } from '@backend/db/seed/fakeSampleData';
-import { getPrisma } from '@backend/db/client';
+
+const { prisma } = await import('@backend/db/clientSync');
 
 await seedFakerSampleData();
-const prisma = await getPrisma();
 await prisma.$disconnect();

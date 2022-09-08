@@ -1,10 +1,10 @@
 import { truncateAllTables } from '@backend/db/seed/truncate';
-import { getPrisma } from '@backend/db/client';
 import { Prisma } from '@prisma/client';
 
+const { prisma } = await import('@backend/db/clientSync');
+
 export async function seedFakerSampleData() {
-  const prisma = await getPrisma();
-  await prisma.$transaction(startSeeding, { maxWait: 30_000, timeout: 60_000 });
+  prisma.$transaction(startSeeding, { maxWait: 30_000, timeout: 60_000 });
 }
 
 export async function startSeeding(prisma: Prisma.TransactionClient) {
