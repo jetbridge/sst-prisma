@@ -33,15 +33,6 @@ const refreshCognitoAccessToken = async (tokens: JWT): Promise<CognitoRefreshTok
   const newTokens = await res.json();
   console.log('newTokens', newTokens);
   return newTokens;
-
-  //   AuthFlow: AuthFlowType.REFRESH_TOKEN_AUTH,
-  //   ClientId: COGNITO_CLIENT_ID,
-  //   AuthParameters: {
-  //     REFRESH_TOKEN: token.refreshToken as string,
-  //   },
-  // });
-  // const response = await client.send(command);
-  // return response.AuthenticationResult;
 };
 
 export const authOptions: NextAuthOptions = {
