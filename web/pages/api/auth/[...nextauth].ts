@@ -1,28 +1,47 @@
 import NextAuth, { NextAuthOptions, Session } from 'next-auth';
 import CognitoProvider from 'next-auth/providers/cognito';
-import { COGNITO_CLIENT_ID, COGNITO_USER_POOL_ID, REGION } from 'web/lib/config/next';
-import {
-  AuthFlowType,
-  CognitoIdentityProviderClient,
-  InitiateAuthCommand,
-} from '@aws-sdk/client-cognito-identity-provider';
+import { COGNITO_CLIENT_ID, COGNITO_DOMAIN_NAME, COGNITO_USER_POOL_ID, REGION } from 'web/lib/config/next';
 import { JWT } from 'next-auth/jwt';
 
 if (!REGION) throw new Error('REGION is not set');
 if (!COGNITO_CLIENT_ID) throw new Error('COGNITO_CLIENT_ID is not set');
 if (!COGNITO_USER_POOL_ID) throw new Error('COGNITO_USER_POOL_ID is not set');
 
-const refreshCognitoAccessToken = async (token: JWT) => {
-  const client = new CognitoIdentityProviderClient({ region: REGION });
-  const command = new InitiateAuthCommand({
-    AuthFlow: AuthFlowType.REFRESH_TOKEN_AUTH,
-    ClientId: COGNITO_CLIENT_ID,
-    AuthParameters: {
-      REFRESH_TOKEN: token.refreshToken as string,
-    },
+interface CognitoRefreshTokenResult {
+  access_token: string;
+  expires_in: number;
+  id_token: string;
+  refresh_token: string;
+}
+
+const refreshCognitoAccessToken = async (tokens: JWT): Promise<CognitoRefreshTokenResult> => {
+  const res = await fetch(`https://${COGNITO_DOMAIN_NAME}/oauth2/token`, {
+    method: 'POST',
+    headers: new Headers({ 'content-type': 'application/x-www-form-urlencoded' }),
+    body: Object.entries({
+      grant_type: 'refresh_token',
+      client_id: COGNITO_CLIENT_ID,
+      redirect_uri: window.location.origin,
+      refresh_token: tokens.refresh_token,
+    })
+      .map(([k, v]) => `${k}=${v}`)
+      .join('&'),
   });
-  const response = await client.send(command);
-  return response.AuthenticationResult;
+  if (!res.ok) {
+    throw new Error(await res.json());
+  }
+  const newTokens = await res.json();
+  console.log('newTokens', newTokens);
+  return newTokens;
+
+  //   AuthFlow: AuthFlowType.REFRESH_TOKEN_AUTH,
+  //   ClientId: COGNITO_CLIENT_ID,
+  //   AuthParameters: {
+  //     REFRESH_TOKEN: token.refreshToken as string,
+  //   },
+  // });
+  // const response = await client.send(command);
+  // return response.AuthenticationResult;
 };
 
 export const authOptions: NextAuthOptions = {
@@ -68,9 +87,9 @@ export const authOptions: NextAuthOptions = {
       const refreshedTokens = await refreshCognitoAccessToken(token);
       return {
         ...token,
-        accessToken: refreshedTokens?.AccessToken,
-        accessTokenExpires: refreshedTokens?.ExpiresIn ? Date.now() + refreshedTokens?.ExpiresIn * 1000 : 0,
-        refreshToken: refreshedTokens?.RefreshToken ?? token.refreshToken, // Fall back to old refresh token
+        accessToken: refreshedTokens?.access_token,
+        accessTokenExpires: refreshedTokens?.expires_in ? Date.now() + refreshedTokens?.expires_in * 1000 : 0,
+        refreshToken: refreshedTokens?.refresh_token ?? token.refreshToken, // Fall back to old refresh token
       };
     },
 
