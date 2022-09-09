@@ -11,26 +11,31 @@
     "migrate:dev": "pnpm run format && prisma migrate dev",
     "migrate:test": "pnpm init:db:test && dotenv -e .env.vitest -- prisma migrate dev --skip-seed --skip-generate",
     "init:db:test": "[ -n \"$CI\" ] || (docker-compose exec -T sst-local-db dropdb -U postgres --if-exists tests && docker-compose exec -T sst-local-db createdb -U postgres tests)",
+    "db:seed": "prisma db seed",
+    "db:seed:clean": "CLEAN_SEED=true prisma db seed",
     "generate": "prisma generate"
   },
+  "prisma": {
+    "seed": "./seed-db.sh"
+  },
   "dependencies": {
+    "@aws-crypto/client-node": "^3.1.1",
     "@aws-lambda-powertools/logger": "^0.8.1",
     "@aws-lambda-powertools/metrics": "^0.9.1",
     "@aws-lambda-powertools/tracer": "^0.9.1",
-    "@aws-sdk/client-secrets-manager": "~3.145.0",
     "@aws-sdk/client-kms": "~3.145.0",
-    "@aws-crypto/client-node": "^3.1.1",
+    "@aws-sdk/client-secrets-manager": "~3.145.0",
+    "@aws-sdk/signature-v4-crt": "^3.130.0",
     "@middy/core": "^2.5.7",
-    "got": "^12.3.1",
     "@prisma/client": "4.2.1",
     "@prisma/internals": "4.2.1",
-    "jose": "^4.8.3",
     "@prisma/migrate": "4.2.1",
-    "base64url": "^3.0.1",
     "@sentry/serverless": "^7.8.1",
-    "@aws-sdk/signature-v4-crt": "^3.130.0",
     "aws-lambda": "^1.0.7",
+    "base64url": "^3.0.1",
     "common": "workspace:*",
+    "got": "^12.3.1",
+    "jose": "^4.8.3",
     "memoizee": "^0.4.15"
   },
   "devDependencies": {
