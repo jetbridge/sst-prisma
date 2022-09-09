@@ -21,17 +21,15 @@ const refreshCognitoAccessToken = async (tokens: JWT): Promise<CognitoRefreshTok
     body: Object.entries({
       grant_type: 'refresh_token',
       client_id: COGNITO_CLIENT_ID,
-      redirect_uri: window.location.origin,
-      refresh_token: tokens.refresh_token,
+      refresh_token: tokens.refreshToken,
     })
       .map(([k, v]) => `${k}=${v}`)
       .join('&'),
   });
   if (!res.ok) {
-    throw new Error(await res.json());
+    throw new Error(JSON.stringify(await res.json()));
   }
   const newTokens = await res.json();
-  console.log('newTokens', newTokens);
   return newTokens;
 };
 
