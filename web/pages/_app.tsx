@@ -1,4 +1,4 @@
-import { colors } from '@mui/material';
+import * as colors from '@mui/material/colors';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { SessionProvider } from 'next-auth/react';
 import type { AppProps } from 'next/app';
