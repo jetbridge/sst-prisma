@@ -6,7 +6,7 @@ import { UserRepository } from '@backend/repository/user';
 export const getCurrentUser = async (event: AppSyncResolverEvent<unknown>): Promise<User | undefined> => {
   // get username
   const cognitoUserName = (event.identity as AppSyncIdentityCognito).username;
-  if (!cognitoUserName) throw new Error('Missing username');
+  if (!cognitoUserName) return undefined;
 
   // load user from DB
   const userRepository = new UserRepository();
