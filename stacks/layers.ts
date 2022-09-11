@@ -30,6 +30,7 @@ export function Layers({ stack, app }: StackContext) {
       copyFiles: [{ from: '../prisma/schema.prisma', to: 'src/schema.prisma' }],
       externalModules: LAYER_MODULES.concat(prismaLayer.externalModules),
       banner: ESM_REQUIRE_SHIM,
+      sourcemap: true,
     },
   });
 }

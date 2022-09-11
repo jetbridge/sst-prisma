@@ -3,7 +3,7 @@ import { describeIntegrationTest } from './testUtil';
 
 import { Prisma } from '@prisma/client';
 import { getPrisma } from './client';
-import { prisma as prismaSync } from './client/sync';
+import { prisma as prismaSync } from './clientSync';
 
 // there can be only one
 const UNIQUE_USER: Prisma.UserCreateInput = { id: '00000000-0000-0000-0000-000000000000', username: 'highlander' };

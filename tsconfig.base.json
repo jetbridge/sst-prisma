@@ -1,7 +1,6 @@
 {
   "extends": "@tsconfig/node16-strictest-esm/tsconfig.json",
   "compilerOptions": {
-    "module": "ES2022",
     "composite": true,
     "moduleResolution": "node",
     "incremental": true,
@@ -12,14 +11,12 @@
     "noUncheckedIndexedAccess": false,
     "noPropertyAccessFromIndexSignature": false,
     "exactOptionalPropertyTypes": false,
+    "importHelpers": true,
     "baseUrl": ".",
     "types": ["vitest/globals"],
     "paths": {
-      "@backend/*": ["./backend/src/*"],
-      "@web/*": ["./web/src/*"]
+      "@backend/*": ["./backend/src/*"]
     }
   },
-
-  "include": ["stacks"],
   "files": ["./index.d.ts"]
 }
