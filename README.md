@@ -34,15 +34,17 @@ Click links to learn more and view documentation.
   - ⇅ [AWS AppSync](https://docs.aws.amazon.com/appsync/latest/devguide/what-is-appsync.html) - serverless GraphQL AWS service
   - ✽ [Code generation](https://www.graphql-code-generator.com/) of [TypeScript](https://www.graphql-code-generator.com/docs/guides/front-end-typescript-only) + [apollo client](https://www.graphql-code-generator.com/plugins/typescript-react-apollo)
 - 🌐 [REST API gateway](https://docs.serverless-stack.com/api)
+- 🖥 [NextJS](https://nextjs.org/) frontend w/ Material-UI
+  - 🎨 [Material-UI](https://mui.com/material-ui/getting-started/overview/) - react components and styling solution
+  - 🔓 [NextAuth.js](https://next-auth.js.org/) - authentication and session management
 - 🔓 [AWS Cognito](https://aws.amazon.com/cognito/) - authentication backend
-- 🔓 [NextAuth.js](https://next-auth.js.org/) - authentication for NextJS
 - 💾 [Prisma ORM](https://www.prisma.io/docs/)
   - 📚 Prisma engine lambda layer
   - 📜 Prisma DB migration CDK script
   - 🐳 Database integration test setup with postgres in docker
 - 🔋 [Aurora Serverless RDS](https://aws.amazon.com/rds/aurora/serverless/) PostgreSQL
-- 🖥 [NextJS](https://nextjs.org/) frontend w/ Material-UI
 - ⚡️ [Live local lambda development](https://docs.serverless-stack.com/live-lambda-development) (`pnpm start`)
+  - 🐞 [Lambda debugging](https://docs.sst.dev/live-lambda-development#debugging-with-visual-studio-code) - set breakpoints on your lambda functions and step through in your IDE
 - 📦 [pnpm](https://pnpm.io/) - fast and correct package manager
 - 🚅 [vitest](https://vitest.dev/) - fast tests
 - 🐛 [ES Modules](https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/)
