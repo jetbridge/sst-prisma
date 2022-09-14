@@ -6,10 +6,17 @@ export default defineConfig({
   test: {
     globals: true,
     clearMocks: true,
-    // setupFiles: ["./testSetup"],
-    environment: 'happy-dom',
+    environment: 'jsdom',
 
     exclude: [...configDefaults.exclude, '**/.next/**'],
+
+    deps: {
+      // we have a problem in the generated GQL client which causes the error 'Apollo.useMutation is not a function'
+      // because of differences in code bundling and node module resolution
+      // probably will be fixed via https://github.com/apollographql/apollo-client/pull/9697
+      // and we can remove this then
+      inline: [/\/common\//],
+    },
   },
   plugins: [
     tsconfigPaths({
