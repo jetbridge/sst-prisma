@@ -3,7 +3,7 @@ import { Config, RDS, StackContext, use } from '@serverless-stack/resources';
 import { Duration, RemovalPolicy } from 'aws-cdk-lib';
 import { APP_NAME } from 'common';
 import { Network } from 'stacks/network';
-import { IS_PRODUCTION } from './config';
+import { IS_PRODUCTION, PRISMA_CONNECTION_LIMIT } from './config';
 
 export function Database({ stack, app }: StackContext) {
   const net = use(Network);
@@ -32,13 +32,11 @@ export function Database({ stack, app }: StackContext) {
 
   cluster.connections.allowDefaultPortFrom(net.defaultLambdaSecurityGroup, 'Allow access from lambda functions');
 
-  const prismaConnectionLimit = process.env.PRISMA_CONNECTION_LIMIT || 5;
-
   const config = [
     new Config.Parameter(stack, 'DATABASE_NAME', { value: defaultDatabaseName }),
     new Config.Parameter(stack, 'CLUSTER_ARN', { value: rds.clusterArn }),
     new Config.Parameter(stack, 'DB_SECRET_ARN', { value: rds.secretArn }),
-    new Config.Parameter(stack, 'PRISMA_CONNECTION_LIMIT', { value: prismaConnectionLimit.toString() ?? '' }),
+    new Config.Parameter(stack, 'PRISMA_CONNECTION_LIMIT', { value: PRISMA_CONNECTION_LIMIT?.toString() ?? '' }),
   ];
 
   stack.addOutputs({
@@ -67,12 +65,13 @@ export function Database({ stack, app }: StackContext) {
  * Generate a database connection string (DSN).
  */
 export function makeDatabaseUrl() {
-  const prismaConnectionLimit = process.env.PRISMA_CONNECTION_LIMIT || 5;
-
   const rds = use(Database);
   const { cluster, defaultDatabaseName } = rds;
   const dbUsername = cluster.secret?.secretValueFromJson('username');
   const dbPassword = cluster.secret?.secretValueFromJson('password');
 
-  return `postgresql://${dbUsername}:${dbPassword}@${cluster.clusterEndpoint.hostname}/${defaultDatabaseName}?connection_limit=${prismaConnectionLimit}`;
+  let dsn = `postgresql://${dbUsername}:${dbPassword}@${cluster.clusterEndpoint.hostname}/${defaultDatabaseName}?`;
+  if (PRISMA_CONNECTION_LIMIT) dsn += `connection_limit=${PRISMA_CONNECTION_LIMIT}`;
+
+  return dsn;
 }

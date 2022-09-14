@@ -20,7 +20,7 @@ export function Web({ stack }: StackContext) {
         }
       : undefined,
     environment: {
-      NEXTAUTH_URL: 'http://localhost:6020', // FIXME: how to pass in this URL?
+      NEXTAUTH_URL: dns.domainName ? `https://${dns.domainName}` : 'http://localhost:6020', // FIXME: how to generate this URL automatically?
       NEXTAUTH_SECRET: secrets.secret.secretValueFromJson('RANDOM').toString(), // FIXME https://github.com/nextauthjs/next-auth/discussions/5145 & https://github.com/serverless-stack/sst/issues/1986
       NEXT_PUBLIC_REGION: stack.region,
       NEXT_PUBLIC_APPSYNC_ENDPOINT: appSyncApi.api.url,
@@ -39,4 +39,6 @@ export function Web({ stack }: StackContext) {
   stack.addOutputs({
     WebURL: frontendSite.url,
   });
+
+  return { webUrl: frontendSite.url };
 }
