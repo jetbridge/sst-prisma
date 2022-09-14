@@ -1,17 +1,16 @@
-import { Stack, StackContext, Topic, App, use } from '@serverless-stack/resources';
+import { Canary, Runtime, Test } from '@aws-cdk/aws-synthetics-alpha';
+import { App, Stack, StackContext, Topic, use } from '@serverless-stack/resources';
 import { Aspects, Duration } from 'aws-cdk-lib';
 import { LoggingLevel, SlackChannelConfiguration } from 'aws-cdk-lib/aws-chatbot';
-import { Effect, ManagedPolicy, PolicyStatement } from 'aws-cdk-lib/aws-iam';
-import { SLACK_ALERTS_CHANNEL_ID, SLACK_ALERTS_WORKSPACE_ID } from './config';
-import { AddAlarmTopicAction, FunctionAlarms } from './resources/alarm';
-import { Canary, Test, Runtime } from '@aws-cdk/aws-synthetics-alpha';
-import { Schedule } from 'aws-cdk-lib/aws-events';
-import { Code } from 'aws-cdk-lib/aws-lambda';
-import path from 'path';
-import { dirname } from 'desm';
-import { Web } from './web';
 import { TreatMissingData } from 'aws-cdk-lib/aws-cloudwatch';
 import { SnsAction } from 'aws-cdk-lib/aws-cloudwatch-actions';
+import { Schedule } from 'aws-cdk-lib/aws-events';
+import { Effect, ManagedPolicy, PolicyStatement } from 'aws-cdk-lib/aws-iam';
+import { Code } from 'aws-cdk-lib/aws-lambda';
+import path from 'path';
+import { SLACK_ALERTS_CHANNEL_ID, SLACK_ALERTS_WORKSPACE_ID } from './config';
+import { AddAlarmTopicAction, FunctionAlarms } from './resources/alarm';
+import { Web } from './web';
 
 /**
  * Alarms and monitoring for our resources.
@@ -35,14 +34,13 @@ export function Monitoring({ stack, app }: StackContext) {
  */
 function createSynthetics(stack: Stack, app: App, alarmTopic: Topic) {
   const { webUrl } = use(Web);
-  const __dirname = dirname(import.meta.url);
 
   // check if the website is up
   const websiteUp = new Canary(stack, 'WebsiteUp', {
     schedule: Schedule.rate(Duration.minutes(5)),
     test: Test.custom({
-      code: Code.fromAsset(path.join(__dirname, 'synthetics', 'websiteUp')),
-      handler: 'index.handler',
+      code: Code.fromAsset(path.join(app.appPath, 'stacks', 'canary')),
+      handler: 'websiteUp.handler',
     }),
     runtime: Runtime.SYNTHETICS_NODEJS_PUPPETEER_3_5,
     canaryName: app.logicalPrefixedName('website-up'),
