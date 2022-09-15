@@ -1,3 +1,5 @@
+const path = require('path');
+
 /**
  * @type {import('next').NextConfig}
  */
@@ -17,7 +19,10 @@ const nextConfig = {
         transform: '@mui/icons-material/{{member}}',
       },
     },
+
+    outputFileTracingRoot: path.join(__dirname, '..'),
   },
+  output: 'standalone',
 };
 
 module.exports = nextConfig;

@@ -12,6 +12,7 @@ export function Web({ stack }: StackContext) {
 
   // docs: https://docs.serverless-stack.com/constructs/NextjsSite
   const frontendSite = new NextjsSite(stack, 'Web', {
+    disablePlaceholder: true,
     path: 'web',
     customDomain: dns.domainName
       ? {
