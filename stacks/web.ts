@@ -1,4 +1,4 @@
-import { NextjsSite, StackContext, use } from '@serverless-stack/resources';
+import { NextjsSsr, StackContext, use } from '@serverless-stack/resources';
 import { AppSyncApi } from './appSyncApi';
 import { Auth } from './auth';
 import { Dns } from './dns';
@@ -11,7 +11,7 @@ export function Web({ stack }: StackContext) {
   const secrets = use(Secrets);
 
   // docs: https://docs.serverless-stack.com/constructs/NextjsSite
-  const frontendSite = new NextjsSite(stack, 'Web', {
+  const frontendSite = new NextjsSsr(stack, 'Web', {
     defaults: {
       function: {
         memorySize: 2048
