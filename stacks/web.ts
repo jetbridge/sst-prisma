@@ -12,13 +12,18 @@ export function Web({ stack }: StackContext) {
 
   // docs: https://docs.serverless-stack.com/constructs/NextjsSite
   const frontendSite = new NextjsSite(stack, 'Web', {
+    defaults: {
+      function: {
+        memorySize: 2048
+      }
+    },
     disablePlaceholder: true,
     path: 'web',
     customDomain: dns.domainName
       ? {
-          domainName: dns.domainName,
-          domainAlias: 'www.' + dns.domainName,
-        }
+        domainName: dns.domainName,
+        domainAlias: 'www.' + dns.domainName,
+      }
       : undefined,
     environment: {
       NEXTAUTH_URL: 'http://localhost:6020', // FIXME: how to pass in this URL?
