@@ -232,6 +232,7 @@ importers:
       eslint-config-next: ^12.1.0
       eslint-plugin-storybook: ^0.5.7
       graphql: ^16.3.0
+      jose: ^4.8.3
       jsdom: ^20.0.0
       next: ^12.3.0
       next-auth: ^4.12.0
@@ -272,6 +273,7 @@ importers:
       classnames: 2.3.1
       common: link:../common
       graphql: 16.5.0
+      jose: 4.10.3
       next: 12.3.1_77ezg3iqi2xcnqlocxlmm2tcqq
       next-auth: 4.15.0_azq6kxkn3od7qdylwkyksrwopy
       nord: 0.2.1
