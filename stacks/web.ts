@@ -1,23 +1,18 @@
-import { App, Stack, StackContext, use } from '@serverless-stack/resources';
+import { NextjsSite, StackContext, use } from '@serverless-stack/resources';
 import { AppSyncApi } from './appSyncApi';
 import { Auth } from './auth';
 import { Dns } from './dns';
 import { Secrets } from './secrets';
-import { BaseSiteEnvironmentOutputsInfo, Nextjs, NextjsProps } from 'cdk-nextjs-standalone';
-import { CfnOutput } from 'aws-cdk-lib';
-import { Construct } from 'constructs';
-import path from 'path';
 
-export function Web({ stack, app }: StackContext) {
+export function Web({ stack }: StackContext) {
   const { userPool, webClient, cognitoDomainName } = use(Auth);
   const appSyncApi = use(AppSyncApi);
   const dns = use(Dns);
   const secrets = use(Secrets);
 
   // docs: https://docs.serverless-stack.com/constructs/NextjsSite
-  const frontendSite = new NextjsSst(stack, 'Web', {
-    nextjsPath: 'web',
-    app,
+  const frontendSite = new NextjsSite(stack, 'Web', {
+    path: 'web',
     customDomain: dns.domainName
       ? {
           domainName: dns.domainName,
@@ -44,50 +39,4 @@ export function Web({ stack, app }: StackContext) {
   stack.addOutputs({
     WebURL: frontendSite.url,
   });
-}
-
-// TODO: move to SST
-export interface NextjsSstProps extends NextjsProps {
-  app: App;
-}
-
-class NextjsSst extends Nextjs {
-  constructor(scope: Construct, id: string, props: NextjsSstProps) {
-    const app = props.app;
-
-    super(scope as any, id, {
-      ...props,
-      environment: {
-        ...props.environment,
-        AUTH_TRUST_HOST: 'true', // for next-auth, since cloudfront rewrites the host header - https://github.com/nextauthjs/next-auth/pull/5561
-      },
-      isPlaceholder: app.local,
-      tempBuildDir: app.buildDir,
-      stageName: app.stage,
-      compressionLevel: 0,
-      // quiet: true,
-
-      // make path relative to the app root
-      nextjsPath: path.isAbsolute(props.nextjsPath) ? path.relative(app.appPath, props.nextjsPath) : props.nextjsPath,
-    });
-
-    this.registerSiteEnvironment();
-  }
-
-  protected registerSiteEnvironment() {
-    const environmentOutputs: Record<string, string> = {};
-    for (const [key, value] of Object.entries(this.props.environment || {})) {
-      const outputId = `SstSiteEnv_${key}`;
-      const output = new CfnOutput(this, outputId, { value });
-      environmentOutputs[key] = Stack.of(this).getLogicalId(output);
-    }
-
-    const app = this.node.root as App;
-    app.registerSiteEnvironment({
-      id: this.node.id,
-      path: this.props.nextjsPath,
-      stack: Stack.of(this).node.id,
-      environmentOutputs,
-    } as BaseSiteEnvironmentOutputsInfo);
-  }
 }
