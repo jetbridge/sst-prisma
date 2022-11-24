@@ -52,6 +52,7 @@ class NextjsSst extends Nextjs {
       ...props,
       isPlaceholder: app.local,
       tempBuildDir: app.buildDir,
+      stageName: app.stage,
 
       // make path relative to the app root
       nextjsPath: path.isAbsolute(props.nextjsPath) ? path.relative(app.appPath, props.nextjsPath) : props.nextjsPath,
