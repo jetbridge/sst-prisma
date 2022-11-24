@@ -1,18 +1,22 @@
-import { NextjsSite, StackContext, use } from '@serverless-stack/resources';
+import { App, Stack, StackContext, use } from '@serverless-stack/resources';
+import { CfnOutput } from 'aws-cdk-lib';
+import { BaseSiteEnvironmentOutputsInfo, Nextjs, NextjsProps } from 'cdk-nextjs-standalone';
+import { Construct } from 'constructs';
+import path from 'path';
 import { AppSyncApi } from './appSyncApi';
 import { Auth } from './auth';
 import { Dns } from './dns';
 import { Secrets } from './secrets';
 
-export function Web({ stack }: StackContext) {
+export function Web({ stack, app }: StackContext) {
   const { userPool, webClient, cognitoDomainName } = use(Auth);
   const appSyncApi = use(AppSyncApi);
   const dns = use(Dns);
   const secrets = use(Secrets);
 
   // docs: https://docs.serverless-stack.com/constructs/NextjsSite
-  const frontendSite = new NextjsSite(stack, 'Web', {
-    path: 'web',
+  const frontendSite = new NextjsSst(stack, 'Web', {
+    nextjsPath: 'web',
     customDomain: dns.domainName
       ? {
           domainName: dns.domainName,
@@ -28,15 +32,49 @@ export function Web({ stack }: StackContext) {
       NEXT_PUBLIC_COGNITO_USER_POOL_ID: userPool.userPoolId,
       NEXT_PUBLIC_COGNITO_DOMAIN_NAME: cognitoDomainName,
     },
-    cdk: {
-      distribution: {
-        certificate: dns.certificateGlobal,
-        ...(dns.domainName && { domainNames: [dns.domainName] }),
-      },
-    },
+    app,
   });
 
   stack.addOutputs({
     WebURL: frontendSite.url,
   });
+}
+
+export interface NextjsSstProps extends NextjsProps {
+  app: App;
+}
+
+class NextjsSst extends Nextjs {
+  constructor(scope: Construct, id: string, props: NextjsSstProps) {
+    const app = props.app;
+
+    super(scope as any, id, {
+      ...props,
+      isPlaceholder: app.local,
+      tempBuildDir: app.buildDir,
+      stageName: app.stage,
+
+      // make path relative to the app root
+      nextjsPath: path.isAbsolute(props.nextjsPath) ? path.relative(app.appPath, props.nextjsPath) : props.nextjsPath,
+    });
+
+    if (props.environment) this.registerSiteEnvironment(props.environment);
+  }
+
+  protected registerSiteEnvironment(environment: Record<string, string>) {
+    const environmentOutputs: Record<string, string> = {};
+    for (const [key, value] of Object.entries(environment)) {
+      const outputId = `SstSiteEnv_${key}`;
+      const output = new CfnOutput(this, outputId, { value });
+      environmentOutputs[key] = Stack.of(this).getLogicalId(output);
+    }
+
+    const app = this.node.root as App;
+    app.registerSiteEnvironment({
+      id: this.node.id,
+      path: this.props.nextjsPath,
+      stack: Stack.of(this).node.id,
+      environmentOutputs,
+    } as BaseSiteEnvironmentOutputsInfo);
+  }
 }
