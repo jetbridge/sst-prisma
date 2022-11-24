@@ -10,7 +10,8 @@ export function Secrets({ stack, app }: StackContext) {
         ['LINKEDIN_CLIENT_ID']: 'changeme',
         ['LINKEDIN_CLIENT_SECRET']: 'changeme',
       }),
-      generateStringKey: 'RANDOM', // unused
+      generateStringKey: 'RANDOM',
+      excludePunctuation: true,
     },
   });
 
