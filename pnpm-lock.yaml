@@ -18,7 +18,7 @@ importers:
       '@typescript-eslint/parser': '^5.33.1 '
       aws-cdk-lib: 2.50.0
       aws-lambda: ^1.0.7
-      cdk-nextjs-standalone: ^0.0.0
+      cdk-nextjs-standalone: 2.0.0-pre.0
       chalk: ^5.0.1
       concurrently: ^7.3.0
       constructs: ^10.1.17
@@ -49,7 +49,7 @@ importers:
     dependencies:
       '@serverless-stack/node': 1.10.0
       aws-cdk-lib: 2.50.0_constructs@10.1.21
-      cdk-nextjs-standalone: 0.0.0_7lpy3dw5565e3njitnonz6kzpe
+      cdk-nextjs-standalone: 2.0.0-pre.0_7lpy3dw5565e3njitnonz6kzpe
       desm: 1.3.0
       tslib: 2.4.0
     devDependencies:
@@ -11587,16 +11587,17 @@ packages:
     resolution: {integrity: sha512-vlNK021QdI7PNeiUh/lKkC/mNHHfV0m/Ad5JoI0TYtlBnJAslM/JIkm/tGC88bkLIwO6OQ5uV6ztS6kVAtCDlg==}
     dev: true
 
-  /cdk-nextjs-standalone/0.0.0_7lpy3dw5565e3njitnonz6kzpe:
-    resolution: {integrity: sha512-wOKaahpXmvbOvPkI3p1ElQgeAFdYyJKhmNfOXGoPpZS6/mB6XFH0fUM5ijxaMuZCtWzAgDGkbEHf2HreXI8Reg==}
+  /cdk-nextjs-standalone/2.0.0-pre.0_7lpy3dw5565e3njitnonz6kzpe:
+    resolution: {integrity: sha512-HavV3FuYcDHOv3x8wTaJilR19Fndb+3UUcWo0zZaJeP1sEiH1SxQGpipfXgBS0sukR71DH30snp/esEsOQYxVg==}
     peerDependencies:
-      aws-cdk-lib: ^2.39.0
+      aws-cdk-lib: ^2.50.0
       constructs: ^10.0.5
     dependencies:
       aws-cdk-lib: 2.50.0_constructs@10.1.21
       constructs: 10.1.21
     dev: false
     bundledDependencies:
+      - '@types/aws-lambda'
       - '@types/cross-spawn'
       - '@types/fs-extra'
       - '@types/micromatch'
@@ -11604,8 +11605,11 @@ packages:
       - cross-spawn
       - esbuild
       - fs-extra
+      - glob
       - indent-string
+      - jszip
       - micromatch
+      - serverless-http
 
   /chai/4.3.6:
     resolution: {integrity: sha512-bbcp3YfHCUzMOvKqsztczerVgBKSsEijCySNlHHbX3VG1nskvqjz5Rfso1gGwD6w6oOV3eI60pKuMOV5MV7p3Q==}
