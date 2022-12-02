@@ -5,7 +5,7 @@ importers:
   .:
     specifiers:
       '@apollo/client': ^3.6.5
-      '@aws-cdk/aws-appsync-alpha': 2.32.0-alpha.0
+      '@aws-cdk/aws-appsync-alpha': 2.50.0-alpha.0
       '@serverless-stack/cli': ^1.18.3
       '@serverless-stack/core': ^1.18.3
       '@serverless-stack/node': ^1.10.0
@@ -18,7 +18,7 @@ importers:
       '@typescript-eslint/parser': '^5.33.1 '
       aws-cdk-lib: 2.50.0
       aws-lambda: ^1.0.7
-      cdk-nextjs-standalone: ^1.1.28
+      cdk-nextjs-standalone: ^0.0.0
       chalk: ^5.0.1
       concurrently: ^7.3.0
       constructs: ^10.1.17
@@ -49,12 +49,12 @@ importers:
     dependencies:
       '@serverless-stack/node': 1.10.0
       aws-cdk-lib: 2.50.0_constructs@10.1.21
-      cdk-nextjs-standalone: 1.1.28_7lpy3dw5565e3njitnonz6kzpe
+      cdk-nextjs-standalone: 0.0.0_7lpy3dw5565e3njitnonz6kzpe
       desm: 1.3.0
       tslib: 2.4.0
     devDependencies:
       '@apollo/client': 3.6.5_graphql@16.5.0
-      '@aws-cdk/aws-appsync-alpha': 2.32.0-alpha.0_7lpy3dw5565e3njitnonz6kzpe
+      '@aws-cdk/aws-appsync-alpha': 2.50.0-alpha.0_7lpy3dw5565e3njitnonz6kzpe
       '@serverless-stack/cli': 1.18.3_constructs@10.1.21
       '@serverless-stack/core': 1.18.3
       '@serverless-stack/resources': 1.18.3
@@ -436,17 +436,6 @@ packages:
       constructs: ^10.0.0
     dependencies:
       '@aws-cdk/aws-apigatewayv2-alpha': 2.50.0-alpha.0_7lpy3dw5565e3njitnonz6kzpe
-      aws-cdk-lib: 2.50.0_constructs@10.1.21
-      constructs: 10.1.21
-    dev: true
-
-  /@aws-cdk/aws-appsync-alpha/2.32.0-alpha.0_7lpy3dw5565e3njitnonz6kzpe:
-    resolution: {integrity: sha512-ued6lAwL0zF4tqLeMJ1UPbRPDHdZbB+nPHF79bXiaJnYnW5x/bw/MBMySZrIljNidFWn8I+WSgEL717+fPsRbQ==}
-    engines: {node: '>= 14.15.0'}
-    peerDependencies:
-      aws-cdk-lib: ^2.32.0
-      constructs: ^10.0.0
-    dependencies:
       aws-cdk-lib: 2.50.0_constructs@10.1.21
       constructs: 10.1.21
     dev: true
@@ -5261,6 +5250,9 @@ packages:
       '@babel/helper-validator-identifier': 7.18.6
       to-fast-properties: 2.0.0
 
+  /@balena/dockerignore/1.0.2:
+    resolution: {integrity: sha512-wMue2Sy4GAVTk6Ic4tJVcnfdau+gx2EnG7S+uAEe+TWJFqE4YoWN4/H8MSLj4eYJKxGg26lZwboEniNiNwZQ6Q==}
+
   /@base2/pretty-print-object/1.0.1:
     resolution: {integrity: sha512-4iri8i1AqYHJE2DstZYkyEprg6Pq6sKx3xn5FpySk9sNhH7qN2LLlHJCfDTZRILNwQNPD7mATWM0TBui7uC1pA==}
     dev: true
@@ -5564,6 +5556,7 @@ packages:
     cpu: [arm]
     os: [android]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-loong64/0.15.15:
@@ -5572,6 +5565,7 @@ packages:
     cpu: [loong64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@eslint/eslintrc/1.3.0:
@@ -6980,7 +6974,7 @@ packages:
     resolution: {integrity: sha512-8KG5RD0GVP4ydEzRn/I4BNDuxDtqVbOdm8675T49OIG/NGhaK0pjPX7ZcDlvKYbA+ulvVK3ztfcF4uBdOxuJbQ==}
     dependencies:
       '@gar/promisify': 1.1.3
-      semver: 7.3.7
+      semver: 7.3.8
     dev: true
 
   /@npmcli/move-file/1.1.2:
@@ -9203,10 +9197,6 @@ packages:
     resolution: {integrity: sha512-BT05v46n9KtSHa9SgGuOvm49eSruJ9utD8iNXpdpuUVYk8wOcqmm1LEzpNRkrXxD0CULc38sdLpk6q3Wa2WOwg==}
     dev: true
 
-  /@types/aws-lambda/8.10.109:
-    resolution: {integrity: sha512-/ME92FneNyXQzrAfcnQQlW1XkCZGPDlpi2ao1MJwecN+6SbeonKeggU8eybv1DfKli90FAVT1MlIZVXfwVuCyg==}
-    dev: false
-
   /@types/aws-lambda/8.10.97:
     resolution: {integrity: sha512-BZk3qO4R2KN8Ts3eR6CW1n8LI46UOgv1KoDZjo8J9vOQvDeX/rsrv1H0BpEAMcSqZ1mLwTEyAMtlua5tlSn0kw==}
 
@@ -9215,10 +9205,6 @@ packages:
     dependencies:
       '@types/connect': 3.4.35
       '@types/node': 18.7.6
-    dev: false
-
-  /@types/braces/3.0.1:
-    resolution: {integrity: sha512-+euflG6ygo4bn0JHtn4pYqcXwRtLvElQ7/nnjDu7iYG56H0+OhCd7d6Ug0IE3WcFpZozBKW2+80FUbv5QGk5AQ==}
     dev: false
 
   /@types/cacheable-request/6.0.2:
@@ -9311,12 +9297,6 @@ packages:
 
   /@types/format-util/1.0.2:
     resolution: {integrity: sha512-9SrLCpgzWo2yHHhiMOX0WwgDh37nSbDbWUsRc1ss++o8O97E3tB6SJiyUQM21UeUsKvZNuhDCmkRaINZ4uJAfg==}
-    dev: false
-
-  /@types/fs-extra/9.0.13:
-    resolution: {integrity: sha512-nEnwB++1u5lVDM2UI4c1+5R+FYaKfaAzS4OococimjVm3nQw3TuzH5UNsocrcTBbhnerblyHj4A49qXbIiZdpA==}
-    dependencies:
-      '@types/node': 18.7.6
     dev: false
 
   /@types/geojson/7946.0.8:
@@ -9421,12 +9401,6 @@ packages:
   /@types/memoizee/0.4.8:
     resolution: {integrity: sha512-qDpXKGgwKywnQt/64fH1O0LiPA++QGIYeykEUiZ51HymKVRLnUSGcRuF60IfpPeeXiuRwiR/W4y7S5VzbrgLCA==}
     dev: true
-
-  /@types/micromatch/4.0.2:
-    resolution: {integrity: sha512-oqXqVb0ci19GtH0vOA/U2TmHTcRY9kuZl4mqUxe0QmJAlIW13kzhuK5pi1i9+ngav8FjpSb9FVS/GE00GLX1VA==}
-    dependencies:
-      '@types/braces': 3.0.1
-    dev: false
 
   /@types/mime/3.0.0:
     resolution: {integrity: sha512-fccbsHKqFDXClBZTDLA43zl0+TbxyIwyzIzwwhvoJvhNjOErCdeX2xJbURimv2EbSVUGav001PaCJg4mZxMl4w==}
@@ -9752,7 +9726,7 @@ packages:
       debug: 4.3.4
       globby: 11.1.0
       is-glob: 4.0.3
-      semver: 7.3.7
+      semver: 7.3.8
       tsutils: 3.21.0_typescript@4.7.2
       typescript: 4.7.2
     transitivePeerDependencies:
@@ -9773,7 +9747,7 @@ packages:
       debug: 4.3.4
       globby: 11.1.0
       is-glob: 4.0.3
-      semver: 7.3.7
+      semver: 7.3.8
       tsutils: 3.21.0_typescript@4.7.4
       typescript: 4.7.4
     transitivePeerDependencies:
@@ -10687,7 +10661,6 @@ packages:
   /at-least-node/1.0.0:
     resolution: {integrity: sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==}
     engines: {node: '>= 4.0.0'}
-    dev: true
 
   /atob/2.1.2:
     resolution: {integrity: sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==}
@@ -10759,7 +10732,16 @@ packages:
     peerDependencies:
       constructs: ^10.0.0
     dependencies:
+      '@balena/dockerignore': 1.0.2
+      case: 1.6.3
       constructs: 10.1.21
+      fs-extra: 9.1.0
+      ignore: 5.2.0
+      jsonschema: 1.4.1
+      minimatch: 3.1.2
+      punycode: 2.1.1
+      semver: 7.3.8
+      yaml: 1.10.2
     bundledDependencies:
       - '@balena/dockerignore'
       - case
@@ -11243,12 +11225,6 @@ packages:
       balanced-match: 1.0.2
       concat-map: 0.0.1
 
-  /brace-expansion/2.0.1:
-    resolution: {integrity: sha512-XnAIvQ8eM+kC6aULx6wuQiwVsnzsi9d3WxzV3FpWTGA19F621kwdbsAcFKXgKUHZWsy+mY6iL1sHTxWEFCytDA==}
-    dependencies:
-      balanced-match: 1.0.2
-    dev: false
-
   /braces/2.3.2:
     resolution: {integrity: sha512-aNdbnj9P8PjdXU4ybaWLK2IF3jc/EoDYbC7AazW6to3TRsfXxscC9UXOB5iDiEQrkyIbWp2SLQda4+QAa7nc3w==}
     engines: {node: '>=0.10.0'}
@@ -11603,34 +11579,24 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
+  /case/1.6.3:
+    resolution: {integrity: sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==}
+    engines: {node: '>= 0.8.0'}
+
   /ccount/1.1.0:
     resolution: {integrity: sha512-vlNK021QdI7PNeiUh/lKkC/mNHHfV0m/Ad5JoI0TYtlBnJAslM/JIkm/tGC88bkLIwO6OQ5uV6ztS6kVAtCDlg==}
     dev: true
 
-  /cdk-nextjs-standalone/1.1.28_7lpy3dw5565e3njitnonz6kzpe:
-    resolution: {integrity: sha512-13Y/QOi8UqLO+PW8QlTSUc+9O2zXsgh+gXPymToxoU47/842eML/UYzFq3yKRRPaWseMSLXsTK9Uw6x5w6cKbw==}
+  /cdk-nextjs-standalone/0.0.0_7lpy3dw5565e3njitnonz6kzpe:
+    resolution: {integrity: sha512-wOKaahpXmvbOvPkI3p1ElQgeAFdYyJKhmNfOXGoPpZS6/mB6XFH0fUM5ijxaMuZCtWzAgDGkbEHf2HreXI8Reg==}
     peerDependencies:
-      aws-cdk-lib: ^2.50.0
+      aws-cdk-lib: ^2.39.0
       constructs: ^10.0.5
     dependencies:
-      '@types/aws-lambda': 8.10.109
-      '@types/cross-spawn': 6.0.2
-      '@types/fs-extra': 9.0.13
-      '@types/micromatch': 4.0.2
       aws-cdk-lib: 2.50.0_constructs@10.1.21
-      aws-lambda: 1.0.7
       constructs: 10.1.21
-      cross-spawn: 7.0.3
-      esbuild: 0.15.15
-      fs-extra: 10.1.0
-      glob: 8.0.3
-      indent-string: 5.0.0
-      jszip: 3.10.1
-      micromatch: 4.0.5
-      serverless-http: 3.1.0
     dev: false
     bundledDependencies:
-      - '@types/aws-lambda'
       - '@types/cross-spawn'
       - '@types/fs-extra'
       - '@types/micromatch'
@@ -11638,11 +11604,8 @@ packages:
       - cross-spawn
       - esbuild
       - fs-extra
-      - glob
       - indent-string
-      - jszip
       - micromatch
-      - serverless-http
 
   /chai/4.3.6:
     resolution: {integrity: sha512-bbcp3YfHCUzMOvKqsztczerVgBKSsEijCySNlHHbX3VG1nskvqjz5Rfso1gGwD6w6oOV3eI60pKuMOV5MV7p3Q==}
@@ -12148,7 +12111,7 @@ packages:
       json-schema-typed: 7.0.3
       onetime: 5.1.2
       pkg-up: 3.1.0
-      semver: 7.3.7
+      semver: 7.3.8
     dev: true
 
   /confusing-browser-globals/1.0.11:
@@ -12442,7 +12405,7 @@ packages:
       postcss-modules-values: 4.0.0_postcss@8.4.16
       postcss-value-parser: 4.2.0
       schema-utils: 3.1.1
-      semver: 7.3.7
+      semver: 7.3.8
       webpack: 5.72.1
     dev: true
 
@@ -13307,6 +13270,7 @@ packages:
     cpu: [x64]
     os: [android]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-android-arm64/0.14.51:
@@ -13324,6 +13288,7 @@ packages:
     cpu: [arm64]
     os: [android]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-darwin-64/0.14.51:
@@ -13341,6 +13306,7 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-darwin-arm64/0.14.51:
@@ -13358,6 +13324,7 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-freebsd-64/0.14.51:
@@ -13375,6 +13342,7 @@ packages:
     cpu: [x64]
     os: [freebsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-freebsd-arm64/0.14.51:
@@ -13392,6 +13360,7 @@ packages:
     cpu: [arm64]
     os: [freebsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-32/0.14.51:
@@ -13409,6 +13378,7 @@ packages:
     cpu: [ia32]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-64/0.14.51:
@@ -13426,6 +13396,7 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-arm/0.14.51:
@@ -13443,6 +13414,7 @@ packages:
     cpu: [arm]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-arm64/0.14.51:
@@ -13460,6 +13432,7 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-mips64le/0.14.51:
@@ -13477,6 +13450,7 @@ packages:
     cpu: [mips64el]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-ppc64le/0.14.51:
@@ -13494,6 +13468,7 @@ packages:
     cpu: [ppc64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-riscv64/0.14.51:
@@ -13511,6 +13486,7 @@ packages:
     cpu: [riscv64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-s390x/0.14.51:
@@ -13528,6 +13504,7 @@ packages:
     cpu: [s390x]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-netbsd-64/0.14.51:
@@ -13545,6 +13522,7 @@ packages:
     cpu: [x64]
     os: [netbsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-openbsd-64/0.14.51:
@@ -13562,6 +13540,7 @@ packages:
     cpu: [x64]
     os: [openbsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-runner/2.2.1_esbuild@0.14.51:
@@ -13590,6 +13569,7 @@ packages:
     cpu: [x64]
     os: [sunos]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-windows-32/0.14.51:
@@ -13607,6 +13587,7 @@ packages:
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-windows-64/0.14.51:
@@ -13624,6 +13605,7 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-windows-arm64/0.14.51:
@@ -13641,6 +13623,7 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild/0.14.51:
@@ -13699,6 +13682,7 @@ packages:
       esbuild-windows-32: 0.15.15
       esbuild-windows-64: 0.15.15
       esbuild-windows-arm64: 0.15.15
+    dev: true
 
   /escalade/3.1.1:
     resolution: {integrity: sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==}
@@ -14842,7 +14826,7 @@ packages:
       memfs: 3.4.4
       minimatch: 3.1.2
       schema-utils: 2.7.0
-      semver: 7.3.7
+      semver: 7.3.8
       tapable: 1.1.3
       typescript: 4.7.2
       webpack: 4.46.0
@@ -14874,7 +14858,7 @@ packages:
       memfs: 3.4.4
       minimatch: 3.1.2
       schema-utils: 2.7.0
-      semver: 7.3.7
+      semver: 7.3.8
       tapable: 1.1.3
       typescript: 4.7.2
       webpack: 5.72.1
@@ -14964,7 +14948,6 @@ packages:
       graceful-fs: 4.2.10
       jsonfile: 6.1.0
       universalify: 2.0.0
-    dev: true
 
   /fs-jetpack/4.3.1:
     resolution: {integrity: sha512-dbeOK84F6BiQzk2yqqCVwCPWTxAvVGJ3fMQc6E2wuEohS28mR6yHngbrKuVCK1KHRx/ccByDylqu4H5PCP2urQ==}
@@ -15206,17 +15189,6 @@ packages:
       minimatch: 3.1.2
       once: 1.4.0
       path-is-absolute: 1.0.1
-
-  /glob/8.0.3:
-    resolution: {integrity: sha512-ull455NHSHI/Y1FqGaaYFaLGkNMMJbavMrEGFXG/PGrg6y7sutWHUHrz6gy6WEBH6akM1M414dWKCNs+IhKdiQ==}
-    engines: {node: '>=12'}
-    dependencies:
-      fs.realpath: 1.0.0
-      inflight: 1.0.6
-      inherits: 2.0.4
-      minimatch: 5.1.0
-      once: 1.4.0
-    dev: false
 
   /global-dirs/3.0.0:
     resolution: {integrity: sha512-v8ho2DS5RiCjftj1nD9NmnfaOzTdud7RRnVd9kFNOjqZbISlx5DQ+OrTkywgd0dIt7oFCvKetZSHoHcP3sDdiA==}
@@ -15865,6 +15837,7 @@ packages:
   /indent-string/5.0.0:
     resolution: {integrity: sha512-m6FAo/spmsW2Ab2fU35JTYwtOKa2yAwXSwgjSv1TJzh4Mh7mC3lzAOVLBprb72XsTrgkEIsl7YrFNAiDiRhIGg==}
     engines: {node: '>=12'}
+    dev: true
 
   /infer-owner/1.0.4:
     resolution: {integrity: sha512-IClj+Xz94+d7irH5qRyfJonOdfTzuDaifE6ZPWfx0N0+/ATZCbuTPq2prFl526urkQd90WyUKIh1DfBQ2hMz9A==}
@@ -16699,6 +16672,9 @@ packages:
   /jsonify/0.0.0:
     resolution: {integrity: sha512-trvBk1ki43VZptdBI5rIlG4YOzyeH/WefQt5rj1grasPn4iiZWKet8nkgc4GlsAylaztn0qZfUYOiTsASJFdNA==}
     dev: true
+
+  /jsonschema/1.4.1:
+    resolution: {integrity: sha512-S6cATIPVv1z0IlxdN+zUk5EPjkGCdnhN4wVSBlvoUO1tOLJootbo9CquNJmbIh4yikWHiUedhRYrNPn1arpEmQ==}
 
   /jsonwebtoken/8.5.1:
     resolution: {integrity: sha512-XjwVfRS6jTMsqYs0EsuJ4LGxXV14zQybNd4L2r0UvbVnSF9Af8x7p5MzbJ90Ioz/9TI41/hTCvznF/loiSzn8w==}
@@ -17590,13 +17566,6 @@ packages:
       brace-expansion: 1.1.11
     dev: true
 
-  /minimatch/5.1.0:
-    resolution: {integrity: sha512-9TPBGGak4nHfGZsPBohm9AWg6NoT7QTCehS3BIJABslyZbzxfV78QM2Y6+i741OPZIafFAaiiEMh5OyIrJPgtg==}
-    engines: {node: '>=10'}
-    dependencies:
-      brace-expansion: 2.0.1
-    dev: false
-
   /minimist/1.2.6:
     resolution: {integrity: sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q==}
 
@@ -17980,7 +17949,7 @@ packages:
       nopt: 5.0.0
       npmlog: 4.1.2
       rimraf: 3.0.2
-      semver: 7.3.7
+      semver: 7.3.8
       tar: 6.1.11
       which: 2.0.2
     transitivePeerDependencies:
@@ -18852,7 +18821,7 @@ packages:
       loader-utils: 2.0.2
       postcss: 7.0.39
       schema-utils: 3.1.1
-      semver: 7.3.7
+      semver: 7.3.8
       webpack: 4.46.0
     dev: true
 
@@ -18866,7 +18835,7 @@ packages:
       cosmiconfig: 7.0.1
       klona: 2.0.5
       postcss: 8.4.14
-      semver: 7.3.7
+      semver: 7.3.8
       webpack: 5.72.1
     dev: true
 
@@ -20225,6 +20194,13 @@ packages:
       lru-cache: 6.0.0
     dev: true
 
+  /semver/7.3.8:
+    resolution: {integrity: sha512-NB1ctGL5rlHrPJtFDVIVzTyQylMLu9N9VICA6HSFJo8MCGVTMW6gfpicwKmmK/dAjTOrqu5l63JJOpDSrAis3A==}
+    engines: {node: '>=10'}
+    hasBin: true
+    dependencies:
+      lru-cache: 6.0.0
+
   /send/0.18.0:
     resolution: {integrity: sha512-qqWzuOjSFOuqPjFe4NOsMLafToQQwBSOEpS+FwEt3A2V3vKubTquT3vmLTQpFgMXp8AlFWFuP1qKaJZOtPpVXg==}
     engines: {node: '>= 0.8.0'}
@@ -20294,11 +20270,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
-
-  /serverless-http/3.1.0:
-    resolution: {integrity: sha512-CwWO34otWjwJ3+meUlFoEhCOiEEpGDT/xnaZ835iMwF0PEL2GoMJMBRed6tUXYtrLAj4tTgkF6wiUbaJQyaEpw==}
-    engines: {node: '>=12.0'}
-    dev: false
 
   /set-blocking/2.0.0:
     resolution: {integrity: sha512-KiKBS8AnWGEyLzofFfmvKwpdPzqiy16LvQfK3yv/fVH7Bj13/wl3JSR1J+rfgRE9q7xUJK4qvgS8raSOeLUehw==}
