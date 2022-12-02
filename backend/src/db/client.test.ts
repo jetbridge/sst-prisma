@@ -22,6 +22,6 @@ describeIntegrationTest('Prisma client', () => {
     await prismaSync.user.create({ data: UNIQUE_USER });
 
     const res = await prismaSync.$queryRaw<Array<{ one: number }>>`SELECT 1 as one`;
-    expect(res[0].one).toEqual(1);
+    expect(res[0].one).toEqual(2);
   });
 });
