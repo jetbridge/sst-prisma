@@ -61,7 +61,7 @@ class NextjsSst extends Nextjs {
   constructor(scope: Construct, id: string, props: NextjsSstProps) {
     const app = props.app;
 
-    super(scope as any, id, {
+    super(scope, id, {
       ...props,
       isPlaceholder: app.local,
       tempBuildDir: app.buildDir,
