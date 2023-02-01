@@ -40,7 +40,7 @@ export function Auth({ stack, app }: StackContext) {
         signInAliases: { email: true, phone: false },
         // allow users to verify their email themselves
         autoVerify: { email: true, phone: false },
-        selfSignUpEnabled: false,
+        selfSignUpEnabled: true,
         customAttributes: {
           firstNameOriginal: new StringAttribute({ mutable: true }),
           lastNameOriginal: new StringAttribute({ mutable: true }),
