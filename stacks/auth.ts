@@ -5,7 +5,6 @@ import { Key, KeySpec, KeyUsage } from 'aws-cdk-lib/aws-kms';
 import { AaaaRecord, ARecord, RecordTarget } from 'aws-cdk-lib/aws-route53';
 import { UserPoolDomainTarget } from 'aws-cdk-lib/aws-route53-targets';
 import { Dns } from './dns';
-import { LinkedInOidc } from './resources/cognitoOidc/linkedInOidc';
 import { Secrets } from './secrets';
 
 const ALLOWED_HOSTS = [

@@ -5,11 +5,7 @@ export function Secrets({ stack, app }: StackContext) {
   const secret = new Secret(stack, 'Secret', {
     description: app.logicalPrefixedName('app'),
     generateSecretString: {
-      secretStringTemplate: JSON.stringify({
-        // optional
-        ['LINKEDIN_CLIENT_ID']: 'changeme',
-        ['LINKEDIN_CLIENT_SECRET']: 'changeme',
-      }),
+      secretStringTemplate: JSON.stringify({}),
       generateStringKey: 'RANDOM',
       excludePunctuation: true,
     },
