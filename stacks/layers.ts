@@ -1,4 +1,4 @@
-import { StackContext } from '@serverless-stack/resources';
+import { StackContext } from 'sst/constructs';
 import { RemovalPolicy } from 'aws-cdk-lib';
 import { ESM_REQUIRE_SHIM } from 'stacks';
 import { PrismaLayer } from './resources/prismaLayer';

@@ -1,5 +1,5 @@
-import * as sst from '@serverless-stack/resources';
-import { getStack } from '@serverless-stack/resources';
+import * as sst from 'sst/constructs';
+import { getStack } from 'sst/constructs';
 import { Template } from 'aws-cdk-lib/assertions';
 import { RestApi } from './restApi';
 

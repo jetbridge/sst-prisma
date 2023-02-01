@@ -1,4 +1,4 @@
-import { Cognito, StackContext, use } from '@serverless-stack/resources';
+import { Cognito, StackContext, use } from 'sst/constructs';
 import { Duration, RemovalPolicy } from 'aws-cdk-lib';
 import { StringAttribute, UserPoolClientIdentityProvider } from 'aws-cdk-lib/aws-cognito';
 import { Key, KeySpec, KeyUsage } from 'aws-cdk-lib/aws-kms';

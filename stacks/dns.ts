@@ -1,4 +1,4 @@
-import { StackContext } from '@serverless-stack/resources';
+import { StackContext } from 'sst/constructs';
 import { DnsValidatedCertificate, ICertificate } from 'aws-cdk-lib/aws-certificatemanager';
 import { HostedZone } from 'aws-cdk-lib/aws-route53';
 

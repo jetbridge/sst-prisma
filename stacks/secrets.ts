@@ -1,4 +1,4 @@
-import { StackContext } from '@serverless-stack/resources';
+import { StackContext } from 'sst/constructs';
 import { Secret } from 'aws-cdk-lib/aws-secretsmanager';
 
 export function Secrets({ stack, app }: StackContext) {

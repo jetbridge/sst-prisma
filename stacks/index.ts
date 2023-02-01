@@ -1,4 +1,4 @@
-import * as sst from '@serverless-stack/resources';
+import * as sst from 'sst/constructs';
 import { Runtime } from 'aws-cdk-lib/aws-lambda';
 import { AppSyncApi } from './appSyncApi';
 import { Auth } from './auth';

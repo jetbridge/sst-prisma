@@ -1,4 +1,4 @@
-import { Api, Config } from '@serverless-stack/resources';
+import { Api, Config } from 'sst/constructs';
 import {
   IUserPool,
   OidcAttributeRequestMethod,

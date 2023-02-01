@@ -1,4 +1,4 @@
-import { StackContext, use } from '@serverless-stack/resources';
+import { StackContext, use } from 'sst/constructs';
 import { Network } from 'stacks/network';
 import { Database } from './database';
 import { DbMigrationScript } from './resources/migrationScript';

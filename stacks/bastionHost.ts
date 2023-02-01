@@ -1,4 +1,4 @@
-import { StackContext, use } from '@serverless-stack/resources';
+import { StackContext, use } from 'sst/constructs';
 import { Duration } from 'aws-cdk-lib';
 import {
   BastionHostLinux,

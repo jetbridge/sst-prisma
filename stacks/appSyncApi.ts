@@ -1,5 +1,5 @@
 import { AuthorizationType } from '@aws-cdk/aws-appsync-alpha';
-import { AppSyncApi as SstAppSyncApi, StackContext, use } from '@serverless-stack/resources';
+import { AppSyncApi as SstAppSyncApi, StackContext, use } from 'sst/constructs';
 import { Auth } from './auth';
 
 export function AppSyncApi({ stack }: StackContext) {

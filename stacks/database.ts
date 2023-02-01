@@ -1,4 +1,4 @@
-import { Config, RDS, StackContext, use } from '@serverless-stack/resources';
+import { Config, RDS, StackContext, use } from 'sst/constructs';
 
 import { Duration, RemovalPolicy } from 'aws-cdk-lib';
 import { APP_NAME } from 'common';

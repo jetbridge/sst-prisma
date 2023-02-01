@@ -1,4 +1,4 @@
-import { App, Stack, StackContext, use } from '@serverless-stack/resources';
+import { App, Stack, StackContext, use } from 'sst/constructs';
 import { CfnOutput } from 'aws-cdk-lib';
 import { Tracing, LambdaInsightsVersion } from 'aws-cdk-lib/aws-lambda';
 import { BaseSiteEnvironmentOutputsInfo, Nextjs, NextjsProps } from 'cdk-nextjs-standalone';

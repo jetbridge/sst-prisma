@@ -1,4 +1,4 @@
-import { App, Function, Script } from '@serverless-stack/resources';
+import { App, Function, Script } from 'sst/constructs';
 import { RemovalPolicy } from 'aws-cdk-lib';
 import { IVpc } from 'aws-cdk-lib/aws-ec2';
 import { Construct } from 'constructs';
