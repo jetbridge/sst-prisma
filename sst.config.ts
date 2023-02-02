@@ -1,5 +1,6 @@
 import type { SSTConfig } from "sst"
 
+// you can configure your default profiles and regions to use here
 const PROFILE = {
   default: "default",
 }
@@ -11,8 +12,10 @@ const REGION = {
 export default {
   config(input) {
     const stage = input.stage || "dev"
-    const region = REGION[stage] || REGION.default
-    const profile = PROFILE[stage] || PROFILE.default
+
+    // uncomment to use your own default profiles and regions
+    const region = undefined // REGION[stage] || REGION.default
+    const profile = undefined // PROFILE[stage] || PROFILE.default
 
     return {
       name: "myapp",  // replace me

@@ -59,13 +59,13 @@ Please see [package.json](package.json) `scripts` for more.
 ### Start live backend dev server with AWS
 
 ```shell
-pnpm start
+pnpm dev
 ```
 
 ### Start Nextjs frontend dev server
 
 ```shell
-pnpm start:web
+pnpm dev:web
 ```
 
 ### Run/generate DB migrations locally

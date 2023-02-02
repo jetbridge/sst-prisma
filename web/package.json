@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "sst-env -- next dev --port 6020",
+    "dev": "sst env 'next dev --port 6001'",
     "test": "vitest run",
     "test:watch": "vitest",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -p 6005",
     "build-storybook": "build-storybook",
     "clean": "rimraf .build .next"
   },
@@ -28,7 +28,6 @@
     "aws-appsync-auth-link": "^3.0.7",
     "aws-appsync-subscription-link": "^3.0.11",
     "classnames": "^2.3.1",
-    "common": "workspace:*",
     "graphql": "^16.3.0",
     "jose": "^4.8.3",
     "next": "^13.0.6",
