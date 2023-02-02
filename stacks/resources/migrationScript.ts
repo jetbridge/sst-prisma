@@ -1,17 +1,17 @@
-import { App, Function, Script } from 'sst/constructs';
 import { RemovalPolicy } from 'aws-cdk-lib';
 import { IVpc } from 'aws-cdk-lib/aws-ec2';
 import { Construct } from 'constructs';
-import { ESM_REQUIRE_SHIM } from 'stacks';
+import { App, Function, Script } from 'sst/constructs';
 import { LAYER_MODULES, PRISMA_VERSION } from '../layers';
 import { PrismaLayer } from './prismaLayer';
 
 interface DbMigrationScriptProps {
   vpc?: IVpc;
+  dbSecretsArn: string;
 }
 
 export class DbMigrationScript extends Construct {
-  constructor(scope: Construct, id: string, { vpc }: DbMigrationScriptProps) {
+  constructor(scope: Construct, id: string, { vpc, dbSecretsArn }: DbMigrationScriptProps) {
     super(scope, id);
 
     const app = App.of(scope) as App;
@@ -32,26 +32,25 @@ export class DbMigrationScript extends Construct {
     const migrationFunction = new Function(this, 'MigrationScriptLambda', {
       vpc,
       enableLiveDev: false,
-      handler: 'backend/src/db/migrationScript.handler',
+      handler: 'backend/src/repo/runMigrations.handler',
       layers: [migrationLayer],
-      srcPath: '.',
-      bundle: {
-        format: 'esm',
-        commandHooks: {
-          beforeBundling: () => [],
-          beforeInstall: () => [],
-          afterBundling: (inputDir, outputDir) => [
-            `cp "${inputDir}/backend/prisma/schema.prisma" "${outputDir}"`,
-            `cp -r "${inputDir}/backend/prisma/migrations" "${outputDir}"`,
+      runtime: 'nodejs18.x',
+      copyFiles: [
+        { from: 'backend/prisma/schema.prisma' },
+        { from: 'backend/prisma/migrations' },
+        { from: 'backend/prisma/schema.prisma', to: 'backend/src/repo/schema.prisma' },
+        { from: 'backend/prisma/migrations', to: 'backend/src/repo/migrations' },
+        { from: 'backend/package.json', to: 'backend/src/package.json' },
+      ],
 
-            // @prisma/migrate wants this package.json to exist
-            `cp -r "${inputDir}/backend/package.json" "${outputDir}/backend/src"`,
-          ],
-        },
-        externalModules: LAYER_MODULES.concat(migrationLayer.externalModules),
-        banner: ESM_REQUIRE_SHIM,
+      nodejs: {
+        format: 'cjs',
+        esbuild: { external: [...LAYER_MODULES, ...(migrationLayer.externalModules || [])] },
       },
       timeout: '3 minutes',
+      environment: {
+        DB_SECRET_ARN: dbSecretsArn,
+      },
     });
 
     // script to run migrations for us during deployment

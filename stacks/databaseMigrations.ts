@@ -13,7 +13,10 @@ export function DatabaseMigrations({ stack, app }: StackContext) {
   if (!app.local) wakeUp = new WakeDB(stack, 'WakeDB', { cluster });
 
   // run migrations
-  const dbMigrationScript = new DbMigrationScript(stack, 'MigrationScript', { vpc: net.vpc });
+  const dbMigrationScript = new DbMigrationScript(stack, 'MigrationScript', {
+    vpc: net.vpc,
+    dbSecretsArn: cluster.secret!.secretArn,
+  });
 
   if (wakeUp) dbMigrationScript.node.addDependency(wakeUp);
 }
