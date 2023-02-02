@@ -49,7 +49,7 @@ export function Database({ stack, app }: StackContext) {
     },
   });
   app.addDefaultFunctionPermissions([rds]);
-  app.setDefaultFunctionProps({ config });
+  app.addDefaultFunctionBinding(config);
 
   // DB connection for local dev can be overridden
   // https://docs.sst.dev/environment-variables#is_local
