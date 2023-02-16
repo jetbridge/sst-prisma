@@ -32,7 +32,7 @@ export class DbMigrationScript extends Construct {
     const migrationFunction = new Function(this, 'MigrationScriptLambda', {
       vpc,
       enableLiveDev: false,
-      handler: 'backend/src/repo/runMigrations.handler',
+      handler: 'backend/src/db/migrationScript.handler',
       layers: [migrationLayer],
       runtime: 'nodejs18.x',
       copyFiles: [
@@ -44,8 +44,8 @@ export class DbMigrationScript extends Construct {
       ],
 
       nodejs: {
-        format: 'cjs',
-        esbuild: { external: [...LAYER_MODULES, ...(migrationLayer.externalModules || [])] },
+        // format: 'cjs',
+        esbuild: { external: [...LAYER_MODULES, ...(migrationLayer.externalModules || [])], target: 'node18' },
       },
       timeout: '3 minutes',
       environment: {
@@ -53,10 +53,10 @@ export class DbMigrationScript extends Construct {
       },
     });
 
-    // script to run migrations for us during deployment
-    new Script(this, 'MigrationScript', {
-      onCreate: migrationFunction,
-      onUpdate: migrationFunction,
-    });
+    // // script to run migrations for us during deployment
+    // new Script(this, 'MigrationScript', {
+    //   onCreate: migrationFunction,
+    //   onUpdate: migrationFunction,
+    // });
   }
 }

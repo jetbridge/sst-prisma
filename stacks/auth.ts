@@ -19,7 +19,7 @@ export function Auth({ stack, app }: StackContext) {
   const auth = new Cognito(stack, 'Auth', {
     triggers: {
       // save user in DB
-      preSignUp: 'auth/trigger/preSignUp.handler',
+      preSignUp: 'backend/src/auth/trigger/preSignUp.handler',
     },
     cdk: {
       userPoolClient: {},

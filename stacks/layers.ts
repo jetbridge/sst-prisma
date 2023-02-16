@@ -25,7 +25,7 @@ export function Layers({ stack, app }: StackContext) {
   app.addDefaultFunctionLayers([prismaLayer]);
   app.addDefaultFunctionEnv(prismaLayer.environment);
   app.setDefaultFunctionProps({
-    copyFiles: [{ from: '../prisma/schema.prisma', to: 'src/schema.prisma' }],
+    copyFiles: [{ from: 'backend/prisma/schema.prisma', to: 'src/schema.prisma' }],
     nodejs: {
       format: 'esm',
       banner: ESM_REQUIRE_SHIM,

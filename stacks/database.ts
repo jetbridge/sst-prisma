@@ -16,7 +16,7 @@ export function Database({ stack, app }: StackContext) {
         removalPolicy: IS_PRODUCTION ? RemovalPolicy.SNAPSHOT : RemovalPolicy.DESTROY,
       },
     },
-    engine: 'postgresql10.14',
+    engine: 'postgresql11.13',
     defaultDatabaseName,
     scaling: {
       autoPause: IS_PRODUCTION
