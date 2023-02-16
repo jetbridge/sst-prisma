@@ -12,7 +12,7 @@ Clone your copy of this template, then do a search and replace for "myapp" to gi
 
 ### Prerequisites
 
-Assumes you have [Node 16](https://nodejs.org/en/download/current/) installed and AWS credentials [configured](https://serverless-stack.com/chapters/configure-the-aws-cli.html).
+Assumes you have [Node 18](https://nodejs.org/en/download/current/) installed and AWS credentials [configured](https://docs.sst.dev/advanced/iam-credentials).
 
 ### Setup
 
@@ -43,7 +43,7 @@ Click links to learn more and view documentation.
   - 📜 Prisma DB migration CDK script
   - 🐳 Database integration test setup with postgres in docker
 - 🔋 [Aurora Serverless RDS](https://aws.amazon.com/rds/aurora/serverless/) PostgreSQL
-- ⚡️ [Live local lambda development](https://docs.serverless-stack.com/live-lambda-development) (`pnpm start`)
+- ⚡️ [Live local lambda development](https://docs.serverless-stack.com/live-lambda-development) (`pnpm dev`)
   - 🐞 [Lambda debugging](https://docs.sst.dev/live-lambda-development#debugging-with-visual-studio-code) - set breakpoints on your lambda functions and step through in your IDE
 - 📦 [pnpm](https://pnpm.io/) - fast and correct package manager
 - 🚅 [vitest](https://vitest.dev/) - fast tests
