@@ -38,13 +38,13 @@ export class DbMigrationScript extends Construct {
       copyFiles: [
         { from: 'backend/prisma/schema.prisma' },
         { from: 'backend/prisma/migrations' },
-        { from: 'backend/prisma/schema.prisma', to: 'backend/src/repo/schema.prisma' },
-        { from: 'backend/prisma/migrations', to: 'backend/src/repo/migrations' },
+        { from: 'backend/prisma/schema.prisma', to: 'backend/src/db/schema.prisma' },
+        { from: 'backend/prisma/migrations', to: 'backend/src/db/migrations' },
         { from: 'backend/package.json', to: 'backend/src/package.json' },
       ],
 
       nodejs: {
-        // format: 'cjs',
+        format: 'cjs',
         esbuild: { external: [...LAYER_MODULES, ...(migrationLayer.externalModules || [])], target: 'node18' },
       },
       timeout: '3 minutes',
@@ -53,10 +53,10 @@ export class DbMigrationScript extends Construct {
       },
     });
 
-    // // script to run migrations for us during deployment
-    // new Script(this, 'MigrationScript', {
-    //   onCreate: migrationFunction,
-    //   onUpdate: migrationFunction,
-    // });
+    // script to run migrations for us during deployment
+    new Script(this, 'MigrationScript', {
+      onCreate: migrationFunction,
+      onUpdate: migrationFunction,
+    });
   }
 }

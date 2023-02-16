@@ -8,16 +8,18 @@ import { Migrate } from '@prisma/migrate/dist/Migrate.js';
 import { ensureDatabaseExists } from '@prisma/migrate/dist/utils/ensureDatabaseExists';
 import { printFilesFromMigrationIds } from '@prisma/migrate/dist/utils/printFiles';
 import chalk from 'chalk';
-import { sleep } from 'common';
-import { getPrisma, loadDatabaseUrl } from './client';
+import { isProd, sleep } from 'common';
+import { GetSecretValueCommand, SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
+import { PrismaClient } from '@prisma/client';
 
 export const handler = async (): Promise<string> => {
-  const schemaPath = './schema.prisma';
+  const schemaPath = '/var/task/backend/prisma/schema.prisma';
   const dbUrl = await loadDatabaseUrl();
 
   // get DB connection
   try {
-    const client = await getPrisma();
+    await createDbIfNotExists(dbUrl);
+    const client = new PrismaClient();
     await client.$connect();
   } catch (ex) {
     const errorCode = (ex as PrismaClientInitializationError).errorCode;
@@ -26,10 +28,11 @@ export const handler = async (): Promise<string> => {
       // it might be waking up from slumber
       // so retry in a short bit
       console.warn('Database not yet available, retrying...');
-      await sleep(25_000);
+      await sleep(30_000);
       console.info('Retrying...');
 
-      const client = await getPrisma();
+      await createDbIfNotExists(dbUrl);
+      const client = new PrismaClient();
       await client.$connect();
     } else {
       console.error('Failed to run database migrations');
@@ -79,5 +82,59 @@ ${editedMigrationNames.join('\n')}`
         'migration.sql': '',
       })
     )}`;
+  }
+};
+
+const loadDatabaseUrl = async (): Promise<string> => {
+  let databaseUrl = process.env.DATABASE_URL;
+  if (process.env.USE_DB_CONFIG !== 'true' && databaseUrl) return databaseUrl;
+
+  // load database secret
+  const secretArn = process.env.DB_SECRET_ARN;
+  const client = new SecretsManagerClient({});
+  const req = new GetSecretValueCommand({ SecretId: secretArn });
+  const res = await client.send(req);
+  if (!res.SecretString) throw new Error(`Missing secretString in ${secretArn}`);
+  const secrets = JSON.parse(res.SecretString);
+  const { host, username, password, port, dbname } = secrets;
+  if (!host) throw new Error('Missing host in secrets');
+  // might have DB_NAME overridden for dev environment
+  const dbNameOverride = process.env['DB_NAME'];
+
+  // construct database url
+  databaseUrl = `postgresql://${username}:${password}@${host}:${port}/${dbNameOverride || dbname}`;
+  process.env.DATABASE_URL = databaseUrl;
+  return databaseUrl;
+};
+
+const createDbIfNotExists = async (dbUrl: string): Promise<void> => {
+  // parse DB name from URL
+  const dbName = dbUrl.split('/').pop();
+  // remove params from name
+  const dbNameNoParams = dbName?.split('?')[0];
+  // sanitize name
+  const dbNameSanitized = dbNameNoParams?.replace(/[^a-zA-Z0-9_]/g, '_');
+
+  // create the database if it doesn't exist
+  if (!isProd()) {
+    // check if DB exists
+
+    // temporarily set DB to postgres so we can connect
+    // parse DSN
+    const dsn = dbUrl.split('/');
+    dsn.pop(); // remove DB name
+    // set DB to postgres
+    dsn.push('postgres');
+    const dbUrlPostgres = dsn.join('/');
+
+    const client = new PrismaClient({ datasources: { db: { url: dbUrlPostgres } } });
+    await client.$connect();
+    const dbExists = await client.$queryRawUnsafe<unknown[]>(
+      `SELECT 1 FROM pg_database WHERE datname = '${dbNameSanitized}'`
+    );
+    if (!dbExists.length) {
+      console.info(`Database ${dbNameSanitized} does not exist, creating...`);
+      await client.$queryRawUnsafe(`CREATE DATABASE ${dbNameSanitized}`);
+    }
   }
 };
