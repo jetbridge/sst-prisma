@@ -13,6 +13,7 @@ export const authOptions: NextAuthOptions = {
     CognitoProvider({
       clientId: COGNITO_CLIENT_ID,
       issuer: `https://cognito-idp.${REGION}.amazonaws.com/${COGNITO_USER_POOL_ID}`,
+      idToken: true,
 
       // use cognito for token signing
       // https://github.com/nextauthjs/next-auth/issues/4707
@@ -20,8 +21,7 @@ export const authOptions: NextAuthOptions = {
       client: {
         token_endpoint_auth_method: 'none',
       },
-      checks: 'nonce', // https://github.com/nextauthjs/next-auth/discussions/3551
-      authorization: { params: { identity_provider: 'linkedin' } }, // skip cognito hosted UI
+      checks: ['pkce', 'state', 'nonce'], // https://github.com/nextauthjs/next-auth/discussions/3551
     }),
   ],
   // debug: true,

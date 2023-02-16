@@ -21,7 +21,6 @@ export default defineConfig({
   plugins: [
     tsconfigPaths({
       loose: true,
-      extensions: ['ts', 'tsx', 'scss', 'css'],
     }),
     react(),
     process.env.VITEST

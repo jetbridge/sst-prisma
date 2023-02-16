@@ -1,5 +1,5 @@
 import { AuthorizationType } from '@aws-cdk/aws-appsync-alpha';
-import { AppSyncApi as SstAppSyncApi, StackContext, use } from '@serverless-stack/resources';
+import { AppSyncApi as SstAppSyncApi, StackContext, use } from 'sst/constructs';
 import { Auth } from './auth';
 
 export function AppSyncApi({ stack }: StackContext) {
@@ -20,8 +20,8 @@ export function AppSyncApi({ stack }: StackContext) {
 
     // define resolvers here - https://docs.serverless-stack.com/constructs/AppSyncApi#using-the-minimal-config
     resolvers: {
-      'Query getGreeting': 'api/resolver/greeting.getGreeting',
-      'Mutation greet': 'api/resolver/greeting.greet',
+      'Query getGreeting': 'backend/src/api/resolver/greeting.getGreeting',
+      'Mutation greet': 'backend/src/api/resolver/greeting.greet',
     },
   });
 

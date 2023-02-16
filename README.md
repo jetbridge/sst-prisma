@@ -19,7 +19,7 @@ Assumes you have [Node 16](https://nodejs.org/en/download/current/) installed an
 ```shell
 npm i -g pnpm  # install pnpm globally
 pnpm i  # install dependencies + generate types from DB and GQL schemas
-pnpm start  # start backend
+pnpm dev  # start local dev server
 ```
 
 ## Features
@@ -59,19 +59,13 @@ Please see [package.json](package.json) `scripts` for more.
 ### Start live backend dev server with AWS
 
 ```shell
-pnpm start
+pnpm dev
 ```
 
 ### Start Nextjs frontend dev server
 
 ```shell
-pnpm start:web
-```
-
-### Start backend and frontend together
-
-```shell
-pnpm fullstack
+pnpm dev:web
 ```
 
 ### Run/generate DB migrations locally

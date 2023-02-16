@@ -1,9 +1,9 @@
-import { StackContext } from '@serverless-stack/resources';
+import { StackContext } from 'sst/constructs';
 import { RemovalPolicy } from 'aws-cdk-lib';
 import { ESM_REQUIRE_SHIM } from 'stacks';
 import { PrismaLayer } from './resources/prismaLayer';
 
-export const PRISMA_VERSION = '4.2.1';
+export const PRISMA_VERSION = '4.8.0';
 
 // default externalModules (not bundled with lambda function code)
 export const LAYER_MODULES = ['encoding', '@prisma/client/runtime'];
@@ -25,12 +25,14 @@ export function Layers({ stack, app }: StackContext) {
   app.addDefaultFunctionLayers([prismaLayer]);
   app.addDefaultFunctionEnv(prismaLayer.environment);
   app.setDefaultFunctionProps({
-    bundle: {
+    copyFiles: [{ from: 'backend/prisma/schema.prisma', to: 'src/schema.prisma' }],
+    nodejs: {
       format: 'esm',
-      copyFiles: [{ from: '../prisma/schema.prisma', to: 'src/schema.prisma' }],
-      externalModules: LAYER_MODULES.concat(prismaLayer.externalModules),
       banner: ESM_REQUIRE_SHIM,
-      sourcemap: true,
+      esbuild: {
+        external: LAYER_MODULES.concat(prismaLayer.externalModules),
+        sourcemap: true,
+      },
     },
   });
 }

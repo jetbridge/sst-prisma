@@ -1,12 +1,9 @@
-import { Cognito, StackContext, use } from '@serverless-stack/resources';
-import { Duration, RemovalPolicy } from 'aws-cdk-lib';
+import { Cognito, StackContext, use } from 'sst/constructs';
+import { Duration } from 'aws-cdk-lib';
 import { StringAttribute, UserPoolClientIdentityProvider } from 'aws-cdk-lib/aws-cognito';
-import { Key, KeySpec, KeyUsage } from 'aws-cdk-lib/aws-kms';
 import { AaaaRecord, ARecord, RecordTarget } from 'aws-cdk-lib/aws-route53';
 import { UserPoolDomainTarget } from 'aws-cdk-lib/aws-route53-targets';
 import { Dns } from './dns';
-import { LinkedInOidc } from './resources/cognitoOidc/linkedInOidc';
-import { Secrets } from './secrets';
 
 const ALLOWED_HOSTS = [
   'http://localhost:6020',
@@ -17,20 +14,12 @@ const ALLOWED_URLS = ['/login', '/api/auth/callback/cognito'];
 export function Auth({ stack, app }: StackContext) {
   const dns = use(Dns);
 
-  const signingKey = new Key(stack, 'SigningKey', {
-    alias: app.logicalPrefixedName('auth-oidc-signingkey'),
-    description: 'Signing key for OIDC',
-    keyUsage: KeyUsage.SIGN_VERIFY,
-    keySpec: KeySpec.RSA_2048,
-    removalPolicy: RemovalPolicy.DESTROY,
-  });
-
   const callbackUrls = ALLOWED_HOSTS.flatMap((h) => ALLOWED_URLS.map((url) => h + url));
 
   const auth = new Cognito(stack, 'Auth', {
     triggers: {
       // save user in DB
-      preSignUp: 'auth/trigger/preSignUp.handler',
+      preSignUp: 'backend/src/auth/trigger/preSignUp.handler',
     },
     cdk: {
       userPoolClient: {},
@@ -81,22 +70,9 @@ export function Auth({ stack, app }: StackContext) {
   const cognitoBaseUrl = cognitoDomain.baseUrl().replace('https://', '');
   const cognitoDomainName = dns.hostedZone ? `${app.stage}-auth.${dns.hostedZone.zoneName}` : cognitoBaseUrl;
 
-  // create LinkedIn provider
-  const linkedIn = new LinkedInOidc(stack, 'LinkedInOidc', {
-    secrets: use(Secrets).secret,
-    signingKey,
-    userPool,
-    cognitoDomainName,
-  });
-
   // create cognito client
   const webClient = userPool.addClient('WebClient', {
-    supportedIdentityProviders: [
-      UserPoolClientIdentityProvider.COGNITO,
-
-      // OPTIONAL: enable LinkedIn
-      UserPoolClientIdentityProvider.custom(linkedIn.userPoolIdentityProviderOidc.providerName),
-    ],
+    supportedIdentityProviders: [UserPoolClientIdentityProvider.COGNITO],
     refreshTokenValidity: Duration.days(365),
     oAuth: {
       callbackUrls: callbackUrls,
@@ -108,7 +84,6 @@ export function Auth({ stack, app }: StackContext) {
     userPool,
     domainName,
     webClient,
-    linkedInIssuer: linkedIn.api.url,
     cognitoDomainName,
   };
 }

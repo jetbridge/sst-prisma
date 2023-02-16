@@ -1,4 +1,4 @@
-import { Config, RDS, StackContext, use } from '@serverless-stack/resources';
+import { Config, RDS, StackContext, use } from 'sst/constructs';
 
 import { Duration, RemovalPolicy } from 'aws-cdk-lib';
 import { APP_NAME } from 'common';
@@ -16,7 +16,7 @@ export function Database({ stack, app }: StackContext) {
         removalPolicy: IS_PRODUCTION ? RemovalPolicy.SNAPSHOT : RemovalPolicy.DESTROY,
       },
     },
-    engine: 'postgresql10.14',
+    engine: 'postgresql11.13',
     defaultDatabaseName,
     scaling: {
       autoPause: IS_PRODUCTION
@@ -49,7 +49,7 @@ export function Database({ stack, app }: StackContext) {
     },
   });
   app.addDefaultFunctionPermissions([rds]);
-  app.setDefaultFunctionProps({ config });
+  app.addDefaultFunctionBinding(config);
 
   // DB connection for local dev can be overridden
   // https://docs.sst.dev/environment-variables#is_local

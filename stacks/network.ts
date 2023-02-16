@@ -1,4 +1,4 @@
-import { StackContext } from '@serverless-stack/resources';
+import { StackContext } from 'sst/constructs';
 import { SecurityGroup, Vpc } from 'aws-cdk-lib/aws-ec2';
 
 export function Network({ stack, app }: StackContext) {

@@ -1,6 +1,6 @@
 import type { Prisma, PrismaClient as PrismaClientType } from '@prisma/client';
 import { PrismaClient } from '@prisma/client';
-import { Config } from '@serverless-stack/node/config';
+import { Config } from 'sst/node/config';
 import memoize from 'memoizee';
 import { GetSecretValueCommand, SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
 
