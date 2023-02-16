@@ -20,7 +20,7 @@
     "lint": "pnpm run --recursive --aggregate-output lint && pnpm lint:toplevel",
     "lint:toplevel": "eslint --ext .js,.ts,.tsx stacks",
     "lint:fix": "pnpm run lint -- --fix",
-    "build": "pnpm build:common && sst build",
+    "build": "pnpm build:common",
     "build:common": "pnpm run -C common build",
     "build:web": "pnpm run -C web build",
     "build:ci": "pnpm run tsc",
@@ -38,12 +38,12 @@
   },
   "dependencies": {
     "desm": "^1.3.0",
-    "sst": "2.0.0-rc.64",
+    "sst": "2.0.23",
     "tslib": "^2.4.0"
   },
   "devDependencies": {
     "@apollo/client": "^3.6.5",
-    "@aws-cdk/aws-appsync-alpha": "2.59.0-alpha.0",
+    "@aws-cdk/aws-appsync-alpha": "^2.59.0-alpha.0",
     "@tsconfig/node18-strictest-esm": "^1.0.1",
     "@types/aws-lambda": "^8.10.102",
     "@types/node": "^18.0.0",
