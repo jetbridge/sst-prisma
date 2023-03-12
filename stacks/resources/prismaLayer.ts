@@ -2,7 +2,6 @@ import { AssetHashType, IgnoreMode } from 'aws-cdk-lib';
 import { Code, LayerVersion, LayerVersionProps } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 import crypto from 'crypto';
-import path from 'path';
 import { RUNTIME } from '..';
 
 // TODO: when SST fixes asset hashing/caching we can delete the layer zip files
@@ -15,7 +14,7 @@ const PRISMA_LAYER_EXTERNAL = ['@prisma/engines', '@prisma/engines-version', '@p
 type PrismaEngine = 'introspection-engine' | 'migration-engine' | 'prisma-fmt' | 'libquery_engine';
 
 export interface PrismaLayerProps extends Omit<LayerVersionProps, 'code'> {
-  // e.g. 4.2.0
+  // e.g. 4.11.0
   prismaVersion?: string;
 
   // some more modules to add to the layer
@@ -25,9 +24,6 @@ export interface PrismaLayerProps extends Omit<LayerVersionProps, 'code'> {
   prismaModules?: string[];
   // engines to keep
   prismaEngines?: PrismaEngine[];
-
-  // use a pre-built layer zip file
-  layerZipPath?: string;
 }
 
 /**
@@ -57,7 +53,7 @@ export class PrismaLayer extends LayerVersion {
   environment: Record<string, string>;
 
   constructor(scope: Construct, id: string, props: PrismaLayerProps = {}) {
-    const { prismaVersion, layerZipPath, prismaModules, ...rest } = props;
+    const { prismaVersion, prismaModules, ...rest } = props;
     const nodeModules = props.nodeModules || [];
 
     const layerDir = '/asset-output/nodejs';
@@ -113,25 +109,20 @@ export class PrismaLayer extends LayerVersion {
     bundleCommandHash.update(JSON.stringify(createBundleCommand));
 
     // bundle
-    let code: Code;
-    if (layerZipPath) {
-      code = Code.fromAsset(path.join('.', layerZipPath));
-    } else {
-      code = Code.fromAsset('.', {
-        // don't send all our files to docker (slow)
-        ignoreMode: IgnoreMode.GLOB,
-        exclude: ['*'],
+    let code = Code.fromAsset('.', {
+      // don't send all our files to docker (slow)
+      ignoreMode: IgnoreMode.GLOB,
+      exclude: ['*'],
 
-        // if our bundle commands (basically our "dockerfile") changes then rebuild the image
-        assetHashType: AssetHashType.CUSTOM,
-        assetHash: bundleCommandHash.digest('hex'),
+      // if our bundle commands (basically our "dockerfile") changes then rebuild the image
+      assetHashType: AssetHashType.CUSTOM,
+      assetHash: bundleCommandHash.digest('hex'),
 
-        bundling: {
-          image: RUNTIME.bundlingImage,
-          command: createBundleCommand,
-        },
-      });
-    }
+      bundling: {
+        image: RUNTIME.bundlingImage,
+        command: createBundleCommand,
+      },
+    });
 
     super(scope, id, { ...rest, code });
 
