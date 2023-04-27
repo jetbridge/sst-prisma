@@ -1,3 +1,4 @@
+import { AuthorizationType } from 'aws-cdk-lib/aws-appsync';
 import { AppSyncApi as SstAppSyncApi, StackContext, use } from 'sst/constructs';
 import { Auth } from './auth';
 
