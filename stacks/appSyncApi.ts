@@ -1,4 +1,3 @@
-import { AuthorizationType } from '@aws-cdk/aws-appsync-alpha';
 import { AppSyncApi as SstAppSyncApi, StackContext, use } from 'sst/constructs';
 import { Auth } from './auth';
 
