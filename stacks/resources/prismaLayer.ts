@@ -2,11 +2,7 @@ import { AssetHashType, IgnoreMode } from 'aws-cdk-lib';
 import { Code, LayerVersion, LayerVersionProps } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 import crypto from 'crypto';
-import path from 'path';
-import { RUNTIME } from '..';
-
-// TODO: when SST fixes asset hashing/caching we can delete the layer zip files
-// https://github.com/serverless-stack/serverless-stack/issues/1121
+import { RUNTIME } from 'stacks';
 
 // modules to mark as "external" when bundling
 // added to prismaModules
@@ -15,7 +11,7 @@ const PRISMA_LAYER_EXTERNAL = ['@prisma/engines', '@prisma/engines-version', '@p
 type PrismaEngine = 'introspection-engine' | 'migration-engine' | 'prisma-fmt' | 'libquery_engine';
 
 export interface PrismaLayerProps extends Omit<LayerVersionProps, 'code'> {
-  // e.g. 4.2.0
+  // e.g. 4.11.0
   prismaVersion?: string;
 
   // some more modules to add to the layer
@@ -25,9 +21,6 @@ export interface PrismaLayerProps extends Omit<LayerVersionProps, 'code'> {
   prismaModules?: string[];
   // engines to keep
   prismaEngines?: PrismaEngine[];
-
-  // use a pre-built layer zip file
-  layerZipPath?: string;
 }
 
 /**
@@ -57,7 +50,7 @@ export class PrismaLayer extends LayerVersion {
   environment: Record<string, string>;
 
   constructor(scope: Construct, id: string, props: PrismaLayerProps = {}) {
-    const { prismaVersion, layerZipPath, prismaModules, ...rest } = props;
+    const { prismaVersion, prismaModules, ...rest } = props;
     const nodeModules = props.nodeModules || [];
 
     const layerDir = '/asset-output/nodejs';
@@ -70,7 +63,7 @@ export class PrismaLayer extends LayerVersion {
     // deps to npm install to the layer
     const modulesToInstall = prismaModules || ['@prisma/client', '@prisma/engines'];
     const modulesToInstallWithVersion = prismaVersion
-      ? modulesToInstall.map((dep) => (!dep.startsWith('@prisma/engines') ? `${dep}@${prismaVersion}` : dep))
+      ? modulesToInstall.map((dep) => `${dep}@${prismaVersion}`)
       : modulesToInstall;
     const modulesToInstallArgs = modulesToInstallWithVersion.concat(nodeModules).join(' ');
 
@@ -86,6 +79,7 @@ export class PrismaLayer extends LayerVersion {
       'bash',
       '-c',
       [
+        `echo "Installing ${modulesToInstallArgs}"`,
         'mkdir -p /tmp/npm && pushd /tmp/npm && HOME=/tmp npm i --no-save --no-package-lock npm@latest && popd',
         `mkdir -p ${layerDir}`,
         // install PRISMA_DEPS
@@ -111,27 +105,23 @@ export class PrismaLayer extends LayerVersion {
     // hash our parameters so we know when we need to rebuild
     const bundleCommandHash = crypto.createHash('sha256');
     bundleCommandHash.update(JSON.stringify(createBundleCommand));
+    const bundleCommandDigest = bundleCommandHash.digest('hex');
 
     // bundle
-    let code: Code;
-    if (layerZipPath) {
-      code = Code.fromAsset(path.join('.', layerZipPath));
-    } else {
-      code = Code.fromAsset('.', {
-        // don't send all our files to docker (slow)
-        ignoreMode: IgnoreMode.GLOB,
-        exclude: ['*'],
+    const code = Code.fromAsset('.', {
+      // don't send all our files to docker (slow)
+      ignoreMode: IgnoreMode.GLOB,
+      exclude: ['*'],
 
-        // if our bundle commands (basically our "dockerfile") changes then rebuild the image
-        assetHashType: AssetHashType.CUSTOM,
-        assetHash: bundleCommandHash.digest('hex'),
+      // if our bundle commands (basically our "dockerfile") changes then rebuild the image
+      assetHashType: AssetHashType.CUSTOM,
+      assetHash: bundleCommandDigest,
 
-        bundling: {
-          image: RUNTIME.bundlingImage,
-          command: createBundleCommand,
-        },
-      });
-    }
+      bundling: {
+        image: RUNTIME.bundlingImage,
+        command: createBundleCommand,
+      },
+    });
 
     super(scope, id, { ...rest, code });
 
