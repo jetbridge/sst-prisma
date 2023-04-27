@@ -2,7 +2,7 @@ import { RemovalPolicy } from 'aws-cdk-lib';
 import { IVpc } from 'aws-cdk-lib/aws-ec2';
 import { Construct } from 'constructs';
 import { App, Function, Script } from 'sst/constructs';
-import { LAYER_MODULES, PRISMA_VERSION } from '../layers';
+import { PRISMA_VERSION } from '../layers';
 import { PrismaLayer } from './prismaLayer';
 
 interface DbMigrationScriptProps {
@@ -25,26 +25,25 @@ export class DbMigrationScript extends Construct {
 
       prismaVersion: PRISMA_VERSION,
       prismaEngines: ['migration-engine'],
-      prismaModules: ['@prisma/engines', '@prisma/engines-version', '@prisma/internals', '@prisma/client'],
+      prismaModules: ['@prisma/engines', '@prisma/internals', '@prisma/client'],
     });
 
     const migrationFunction = new Function(this, 'MigrationScriptLambda', {
       vpc,
       enableLiveDev: false,
-      handler: 'backend/src/db/migrationScript.handler',
+      handler: 'backend/src/repo/runMigrations.handler',
       layers: [migrationLayer],
-      runtime: 'nodejs18.x',
       copyFiles: [
         { from: 'backend/prisma/schema.prisma' },
         { from: 'backend/prisma/migrations' },
-        { from: 'backend/prisma/schema.prisma', to: 'backend/src/db/schema.prisma' },
-        { from: 'backend/prisma/migrations', to: 'backend/src/db/migrations' },
+        { from: 'backend/prisma/schema.prisma', to: 'backend/src/repo/schema.prisma' },
+        { from: 'backend/prisma/migrations', to: 'backend/src/repo/migrations' },
         { from: 'backend/package.json', to: 'backend/src/package.json' },
       ],
 
       nodejs: {
         format: 'cjs',
-        esbuild: { external: [...LAYER_MODULES, ...(migrationLayer.externalModules || [])], target: 'node18' },
+        esbuild: { external: [...(migrationLayer.externalModules || [])] },
       },
       timeout: '3 minutes',
       environment: {
