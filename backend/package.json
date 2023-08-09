@@ -36,7 +36,7 @@
     "chalk": "^4.1.2",
     "common": "workspace:*",
     "got": "^12.3.1",
-    "jose": "^4.8.3",
+    "jose": "^4.9.2",
     "memoizee": "^0.4.15"
   },
   "devDependencies": {
