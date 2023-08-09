@@ -1,10 +1,10 @@
+import { isProd } from '@common/env';
 import { Prisma, PrismaClient } from '@prisma/client';
-import { isProd } from 'common';
 
 export async function truncateAllTables(prisma: PrismaClient | Prisma.TransactionClient) {
-  if (isProd()) throw new Error('Please stop whatever you are doing right now.');
+    if (isProd()) throw new Error('Please stop whatever you are doing right now.');
 
-  await prisma.$executeRawUnsafe(`
+    await prisma.$executeRawUnsafe(`
       DO $$ DECLARE
           r RECORD;
       BEGIN

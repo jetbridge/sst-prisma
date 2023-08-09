@@ -1,11 +1,7 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "moduleResolution": "node",
@@ -13,19 +9,13 @@
     "jsx": "preserve",
     "module": "esnext",
     "resolveJsonModule": true,
-    "isolatedModules": true
-  },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ],
-  "references": [
-    {
-      "path": "../common"
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "paths": {
+      "@common/*": ["../common/src/*"], // shared
+      "@web/*": ["./*"]
     }
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "../common/src/**/*"],
+  "exclude": ["node_modules"]
 }

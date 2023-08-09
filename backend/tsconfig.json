@@ -1,10 +1,15 @@
 {
   "extends": "../tsconfig.base.json",
-  "include": ["src"],
   "compilerOptions": {
-    "outDir": "./dist",
     "module": "esnext",
-    "target": "es2021"
+    "paths": {
+      "@common/*": ["../common/src/*"],
+      "@backend/*": ["./src/*"]
+    },
+    "baseUrl": ".",
+    "rootDir": "..",
+    "outDir": "./.build"
   },
-  "references": [{ "path": "../common" }]
+  "files": ["./src/index.d.ts", "../common/src/index.d.ts"],
+  "include": ["src/**/*", "../common/src/**/*"]
 }

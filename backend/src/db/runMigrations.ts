@@ -3,14 +3,14 @@
 
   Not really using a public API.
 */
-import type { PrismaClientInitializationError } from '@prisma/client/runtime';
 import { Migrate } from '@prisma/migrate/dist/Migrate.js';
 import { ensureDatabaseExists } from '@prisma/migrate/dist/utils/ensureDatabaseExists';
 import { printFilesFromMigrationIds } from '@prisma/migrate/dist/utils/printFiles';
 import chalk from 'chalk';
 import { GetSecretValueCommand, SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
-import { PrismaClient } from '@prisma/client';
-import { sleep, isProd } from 'common';
+import { Prisma, PrismaClient } from '@prisma/client';
+import { isProd } from '@common/env';
+import { sleep } from '@common/util';
 
 export const handler = async (): Promise<string> => {
   const schemaPath = '/var/task/backend/prisma/schema.prisma';
@@ -22,7 +22,7 @@ export const handler = async (): Promise<string> => {
     const client = new PrismaClient();
     await client.$connect();
   } catch (ex) {
-    const errorCode = (ex as PrismaClientInitializationError).errorCode;
+    const errorCode = (ex as Prisma.PrismaClientInitializationError).errorCode;
     if (errorCode == 'P1001') {
       // timed out waiting to reach DB server
       // it might be waking up from slumber

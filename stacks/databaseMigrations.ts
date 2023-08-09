@@ -8,9 +8,11 @@ export function DatabaseMigrations({ stack, app }: StackContext) {
   const net = use(Network);
   const { cluster } = use(Database);
 
+  // using local DB, no need to run migrations in AWS
+  if (app.local) return;
+
   // make sure DB is running before applying migration
-  let wakeUp;
-  if (!app.local) wakeUp = new WakeDB(stack, 'WakeDB', { cluster });
+  const wakeUp = new WakeDB(stack, 'WakeDB', { cluster });
 
   // run migrations
   const dbMigrationScript = new DbMigrationScript(stack, 'MigrationScript', {
@@ -18,5 +20,5 @@ export function DatabaseMigrations({ stack, app }: StackContext) {
     dbSecretsArn: cluster.secret!.secretArn,
   });
 
-  if (wakeUp) dbMigrationScript.node.addDependency(wakeUp);
+  dbMigrationScript.node.addDependency(wakeUp);
 }

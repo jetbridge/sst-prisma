@@ -3,7 +3,7 @@ import { decodeJwt } from 'jose';
 import { Session } from 'next-auth';
 import { getToken, JWT } from 'next-auth/jwt';
 import { NextApiRequestCookies } from 'next/dist/server/api-utils';
-import { COGNITO_CLIENT_ID, COGNITO_DOMAIN_NAME } from 'web/lib/config/next';
+import { COGNITO_CLIENT_ID, COGNITO_DOMAIN_NAME } from '@web/lib/config/next';
 
 interface CognitoRefreshTokenResult {
   access_token: string;

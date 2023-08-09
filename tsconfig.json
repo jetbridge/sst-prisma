@@ -1,9 +1,12 @@
 {
-  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "module": "esnext",
-    "outDir": "./dist"
+    "outDir": "./.build",
+    "paths": {
+      "@common/*": ["./common/src/*"],
+      "@backend/*": ["./backend/src/*"]
+    },
+    "baseUrl": "."
   },
-  "include": ["stacks"],
-  "references": [{ "path": "./common" }, { "path": "./backend" }]
+  "extends": "./tsconfig.base.json",
+  "include": ["stacks/**/*", "backend/src/**/*", "common/src/**/*"]
 }

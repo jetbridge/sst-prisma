@@ -1,0 +1,63 @@
+---
+root: true
+env:
+  browser: false
+  node: true
+  es6: true
+extends:
+  - "eslint:recommended"
+  - "plugin:@typescript-eslint/eslint-recommended"
+  - "plugin:@typescript-eslint/recommended"
+  - "plugin:import/recommended"
+  - "plugin:import/typescript"
+globals:
+  Atomics: readonly
+  SharedArrayBuffer: readonly
+parser: "@typescript-eslint/parser"
+parserOptions:
+  ecmaVersion: 2019
+  sourceType: module
+plugins:
+  - "@typescript-eslint"
+ignorePatterns:
+  - node_modules
+  - build
+  - "prisma-generated-client"
+  - generated/
+  - cdk.out
+  - __mocks__
+settings:
+  import/parsers:
+    "@typescript-eslint/parser": [".ts", ".tsx"]
+  import/ignore:
+    - \.test\.ts$ # tests aren't imported
+    - \.(scss|less|css)$ # can't parse unprocessed CSS modules
+    - node_modules
+    - build/
+    - \.next
+  import/resolver:
+    typescript:
+      alwaysTryTypes: true
+      project:
+        - "tsconfig.json"
+        - "*/tsconfig.json"
+rules:
+
+  "@typescript-eslint/explicit-module-boundary-types": off
+
+  "@typescript-eslint/no-unused-vars": off
+
+  "@typescript-eslint/no-non-null-assertion": off
+
+  "@typescript-eslint/no-empty-interface": off
+
+  "@typescript-eslint/no-explicit-any": off
+
+  "@typescript-eslint/triple-slash-reference": off
+
+  # gets confused about imported Function from SST etc
+  "@typescript-eslint/ban-types": off
+
+  # makes switch/case statements really annoying
+  "no-case-declarations": off
+

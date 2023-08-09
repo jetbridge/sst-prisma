@@ -6,7 +6,7 @@ import { UserPoolDomainTarget } from 'aws-cdk-lib/aws-route53-targets';
 import { Dns } from './dns';
 
 const ALLOWED_HOSTS = [
-  'http://localhost:6020',
+  'http://localhost:6001',
   /// ... add frontend hosts here
 ];
 const ALLOWED_URLS = ['/login', '/api/auth/callback/cognito'];

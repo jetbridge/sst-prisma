@@ -2,7 +2,8 @@
 // https://awslabs.github.io/aws-lambda-powertools-typescript/latest/core/metrics/
 
 import { Metrics, MetricUnits } from '@aws-lambda-powertools/metrics';
-import { APP_NAME, getSstApp, getSstStage } from 'common';
+import { getSstStage, getSstApp } from '@common/env';
+import { APP_NAME } from '@common/index';
 
 const stage = getSstStage();
 const app = getSstApp();

@@ -4,6 +4,7 @@ import { Construct } from 'constructs';
 import { App, Function, Script } from 'sst/constructs';
 import { PRISMA_VERSION } from '../layers';
 import { PrismaLayer } from './prismaLayer';
+import { RUN_DB_MIGRATIONS } from 'stacks/config';
 
 interface DbMigrationScriptProps {
   vpc?: IVpc;
@@ -24,26 +25,25 @@ export class DbMigrationScript extends Construct {
       layerVersionName: app.logicalPrefixedName('prisma-migrate'),
 
       prismaVersion: PRISMA_VERSION,
-      prismaEngines: ['migration-engine'],
+      prismaEngines: ['schema-engine'],
       prismaModules: ['@prisma/engines', '@prisma/internals', '@prisma/client'],
     });
 
     const migrationFunction = new Function(this, 'MigrationScriptLambda', {
       vpc,
       enableLiveDev: false,
-      handler: 'backend/src/repo/runMigrations.handler',
+      handler: 'backend/src/db/runMigrations.handler',
       layers: [migrationLayer],
       copyFiles: [
         { from: 'backend/prisma/schema.prisma' },
         { from: 'backend/prisma/migrations' },
-        { from: 'backend/prisma/schema.prisma', to: 'backend/src/repo/schema.prisma' },
+        { from: 'backend/prisma/schema.prisma', to: 'backend/src/db/schema.prisma' },
         { from: 'backend/prisma/migrations', to: 'backend/src/repo/migrations' },
         { from: 'backend/package.json', to: 'backend/src/package.json' },
       ],
 
       nodejs: {
-        format: 'cjs',
-        esbuild: { external: [...(migrationLayer.externalModules || [])] },
+        esbuild: { external: migrationLayer.externalModules || [] },
       },
       timeout: '3 minutes',
       environment: {
@@ -52,9 +52,11 @@ export class DbMigrationScript extends Construct {
     });
 
     // script to run migrations for us during deployment
-    new Script(this, 'MigrationScript', {
-      onCreate: migrationFunction,
-      onUpdate: migrationFunction,
-    });
+    if (RUN_DB_MIGRATIONS) {
+      new Script(this, 'MigrationScript', {
+        onCreate: migrationFunction,
+        onUpdate: migrationFunction,
+      });
+    }
   }
 }
