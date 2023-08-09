@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./build",
+    "outDir": "./.build",
     "paths": {
       "@common/*": ["./common/src/*"],
       "@backend/*": ["./backend/src/*"]

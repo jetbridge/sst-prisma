@@ -8,7 +8,7 @@
     },
     "baseUrl": ".",
     "rootDir": "..",
-    "outDir": "./build"
+    "outDir": "./.build"
   },
   "files": ["./src/index.d.ts", "../common/src/index.d.ts"],
   "include": ["src/**/*", "../common/src/**/*"]
