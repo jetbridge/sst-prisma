@@ -9,27 +9,18 @@
     "build": "tsc",
     "start": "tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "graphql:generate": "cross-env DEBUG=1 graphql-codegen --config graphql/codegen.yml",
     "generate": "pnpm run graphql:generate",
     "lint": "eslint --ext .js,.ts,.tsx src graphql/documents",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "graphql:generate": "graphql-codegen --config ../graphql/codegen.ts"
   },
   "devDependencies": {
-    "@apollo/client": "^3.6.5",
-    "@graphql-codegen/cli": "^2.6.2",
-    "@graphql-codegen/client-preset": "^4.1.0",
-    "@graphql-codegen/schema-ast": "^4.0.0",
-    "@graphql-codegen/typescript": "^4.0.1",
-    "@graphql-codegen/typescript-operations": "^4.0.1",
-    "@graphql-codegen/typescript-react-apollo": "^3.3.7",
-    "@types/node": "^18.0.0",
-    "graphql": "^16.5.0",
-    "graphql-tag": "^2.12.6"
+    "@graphql-codegen/cli": "5.0.0",
+    "@graphql-codegen/client-preset": "4.1.0"
   },
   "keywords": [],
   "author": "",
   "peerDependencies": {
-    "@apollo/client": "^3.6.5",
     "graphql": "^16.5.0"
   }
 }

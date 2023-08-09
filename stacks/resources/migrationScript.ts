@@ -43,7 +43,7 @@ export class DbMigrationScript extends Construct {
       ],
 
       nodejs: {
-        format: 'cjs',
+        // format: 'cjs',
         esbuild: { external: migrationLayer.externalModules || [] },
       },
       timeout: '3 minutes',

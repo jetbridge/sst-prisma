@@ -13,9 +13,9 @@ export function Web({ stack, app }: StackContext) {
     path: 'web',
     customDomain: dns.domainName
       ? {
-          domainName: dns.domainName,
-          domainAlias: 'www.' + dns.domainName,
-        }
+        domainName: dns.domainName,
+        domainAlias: 'www.' + dns.domainName,
+      }
       : undefined,
     cdk: {
       distribution: {
@@ -24,7 +24,7 @@ export function Web({ stack, app }: StackContext) {
     },
     memorySize: 1024,
     environment: {
-      NEXTAUTH_URL: 'http://localhost:6020', // FIXME: how to pass in this URL?
+      NEXTAUTH_URL: 'http://localhost:6001', // FIXME: how to pass in this URL?
       NEXT_PUBLIC_REGION: stack.region,
       NEXT_PUBLIC_APPSYNC_ENDPOINT: appSyncApi.api.url,
       NEXT_PUBLIC_COGNITO_CLIENT_ID: webClient.userPoolClientId,

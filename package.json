@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "pnpm db:migrate:dev && pnpm dev:sst",
+    "dev": "pnpm db:migrate && pnpm dev:sst",
     "dev:sst": "sst dev",
     "dev:web": "pnpm run -C web dev",
     "watch": "pnpm run tsc:watch",
@@ -26,7 +26,7 @@
     "remove": "sst remove",
     "prettier:exc": "./node_modules/.bin/prettier --config .prettierrc.yaml --write",
     "prettier": "pnpm run prettier:exc -- '**/*.{js,ts,tsx,css,json,yaml,yml,md}'",
-    "db:migrate:dev": "pnpm db:start && pnpm -C backend migrate:dev",
+    "db:migrate": "pnpm db:start && pnpm -C backend migrate:dev",
     "db:migrate:test": "pnpm db:start && pnpm -C backend migrate:test",
     "db:start": "bin/startLocalDb.sh",
     "db:stop": "docker-compose down",
@@ -41,6 +41,7 @@
   },
   "devDependencies": {
     "@apollo/client": "^3.6.5",
+    "@graphql-typed-document-node/core": "^3.2.0",
     "@tsconfig/node18": "^1.0.1",
     "@types/aws-lambda": "^8.10.102",
     "@types/node": "^18.13.0",

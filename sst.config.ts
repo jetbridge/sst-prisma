@@ -1,33 +1,32 @@
-import type { SSTConfig } from "sst"
+import type { SSTConfig } from 'sst';
 
 // you can configure your default profiles and regions to use here
+// map of stage to profile name
 const PROFILE = {
-  default: "default",
-}
-
+  default: undefined,
+};
+// map of stage to region
 const REGION = {
-  default: "us-east-1"
-}
+  default: undefined,
+};
 
 export default {
   config(input) {
-    const stage = input.stage || "dev"
+    const stage = input.stage;
 
-    // uncomment to use your own default profiles and regions
-    const region = undefined // REGION[stage] || REGION.default
-    const profile = undefined // PROFILE[stage] || PROFILE.default
+    const region = (stage && REGION[stage]) || REGION.default;
+    const profile = (stage && PROFILE[stage]) || PROFILE.default;
 
     return {
-      name: "myapp",  // replace me
+      name: 'myapp', // replace me
       region,
       profile: process.env.CI ? undefined : profile,
       stage,
-    }
+    };
   },
 
   async stacks(app) {
-    const appStacks = await import("./stacks")
-    appStacks.default(app)
+    const appStacks = await import('./stacks');
+    appStacks.default(app);
   },
-} satisfies SSTConfig
-
+} satisfies SSTConfig;
