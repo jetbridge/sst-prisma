@@ -8,8 +8,9 @@
     "dev:sst": "sst dev",
     "dev:web": "pnpm run -C web dev",
     "watch": "pnpm run tsc:watch",
-    "tsc": "tsc -b",
-    "tsc:watch": "tsc -b --watch",
+    "build": "pnpm tsc",
+    "tsc": "tsc",
+    "tsc:watch": "pnpm tsc --watch",
     "generate": "pnpm run --recursive generate",
     "postinstall": "pnpm run generate",
     "test": "pnpm testall",
@@ -32,7 +33,7 @@
     "db:stop": "docker-compose down",
     "db:seed": "pnpm run --filter backend db:seed",
     "db:seed:clean": "pnpm run --filter backend db:seed:clean",
-    "clean": "tsc -b --clean && rm -rf .build .sst dist common/graphql/generated && pnpm run --recursive --if-present clean"
+    "clean": "tsc --clean && rm -rf .build .sst dist common/graphql/generated && pnpm run --recursive --if-present clean"
   },
   "dependencies": {
     "desm": "^1.3.0",
