@@ -2,16 +2,17 @@ import { AssetHashType, IgnoreMode } from 'aws-cdk-lib';
 import { Code, LayerVersion, LayerVersionProps } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 import crypto from 'crypto';
+import { App } from 'sst/constructs';
 import { RUNTIME } from 'stacks';
 
 // modules to mark as "external" when bundling
 // added to prismaModules
 const PRISMA_LAYER_EXTERNAL = ['@prisma/engines', '@prisma/engines-version', '@prisma/internals'];
 
-type PrismaEngine = 'introspection-engine' | 'migration-engine' | 'prisma-fmt' | 'libquery_engine';
+type PrismaEngine = 'introspection-engine' | 'schema-engine' | 'prisma-fmt' | 'libquery_engine';
 
 export interface PrismaLayerProps extends Omit<LayerVersionProps, 'code'> {
-  // e.g. 4.11.0
+  // e.g. 5.0.0
   prismaVersion?: string;
 
   // some more modules to add to the layer
@@ -53,6 +54,8 @@ export class PrismaLayer extends LayerVersion {
     const { prismaVersion, prismaModules, ...rest } = props;
     const nodeModules = props.nodeModules || [];
 
+    const app = App.of(scope) as App;
+
     const layerDir = '/asset-output/nodejs';
     const nm = `${layerDir}/node_modules`;
     const engineDir = `${nm}/@prisma/engines`;
@@ -68,7 +71,7 @@ export class PrismaLayer extends LayerVersion {
     const modulesToInstallArgs = modulesToInstallWithVersion.concat(nodeModules).join(' ');
 
     // delete engines not requested
-    const allEngines: PrismaEngine[] = ['introspection-engine', 'migration-engine', 'libquery_engine', 'prisma-fmt'];
+    const allEngines: PrismaEngine[] = ['introspection-engine', 'schema-engine', 'libquery_engine', 'prisma-fmt'];
     const prismaEngines = props.prismaEngines || ['libquery_engine'];
     const deleteEngineCmds = allEngines
       .filter((e) => !prismaEngines.includes(e))
@@ -126,10 +129,12 @@ export class PrismaLayer extends LayerVersion {
     super(scope, id, { ...rest, code });
 
     // hint for prisma to find the engine
-    this.environment = {
-      PRISMA_QUERY_ENGINE_LIBRARY:
-        '/opt/nodejs/node_modules/@prisma/engines/libquery_engine-rhel-openssl-1.0.x.so.node',
-    };
+    this.environment = app.local
+      ? {}
+      : {
+        PRISMA_QUERY_ENGINE_LIBRARY:
+          '/opt/nodejs/node_modules/@prisma/engines/libquery_engine-rhel-openssl-1.0.x.so.node',
+      };
     // modules provided by layer
     this.externalModules = [...new Set([...PRISMA_LAYER_EXTERNAL, ...nodeModules])];
   }
