@@ -10,7 +10,7 @@
     "start": "tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1",
     "generate": "pnpm run graphql:generate",
-    "lint": "eslint --ext .js,.ts,.tsx src graphql/documents",
+    "lint": "eslint --ext .js,.ts,.tsx src",
     "clean": "rimraf dist",
     "graphql:generate": "graphql-codegen --config ../graphql/codegen.ts"
   },
