@@ -4,9 +4,11 @@ import { StringAttribute, UserPoolClientIdentityProvider } from 'aws-cdk-lib/aws
 import { AaaaRecord, ARecord, RecordTarget } from 'aws-cdk-lib/aws-route53';
 import { UserPoolDomainTarget } from 'aws-cdk-lib/aws-route53-targets';
 import { Dns } from './dns';
+import { WEB_URL } from './config';
 
 const ALLOWED_HOSTS = [
   'http://localhost:6001',
+  ...(WEB_URL ? [WEB_URL] : []),
   /// ... add frontend hosts here
 ];
 const ALLOWED_URLS = ['/login', '/api/auth/callback/cognito'];
