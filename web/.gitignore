@@ -41,3 +41,5 @@ yarn-error.log*
 !.storybook/main.js
 
 .open-next/
+
+sst-env.d.ts

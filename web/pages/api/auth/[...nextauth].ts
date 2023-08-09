@@ -1,8 +1,8 @@
+import { refreshTokensIfNeeded } from '@web/lib/client/auth';
+import { REGION, COGNITO_CLIENT_ID, COGNITO_USER_POOL_ID } from '@web/lib/config/next';
 import { decodeJwt } from 'jose';
 import NextAuth, { NextAuthOptions, Session } from 'next-auth';
 import CognitoProvider from 'next-auth/providers/cognito';
-import { refreshTokensIfNeeded } from 'web/lib/client/auth';
-import { COGNITO_CLIENT_ID, COGNITO_USER_POOL_ID, REGION } from 'web/lib/config/next';
 
 if (!REGION) throw new Error('REGION is not set');
 if (!COGNITO_CLIENT_ID) throw new Error('COGNITO_CLIENT_ID is not set');

@@ -31,8 +31,8 @@
     "classnames": "^2.3.1",
     "graphql": "^16.3.0",
     "jose": "^4.8.3",
-    "next": "^13.0.6",
-    "next-auth": "^4.18.6",
+    "next": "^13.4.13",
+    "next-auth": "^4.22.5",
     "nord": "^0.2.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
@@ -44,7 +44,6 @@
     "zen-observable": "^0.8.15"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.8",
     "@mui/system": "^5.2.8",
     "@next/bundle-analyzer": "^13.1.6",
     "@storybook/addon-actions": "^6.4.19",
@@ -63,18 +62,13 @@
     "@testing-library/react": "^13.3.0",
     "@types/react": "^18.0.0",
     "@vitejs/plugin-react": "^3.1.0",
-    "babel-loader": "^8.2.4",
     "css-loader": "^6.5.1",
-    "eslint-config-next": "^12.1.0",
-    "eslint-plugin-storybook": "^0.5.7",
     "jsdom": "^20.0.0",
     "postcss": "^8.4.14",
     "prop-types": "^15.8.1",
     "require-from-string": "^2.0.2",
     "sass-loader": "10.1.1",
     "storybook-addon-next": "^1.6.2",
-    "style-loader": "^2.0.0",
-    "typescript": "^4.7.0",
-    "webpack": "^5.70.0"
+    "style-loader": "^2.0.0"
   }
 }

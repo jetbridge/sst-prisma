@@ -1,7 +1,7 @@
 import Avatar from '@mui/material/Avatar';
 import { useSession } from 'next-auth/react';
 import React from 'react';
-import { GQL } from '@common/index';
+import { GQL } from '@common/gql';
 import { Button, LinearProgress } from '@mui/material';
 
 export const Profile: React.FC = () => {
