@@ -2,7 +2,7 @@ import { defaultAppSyncMiddleware } from '@backend/middleware/lambda';
 import { logger } from '@backend/util/logger';
 import { incrementMetric } from '@backend/util/metrics';
 import { AppSyncResolverEvent } from 'aws-lambda';
-import { GQL } from 'common';
+import { GQL } from '@common/gql';
 
 export const GREETING = 'Yo yo';
 

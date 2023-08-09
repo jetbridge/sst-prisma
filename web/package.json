@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "sst env 'next dev --port 6001'",
+    "dev": "sst bind 'next dev --port 6001'",
     "test": "vitest run",
     "test:watch": "vitest",
     "build": "next build",
