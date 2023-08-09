@@ -9,7 +9,8 @@ import { printFilesFromMigrationIds } from '@prisma/migrate/dist/utils/printFile
 import chalk from 'chalk';
 import { GetSecretValueCommand, SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
 import { Prisma, PrismaClient } from '@prisma/client';
-import { sleep, isProd } from 'common/src';
+import { isProd } from '@common/env';
+import { sleep } from '@common/util';
 
 export const handler = async (): Promise<string> => {
   const schemaPath = '/var/task/backend/prisma/schema.prisma';
