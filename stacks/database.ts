@@ -1,7 +1,7 @@
 import { Config, RDS, StackContext, use } from 'sst/constructs';
 
 import { Duration, RemovalPolicy } from 'aws-cdk-lib';
-import { APP_NAME } from 'common';
+import { APP_NAME } from '@common/index';
 import { Network } from 'stacks/network';
 import { IS_PRODUCTION } from './config';
 
@@ -22,7 +22,7 @@ export function Database({ stack, app }: StackContext) {
       autoPause: IS_PRODUCTION
         ? false
         : // go to sleep after this length of inactivity
-          Duration.hours(4).toMinutes(),
+        Duration.hours(4).toMinutes(),
       minCapacity: 'ACU_2',
       maxCapacity: 'ACU_4',
     },

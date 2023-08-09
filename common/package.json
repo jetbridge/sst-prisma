@@ -2,8 +2,9 @@
   "name": "common",
   "version": "1.0.0",
   "description": "Code shared between the client and server",
-  "main": "./dist/src/index.js",
+  "main": "build/index.js",
   "type": "module",
+  "types": "./src/index.ts",
   "scripts": {
     "build": "tsc",
     "start": "tsc -w",
@@ -14,15 +15,15 @@
     "clean": "rimraf dist"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^2.6.2",
-    "@graphql-codegen/schema-ast": "^2.4.1",
-    "@graphql-codegen/typescript": "^2.4.11",
-    "@graphql-codegen/typescript-operations": "^2.4.0",
-    "@graphql-codegen/typescript-react-apollo": "*",
     "@apollo/client": "^3.6.5",
-    "graphql": "^16.5.0",
+    "@graphql-codegen/cli": "^2.6.2",
+    "@graphql-codegen/client-preset": "^4.1.0",
+    "@graphql-codegen/schema-ast": "^4.0.0",
+    "@graphql-codegen/typescript": "^4.0.1",
+    "@graphql-codegen/typescript-operations": "^4.0.1",
+    "@graphql-codegen/typescript-react-apollo": "^3.3.7",
     "@types/node": "^18.0.0",
-    "typescript": "^4.7.4",
+    "graphql": "^16.5.0",
     "graphql-tag": "^2.12.6"
   },
   "keywords": [],

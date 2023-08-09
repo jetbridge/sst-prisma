@@ -4,6 +4,7 @@ import { Construct } from 'constructs';
 import { App, Function, Script } from 'sst/constructs';
 import { PRISMA_VERSION } from '../layers';
 import { PrismaLayer } from './prismaLayer';
+import { RUN_DB_MIGRATIONS } from 'stacks/config';
 
 interface DbMigrationScriptProps {
   vpc?: IVpc;
@@ -24,7 +25,7 @@ export class DbMigrationScript extends Construct {
       layerVersionName: app.logicalPrefixedName('prisma-migrate'),
 
       prismaVersion: PRISMA_VERSION,
-      prismaEngines: ['migration-engine'],
+      prismaEngines: ['schema-engine'],
       prismaModules: ['@prisma/engines', '@prisma/internals', '@prisma/client'],
     });
 
@@ -43,7 +44,7 @@ export class DbMigrationScript extends Construct {
 
       nodejs: {
         format: 'cjs',
-        esbuild: { external: [...(migrationLayer.externalModules || [])] },
+        esbuild: { external: migrationLayer.externalModules || [] },
       },
       timeout: '3 minutes',
       environment: {
@@ -52,9 +53,11 @@ export class DbMigrationScript extends Construct {
     });
 
     // script to run migrations for us during deployment
-    new Script(this, 'MigrationScript', {
-      onCreate: migrationFunction,
-      onUpdate: migrationFunction,
-    });
+    if (RUN_DB_MIGRATIONS) {
+      new Script(this, 'MigrationScript', {
+        onCreate: migrationFunction,
+        onUpdate: migrationFunction,
+      });
+    }
   }
 }
