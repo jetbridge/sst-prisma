@@ -179,8 +179,8 @@ importers:
         specifier: '>=7.0.0 <8.0.0'
         version: 7.17.8
       '@chax-at/transactional-prisma-testing':
-        specifier: ^0.5.0
-        version: 0.5.0(@prisma/client@5.1.1)
+        specifier: ^1.1.0
+        version: 1.1.0(@prisma/client@5.1.1)
       '@faker-js/faker':
         specifier: ^7.5.0
         version: 7.5.0
@@ -4411,10 +4411,11 @@ packages:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: true
 
-  /@chax-at/transactional-prisma-testing@0.5.0(@prisma/client@5.1.1):
-    resolution: {integrity: sha512-pOhl8ZjbgLIjBe/zRoiArsV9Rzi5mhieESbRLXflHzParaeRHTcEhCcPyk6C/5IB7Hw6ye+V1wZuQzHh4jYyWQ==}
+  /@chax-at/transactional-prisma-testing@1.1.0(@prisma/client@5.1.1):
+    resolution: {integrity: sha512-BT2KRg2mfHbjW3gb3u5RtXjwvodywA8uvOX5Szm2J6KotgYJ/vRnCJ8LKp+kb/dbHhnPIrOCTtj6AY1Xku8Wng==}
+    engines: {node: '>= 14'}
     peerDependencies:
-      '@prisma/client': ^2.29.0 || 3 || 4
+      '@prisma/client': ^4.7.0 || 5
     dependencies:
       '@prisma/client': 5.1.1(prisma@5.1.1)
     dev: true
