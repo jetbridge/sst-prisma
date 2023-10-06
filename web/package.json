@@ -65,7 +65,7 @@
     "@vitejs/plugin-react": "^4.0.4",
     "css-loader": "^6.5.1",
     "jsdom": "^20.0.0",
-    "postcss": "^8.4.14",
+    "postcss": "^8.4.31",
     "prop-types": "^15.8.1",
     "require-from-string": "^2.0.2",
     "sass-loader": "10.1.1",
