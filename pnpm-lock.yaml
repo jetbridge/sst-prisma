@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -385,8 +385,8 @@ importers:
         specifier: ^20.0.0
         version: 20.0.0
       postcss:
-        specifier: ^8.4.14
-        version: 8.4.14
+        specifier: ^8.4.31
+        version: 8.4.31
       prop-types:
         specifier: ^15.8.1
         version: 15.8.1
@@ -398,7 +398,7 @@ importers:
         version: 10.1.1(sass@1.49.9)(webpack@5.88.2)
       storybook-addon-next:
         specifier: ^1.6.2
-        version: 1.6.2(@storybook/addon-actions@6.4.19)(@storybook/addons@6.0.0)(next@13.4.13)(postcss@8.4.14)(react-dom@18.0.0)(react@18.0.0)(sass@1.49.9)(webpack@5.88.2)
+        version: 1.6.2(@storybook/addon-actions@6.4.19)(@storybook/addons@6.0.0)(next@13.4.13)(postcss@8.4.31)(react-dom@18.0.0)(react@18.0.0)(sass@1.49.9)(webpack@5.88.2)
       style-loader:
         specifier: ^2.0.0
         version: 2.0.0(webpack@5.88.2)
@@ -12224,6 +12224,7 @@ packages:
 
   /async-each@1.0.6:
     resolution: {integrity: sha512-c646jH1avxr+aVpndVMeAfYw7wAa6idufrlN3LPA4PmKS0QEGp6PIC9nwz0WQkkvBGAMEki3pFdtxaF39J9vvg==}
+    requiresBuild: true
     dev: true
     optional: true
 
@@ -12772,6 +12773,7 @@ packages:
   /binary-extensions@1.13.1:
     resolution: {integrity: sha512-Un7MIEDdUC5gNpcGDV97op1Ywk748MpHcFTHoYs6qnj1Z3j7I53VG3nwZhKzoBZmbdRNnb6WRdFlwl7tSDuZGw==}
     engines: {node: '>=0.10.0'}
+    requiresBuild: true
     dev: true
     optional: true
 
@@ -13342,6 +13344,7 @@ packages:
   /chokidar@2.1.8:
     resolution: {integrity: sha512-ZmZUazfOzf0Nve7duiCKD23PFSCs4JPoYyccjUFF3aQkQadqBhfzhjkwBH2mNOG9cTBwhamM37EIsIkZw3nRgg==}
     deprecated: Chokidar 2 does not receive security updates since 2019. Upgrade to chokidar 3 with 15x fewer dependencies
+    requiresBuild: true
     dependencies:
       anymatch: 2.0.0
       async-each: 1.0.6
@@ -14081,13 +14084,13 @@ packages:
     peerDependencies:
       webpack: ^4.27.0 || ^5.0.0
     dependencies:
-      icss-utils: 5.1.0(postcss@8.4.14)
+      icss-utils: 5.1.0(postcss@8.4.31)
       loader-utils: 2.0.4
-      postcss: 8.4.14
-      postcss-modules-extract-imports: 3.0.0(postcss@8.4.14)
-      postcss-modules-local-by-default: 4.0.3(postcss@8.4.14)
-      postcss-modules-scope: 3.0.0(postcss@8.4.14)
-      postcss-modules-values: 4.0.0(postcss@8.4.14)
+      postcss: 8.4.31
+      postcss-modules-extract-imports: 3.0.0(postcss@8.4.31)
+      postcss-modules-local-by-default: 4.0.3(postcss@8.4.31)
+      postcss-modules-scope: 3.0.0(postcss@8.4.31)
+      postcss-modules-values: 4.0.0(postcss@8.4.31)
       postcss-value-parser: 4.2.0
       schema-utils: 3.3.0
       semver: 7.5.4
@@ -14100,12 +14103,12 @@ packages:
     peerDependencies:
       webpack: ^5.0.0
     dependencies:
-      icss-utils: 5.1.0(postcss@8.4.14)
-      postcss: 8.4.14
-      postcss-modules-extract-imports: 3.0.0(postcss@8.4.14)
-      postcss-modules-local-by-default: 4.0.3(postcss@8.4.14)
-      postcss-modules-scope: 3.0.0(postcss@8.4.14)
-      postcss-modules-values: 4.0.0(postcss@8.4.14)
+      icss-utils: 5.1.0(postcss@8.4.31)
+      postcss: 8.4.31
+      postcss-modules-extract-imports: 3.0.0(postcss@8.4.31)
+      postcss-modules-local-by-default: 4.0.3(postcss@8.4.31)
+      postcss-modules-scope: 3.0.0(postcss@8.4.31)
+      postcss-modules-values: 4.0.0(postcss@8.4.31)
       postcss-value-parser: 4.2.0
       semver: 7.5.4
       webpack: 5.88.2
@@ -14395,6 +14398,7 @@ packages:
 
   /delegate@3.2.0:
     resolution: {integrity: sha512-IofjkYBZaZivn0V8nnsMJGBr4jVLxHDheKSW88PyxS5QC4Vo9ZbZVvhzlSxY87fVq3STR6r+4cGepyHkcWOQSw==}
+    requiresBuild: true
     optional: true
 
   /delegates@1.0.0:
@@ -16518,6 +16522,7 @@ packages:
 
   /good-listener@1.2.2:
     resolution: {integrity: sha512-goW1b+d9q/HIwbVYZzZ6SsTr4IgE+WA44A0GmPIQstuOrgsFcT7VEJ48nmr9GaRtNu0XTKacFLGnBPAM6Afouw==}
+    requiresBuild: true
     dependencies:
       delegate: 3.2.0
     optional: true
@@ -17077,13 +17082,13 @@ packages:
       postcss: 7.0.39
     dev: true
 
-  /icss-utils@5.1.0(postcss@8.4.14):
+  /icss-utils@5.1.0(postcss@8.4.31):
     resolution: {integrity: sha512-soFhflCVWLfRNOPU3iv5Z9VUdT44xFRbzjLsEzSr5AQmgqPMTHdU3PMT1Cf1ssx8fLNJDA1juftYl+PUcv3MqA==}
     engines: {node: ^10 || ^12 || >= 14}
     peerDependencies:
       postcss: ^8.1.0
     dependencies:
-      postcss: 8.4.14
+      postcss: 8.4.31
     dev: true
 
   /ieee754@1.1.13:
@@ -17356,6 +17361,7 @@ packages:
   /is-binary-path@1.0.1:
     resolution: {integrity: sha512-9fRVlXc0uCxEDj1nQzaWONSpbTfx0FmJfzHF7pwlI8DkWGoHBBea4Pg5Ky0ojwwxQmnSifgbKkI06Qv0Ljgj+Q==}
     engines: {node: '>=0.10.0'}
+    requiresBuild: true
     dependencies:
       binary-extensions: 1.13.1
     dev: true
@@ -18733,6 +18739,7 @@ packages:
 
   /memory-pager@1.5.0:
     resolution: {integrity: sha512-ZS4Bp4r/Zoeq6+NLJpP+0Zzm0pR8whtGPf1XExKLJBAczGMnSi3It14OiNCStjQjM6NU1okjQGSxgEZN8eBYKg==}
+    requiresBuild: true
     dev: false
     optional: true
 
@@ -19954,6 +19961,7 @@ packages:
 
   /path-dirname@1.0.2:
     resolution: {integrity: sha512-ALzNPpyNq9AqXMBjeymIjFDAkAFH06mHJH/cSBHAgU0s4vfpBn6b2nf8tiRLvagKD8RbTpq2FKTBg7cl9l3c7Q==}
+    requiresBuild: true
     dev: true
 
   /path-exists@3.0.0:
@@ -20212,7 +20220,7 @@ packages:
       webpack: 4.46.0
     dev: true
 
-  /postcss-loader@6.2.1(postcss@8.4.14)(webpack@5.88.2):
+  /postcss-loader@6.2.1(postcss@8.4.31)(webpack@5.88.2):
     resolution: {integrity: sha512-WbbYpmAaKcux/P66bZ40bpWsBucjx/TTgVVzRZ9yUO8yQfVBlameJ0ZGVaPfH64hNSBh63a+ICP5nqOpBA0w+Q==}
     engines: {node: '>= 12.13.0'}
     peerDependencies:
@@ -20221,7 +20229,7 @@ packages:
     dependencies:
       cosmiconfig: 7.1.0
       klona: 2.0.6
-      postcss: 8.4.14
+      postcss: 8.4.31
       semver: 7.5.4
       webpack: 5.88.2
     dev: true
@@ -20233,13 +20241,13 @@ packages:
       postcss: 7.0.39
     dev: true
 
-  /postcss-modules-extract-imports@3.0.0(postcss@8.4.14):
+  /postcss-modules-extract-imports@3.0.0(postcss@8.4.31):
     resolution: {integrity: sha512-bdHleFnP3kZ4NYDhuGlVK+CMrQ/pqUm8bx/oGL93K6gVwiclvX5x0n76fYMKuIGKzlABOy13zsvqjb0f92TEXw==}
     engines: {node: ^10 || ^12 || >= 14}
     peerDependencies:
       postcss: ^8.1.0
     dependencies:
-      postcss: 8.4.14
+      postcss: 8.4.31
     dev: true
 
   /postcss-modules-local-by-default@3.0.3:
@@ -20252,14 +20260,14 @@ packages:
       postcss-value-parser: 4.2.0
     dev: true
 
-  /postcss-modules-local-by-default@4.0.3(postcss@8.4.14):
+  /postcss-modules-local-by-default@4.0.3(postcss@8.4.31):
     resolution: {integrity: sha512-2/u2zraspoACtrbFRnTijMiQtb4GW4BvatjaG/bCjYQo8kLTdevCUlwuBHx2sCnSyrI3x3qj4ZK1j5LQBgzmwA==}
     engines: {node: ^10 || ^12 || >= 14}
     peerDependencies:
       postcss: ^8.1.0
     dependencies:
-      icss-utils: 5.1.0(postcss@8.4.14)
-      postcss: 8.4.14
+      icss-utils: 5.1.0(postcss@8.4.31)
+      postcss: 8.4.31
       postcss-selector-parser: 6.0.13
       postcss-value-parser: 4.2.0
     dev: true
@@ -20272,13 +20280,13 @@ packages:
       postcss-selector-parser: 6.0.13
     dev: true
 
-  /postcss-modules-scope@3.0.0(postcss@8.4.14):
+  /postcss-modules-scope@3.0.0(postcss@8.4.31):
     resolution: {integrity: sha512-hncihwFA2yPath8oZ15PZqvWGkWf+XUfQgUGamS4LqoP1anQLOsOJw0vr7J7IwLpoY9fatA2qiGUGmuZL0Iqlg==}
     engines: {node: ^10 || ^12 || >= 14}
     peerDependencies:
       postcss: ^8.1.0
     dependencies:
-      postcss: 8.4.14
+      postcss: 8.4.31
       postcss-selector-parser: 6.0.13
     dev: true
 
@@ -20289,14 +20297,14 @@ packages:
       postcss: 7.0.39
     dev: true
 
-  /postcss-modules-values@4.0.0(postcss@8.4.14):
+  /postcss-modules-values@4.0.0(postcss@8.4.31):
     resolution: {integrity: sha512-RDxHkAiEGI78gS2ofyvCsu7iycRv7oqw5xMWn9iMoR0N/7mf9D50ecQqUo5BZ9Zh2vH4bCUR/ktCqbB9m8vJjQ==}
     engines: {node: ^10 || ^12 || >= 14}
     peerDependencies:
       postcss: ^8.1.0
     dependencies:
-      icss-utils: 5.1.0(postcss@8.4.14)
-      postcss: 8.4.14
+      icss-utils: 5.1.0(postcss@8.4.31)
+      postcss: 8.4.31
     dev: true
 
   /postcss-selector-parser@6.0.13:
@@ -20327,8 +20335,8 @@ packages:
       picocolors: 1.0.0
       source-map-js: 1.0.2
 
-  /postcss@8.4.27:
-    resolution: {integrity: sha512-gY/ACJtJPSmUFPDCHtX78+01fHa64FaU4zaaWfuh1MhGJISufJAH4cun6k/8fwsHYeK4UQmENQK+tRLCFJE8JQ==}
+  /postcss@8.4.31:
+    resolution: {integrity: sha512-PS08Iboia9mts/2ygV3eLpY5ghnUcfLV/EXTOW1E2qYxJKGGBUtNjN76FYHnMs36RmARn41bC0AZmn+rR0OVpQ==}
     engines: {node: ^10 || ^12 || >=14}
     dependencies:
       nanoid: 3.3.6
@@ -21080,6 +21088,7 @@ packages:
   /readdirp@2.2.1:
     resolution: {integrity: sha512-1JU/8q+VgFZyxwrJ+SVIOsh+KywWGpds3NTqikiKpDMZWScmAYyKIgqkO+ARvNWJfXeXR1zxz7aHF4u4CyH6vQ==}
     engines: {node: '>=0.10'}
+    requiresBuild: true
     dependencies:
       graceful-fs: 4.2.11
       micromatch: 3.1.10
@@ -21349,7 +21358,7 @@ packages:
       adjust-sourcemap-loader: 4.0.0
       convert-source-map: 1.9.0
       loader-utils: 2.0.4
-      postcss: 8.4.14
+      postcss: 8.4.31
       source-map: 0.6.1
     dev: true
 
@@ -21677,6 +21686,7 @@ packages:
 
   /select@1.1.2:
     resolution: {integrity: sha512-OwpTSOfy6xSs1+pwcNrv0RBMOzI39Lp3qQKUTPVVPRjCdNa5JH/oPRiqsesIskK8TVgmRiHwO4KXlV2Li9dANA==}
+    requiresBuild: true
     optional: true
 
   /semver@5.7.2:
@@ -22024,6 +22034,7 @@ packages:
 
   /sparse-bitfield@3.0.3:
     resolution: {integrity: sha512-kvzhi7vqKTfkh0PZU+2D2PIllw2ymqJKujUcyPMd9Y75Nv4nPbGJZXNhxsgdQab2BmlDct1YnfQCguEvHr7VsQ==}
+    requiresBuild: true
     dependencies:
       memory-pager: 1.5.0
     dev: false
@@ -22265,7 +22276,7 @@ packages:
   /store2@2.14.2:
     resolution: {integrity: sha512-siT1RiqlfQnGqgT/YzXVUNsom9S0H1OX+dpdGN1xkyYATo4I6sep5NmsRD/40s3IIOvlCq6akxkqG82urIZW1w==}
 
-  /storybook-addon-next@1.6.2(@storybook/addon-actions@6.4.19)(@storybook/addons@6.0.0)(next@13.4.13)(postcss@8.4.14)(react-dom@18.0.0)(react@18.0.0)(sass@1.49.9)(webpack@5.88.2):
+  /storybook-addon-next@1.6.2(@storybook/addon-actions@6.4.19)(@storybook/addons@6.0.0)(next@13.4.13)(postcss@8.4.31)(react-dom@18.0.0)(react@18.0.0)(sass@1.49.9)(webpack@5.88.2):
     resolution: {integrity: sha512-v6x2oj+dWqL4Ed64rO8KRQG07JM0uv031IMlBNJAPLclyL7yWA/eCnwiZNNoLOXpV5LCV00KCchF1BJwmqcjBw==}
     peerDependencies:
       '@storybook/addon-actions': ^6.0.0
@@ -22279,7 +22290,7 @@ packages:
       image-size: 1.0.2
       loader-utils: 3.2.1
       next: 13.4.13(@babel/core@7.22.10)(react-dom@18.0.0)(react@18.0.0)(sass@1.49.9)
-      postcss-loader: 6.2.1(postcss@8.4.14)(webpack@5.88.2)
+      postcss-loader: 6.2.1(postcss@8.4.31)(webpack@5.88.2)
       react: 18.0.0
       react-dom: 18.0.0(react@18.0.0)
       resolve-url-loader: 5.0.0
@@ -22848,6 +22859,7 @@ packages:
 
   /tiny-emitter@2.1.0:
     resolution: {integrity: sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q==}
+    requiresBuild: true
     optional: true
 
   /tiny-invariant@1.3.1:
@@ -23400,6 +23412,7 @@ packages:
   /upath@1.2.0:
     resolution: {integrity: sha512-aZwGpamFO61g3OlfT7OQCHqhGnW43ieH9WZeP7QxN/G/jS4jfqUkZxoryvJgVPEcrl5NL/ggHsSmLMHuH64Lhg==}
     engines: {node: '>=4'}
+    requiresBuild: true
     dev: true
     optional: true
 
@@ -23690,7 +23703,7 @@ packages:
     dependencies:
       '@types/node': 18.13.0
       esbuild: 0.18.20
-      postcss: 8.4.27
+      postcss: 8.4.31
       rollup: 3.28.0
       sass: 1.49.9
     optionalDependencies:
