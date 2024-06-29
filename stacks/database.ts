@@ -148,7 +148,7 @@ export function Database({ stack, app }: StackContext) {
     });
   }
 
-  app.addDefaultFunctionPermissions([dbSecret, 'grantRead']);
+  // app.addDefaultFunctionPermissions([dbSecret, 'grantRead']);
 
   return { db, defaultDatabaseName, dbAccessSecurityGroup };
 }
