@@ -1,9 +1,22 @@
 {
-  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "module": "esnext",
-    "outDir": "./dist"
+    "strictNullChecks": true,
+    "noEmit": true,
+    "paths": {
+      "@common/*": ["./common/src/*"],
+      "@backend/*": ["./backend/src/*"]
+    },
+    "baseUrl": "."
   },
-  "include": ["stacks"],
-  "references": [{ "path": "./common" }, { "path": "./backend" }]
+  "extends": "./tsconfig.base.json",
+  "include": [
+    "stacks/**/*",
+    "backend/src/**/*",
+    "common/src/**/*",
+    "index.d.ts",
+    "vite.config.ts",
+    "backend/src/index.d.ts"
+  ],
+  "files": ["sst-env.d.ts", "reset.d.ts"],
+  "exclude": ["sst.config.ts", "node_modules", "web/public"]
 }

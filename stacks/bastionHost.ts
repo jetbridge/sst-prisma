@@ -27,8 +27,11 @@ export const BastionHost = ({ stack, app }: StackContext) => {
   }
 
   const { vpc, defaultLambdaSecurityGroup } = use(Network);
-  const { rds, cluster } = use(Database);
+  const { db } = use(Database);
   const { hostedZone } = use(Dns);
+
+  // skip if no DB
+  if (!db) return
 
   const host = new BastionHostLinux(stack, 'LinuxHost', {
     vpc,
@@ -42,7 +45,7 @@ export const BastionHost = ({ stack, app }: StackContext) => {
   host.instance.instance.keyName = keypairName;
 
   // allow DB access
-  rds.cdk.cluster.connections.allowDefaultPortFrom(host);
+  db.connections.allowDefaultPortFrom(host);
 
   // allow public SSH access
   host.allowSshAccessFrom(Peer.anyIpv4(), Peer.anyIpv6());
@@ -81,7 +84,7 @@ export const BastionHost = ({ stack, app }: StackContext) => {
     },
     BastionHostSSHTunnelCommand: {
       description: 'Create SSH tunnel to DB',
-      value: `ssh -i ~/.ssh/${keypairName}.cer ec2-user@${publicHost} -L 5431:${cluster.clusterEndpoint.hostname}:${cluster.clusterEndpoint.port}`,
+      value: `ssh -i ~/.ssh/${keypairName}.cer ec2-user@${publicHost} -L 5431:${db.clusterEndpoint.hostname}:${db.clusterEndpoint.port}`,
     },
   });
 

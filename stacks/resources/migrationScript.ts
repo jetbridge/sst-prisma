@@ -2,7 +2,7 @@ import { RemovalPolicy } from 'aws-cdk-lib';
 import { IVpc } from 'aws-cdk-lib/aws-ec2';
 import { Construct } from 'constructs';
 import { App, Function, Script } from 'sst/constructs';
-import { LAYER_MODULES, PRISMA_VERSION } from '../layers';
+import { PRISMA_VERSION } from '../layers';
 import { PrismaLayer } from './prismaLayer';
 
 interface DbMigrationScriptProps {
@@ -24,31 +24,34 @@ export class DbMigrationScript extends Construct {
       layerVersionName: app.logicalPrefixedName('prisma-migrate'),
 
       prismaVersion: PRISMA_VERSION,
-      prismaEngines: ['migration-engine'],
-      prismaModules: ['@prisma/engines', '@prisma/engines-version', '@prisma/internals', '@prisma/client'],
+      prismaEngines: ['schema-engine'],
+      prismaModules: ['@prisma/engines', '@prisma/internals', '@prisma/client'],
+      binaryTargets: ['linux-arm64-openssl-3.0.x'],
     });
 
     const migrationFunction = new Function(this, 'MigrationScriptLambda', {
       vpc,
       enableLiveDev: false,
-      handler: 'backend/src/db/migrationScript.handler',
+      handler: 'backend/src/db/runMigrations.handler',
       layers: [migrationLayer],
-      runtime: 'nodejs18.x',
       copyFiles: [
         { from: 'backend/prisma/schema.prisma' },
         { from: 'backend/prisma/migrations' },
-        { from: 'backend/prisma/schema.prisma', to: 'backend/src/db/schema.prisma' },
-        { from: 'backend/prisma/migrations', to: 'backend/src/db/migrations' },
+        { from: 'backend/prisma/schema.prisma', to: 'backend/src/repo/schema.prisma' },
+        { from: 'backend/prisma/migrations', to: 'backend/src/repo/migrations' },
         { from: 'backend/package.json', to: 'backend/src/package.json' },
       ],
 
       nodejs: {
         format: 'cjs',
-        esbuild: { external: [...LAYER_MODULES, ...(migrationLayer.externalModules || [])], target: 'node18' },
+        esbuild: { external: migrationLayer.externalModules || [] },
       },
-      timeout: '3 minutes',
+      timeout: '13 minutes',
       environment: {
+        ...migrationLayer.environment,
         DB_SECRET_ARN: dbSecretsArn,
+        // uncomment in an emergency if you get a lock error on prod
+        // PRISMA_SCHEMA_DISABLE_ADVISORY_LOCK: "true",
       },
     });
 

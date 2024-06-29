@@ -12,7 +12,7 @@ Clone your copy of this template, then do a search and replace for "myapp" to gi
 
 ### Prerequisites
 
-Assumes you have [Node 18](https://nodejs.org/en/download/current/) installed and AWS credentials [configured](https://docs.sst.dev/advanced/iam-credentials).
+Assumes you have [Node 20](https://nodejs.org/en/download/current/) installed and AWS credentials [configured](https://docs.sst.dev/advanced/iam-credentials).
 
 ### Setup
 

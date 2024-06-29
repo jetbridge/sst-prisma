@@ -1,22 +1,21 @@
 {
-  "extends": "@tsconfig/node18-strictest-esm/tsconfig.json",
+  "extends": "@tsconfig/node20/tsconfig.json",
   "compilerOptions": {
-    "composite": true,
-    "moduleResolution": "node",
+    "module": "esnext",
+    "target": "ESNext",
+    "allowJs": true,
+    "esModuleInterop": true,
     "incremental": true,
-    "outDir": "./dist",
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "importsNotUsedAsValues": "remove",
-    "noUncheckedIndexedAccess": false,
-    "noPropertyAccessFromIndexSignature": false,
-    "exactOptionalPropertyTypes": false,
-    "importHelpers": true,
+    // for service paths
     "baseUrl": ".",
-    "types": ["vitest/globals"],
     "paths": {
-      "@backend/*": ["./backend/src/*"]
-    }
+      "@common/*": ["common/src/*"], // shared
+      "@backend/*": ["backend/src/*"],
+      "@web/*": ["web/src/*"]
+    },
+    "types": ["vitest/globals"],
+    "jsx": "react-jsx", // react 17 (used in all packages)
+    "moduleResolution": "bundler" // assume esbuild/webpack/turbopack is used for bundling and let them handle imports
   },
   "files": ["./index.d.ts"]
 }

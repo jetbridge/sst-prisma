@@ -3,14 +3,13 @@
 
   Not really using a public API.
 */
-import type { PrismaClientInitializationError } from '@prisma/client/runtime';
 import { Migrate } from '@prisma/migrate/dist/Migrate.js';
 import { ensureDatabaseExists } from '@prisma/migrate/dist/utils/ensureDatabaseExists';
 import { printFilesFromMigrationIds } from '@prisma/migrate/dist/utils/printFiles';
 import chalk from 'chalk';
-import { isProd, sleep } from 'common';
+import { isProd, sleep } from '@common/index';
 import { GetSecretValueCommand, SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 
 export const handler = async (): Promise<string> => {
   const schemaPath = '/var/task/backend/prisma/schema.prisma';
@@ -22,7 +21,7 @@ export const handler = async (): Promise<string> => {
     const client = new PrismaClient();
     await client.$connect();
   } catch (ex) {
-    const errorCode = (ex as PrismaClientInitializationError).errorCode;
+    const errorCode = (ex as Prisma.PrismaClientInitializationError).errorCode;
     if (errorCode == 'P1001') {
       // timed out waiting to reach DB server
       // it might be waking up from slumber
@@ -43,7 +42,8 @@ export const handler = async (): Promise<string> => {
   process.env.DATABASE_URL = dbUrl;
 
   const migrate = new Migrate(schemaPath);
-  const wasDbCreated = await ensureDatabaseExists('apply', true, schemaPath);
+  // i don't think this really creates the DB and it's not documented
+  const wasDbCreated = await ensureDatabaseExists('apply', schemaPath);
   if (wasDbCreated) {
     console.info(''); // empty line
     console.info(wasDbCreated);
@@ -90,6 +90,7 @@ const loadDatabaseUrl = async (): Promise<string> => {
   if (process.env.USE_DB_CONFIG !== 'true' && databaseUrl) return databaseUrl;
 
   // load database secret
+  // FIXME config
   const secretArn = process.env.DB_SECRET_ARN;
   const client = new SecretsManagerClient({});
   const req = new GetSecretValueCommand({ SecretId: secretArn });
@@ -98,11 +99,9 @@ const loadDatabaseUrl = async (): Promise<string> => {
   const secrets = JSON.parse(res.SecretString);
   const { host, username, password, port, dbname } = secrets;
   if (!host) throw new Error('Missing host in secrets');
-  // might have DB_NAME overridden for dev environment
-  const dbNameOverride = process.env['DB_NAME'];
 
   // construct database url
-  databaseUrl = `postgresql://${username}:${password}@${host}:${port}/${dbNameOverride || dbname}`;
+  databaseUrl = `postgresql://${username}:${password}@${host}:${port}/${dbname}`;
   process.env.DATABASE_URL = databaseUrl;
   return databaseUrl;
 };

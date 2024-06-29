@@ -1,33 +1,32 @@
-import type { SSTConfig } from "sst"
+import type { SSTConfig } from 'sst';
 
-// you can configure your default profiles and regions to use here
+process.env.SST_BUILD_CONCURRENCY = '8';
+
+// AWS profile to use - what credentials to use
 const PROFILE = {
-  default: "default",
-}
+  default: undefined,
+} as const;
 
 const REGION = {
-  default: "us-east-1"
-}
+  default: 'us-west-2',
+} as const;
 
 export default {
   config(input) {
-    const stage = input.stage || "dev"
-
-    // uncomment to use your own default profiles and regions
-    const region = undefined // REGION[stage] || REGION.default
-    const profile = undefined // PROFILE[stage] || PROFILE.default
+    const stage = input.stage as string;
+    const region = (stage && REGION[stage]) || REGION.default;
+    const profile = (stage && PROFILE[stage]) || PROFILE.default;
 
     return {
-      name: "myapp",  // replace me
+      name: 'myapp', // replace me
       region,
       profile: process.env.CI ? undefined : profile,
       stage,
-    }
+    };
   },
 
   async stacks(app) {
-    const appStacks = await import("./stacks")
-    appStacks.default(app)
+    const appStacks = await import('./stacks');
+    appStacks.default(app);
   },
-} satisfies SSTConfig
-
+} satisfies SSTConfig;

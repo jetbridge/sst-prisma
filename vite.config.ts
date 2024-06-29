@@ -1,5 +1,4 @@
 import { defineConfig, configDefaults } from 'vitest/config';
-import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
   test: {
@@ -17,15 +16,20 @@ export default defineConfig({
       'web/**', // web runs its own tests
     ],
 
-    // parallelism:
-    // minThreads: 1,
-    // maxThreads: 1,
-    // maxConcurrency: 1,
-    threads: false,
+    // adjust these: https://vitest.dev/config/#pool
+    pool: 'forks',
+    poolOptions: {
+      forks: {
+        minForks: 0,
+        maxForks: 3,
+        isolate: true,
+      },
+      threads: {
+        // just for some integration tests - run sequentially
+        singleThread: true,
+        minThreads: 1,
+        maxThreads: 1,
+      },
+    },
   },
-  plugins: [
-    tsconfigPaths({
-      loose: true,
-    }),
-  ],
 });

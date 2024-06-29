@@ -1,5 +1,5 @@
 import { Prisma, PrismaClient } from '@prisma/client';
-import { isProd } from 'common';
+import { isProd } from '@common/index';
 
 export async function truncateAllTables(prisma: PrismaClient | Prisma.TransactionClient) {
   if (isProd()) throw new Error('Please stop whatever you are doing right now.');
