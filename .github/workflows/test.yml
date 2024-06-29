@@ -1,51 +1,124 @@
-name: Test
+name: Build and test
 
-on: push
+on:
+  workflow_dispatch:
+  workflow_call:
+
+env:
+  NODE_OPTIONS: "--max-old-space-size=4096"
 
 jobs:
-  build-and-test:
+  checks:
+    name: Run checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install
+      # generate types from infra
+      # needed for typechecks
+      - name: SST types
+        run: pnpm sst:types --stage test
+      - name: Type checks
+        run: pnpm build
+      - name: Lint
+        run: pnpm ci:lint
+
+  test-backend:
+    name: Test backend
     env:
-      DATABASE_URL: 'postgresql://prisma:prisma@localhost/tests'
-      NODE_OPTIONS: '--max-old-space-size=4096'
+      DATABASE_URL: "postgresql://postgres:pass@localhost:5438/myapp?connection_limit=80"
 
     services:
       postgres:
-        image: postgres:12
+        image: postgres:16
         env:
+          # this matches repo/prisma/.env.test
           POSTGRES_USER: prisma
           POSTGRES_PASSWORD: prisma
           POSTGRES_DB: tests
-        # Set health checks to wait until postgres has started
         options: >-
-          --health-cmd pg_isready
-          --health-interval 1s
-          --health-timeout 1s
-          --health-retries 60
+          --health-cmd pg_isready --health-interval 1s --health-timeout 1s --health-retries 60
         ports:
           - 5432:5432
 
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-
-      # Build
-      - uses: pnpm/action-setup@v2
+        uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
         with:
-          version: 7
+          version: 9
       - name: Install Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: "20"
           cache: pnpm
-
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-      - name: Build backend
-        run: pnpm build:ci
-      - name: Lint
-        run: pnpm lint
-      - name: Tests
-        run: pnpm test:ci
+        run: pnpm install
+
+      - name: Test backend
+        run: pnpm test:backend
+
+      - name: Seed sample data
+        run: pnpm run db:seed
+
+  build-web:
+    name: Build web
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install
+      - name: Type checks
+        run: pnpm -C web tsc
+      - uses: actions/cache@v4
+        name: Enable NextJS cache
+        # https://nextjs.org/docs/messages/no-cache#github-actions
+        with:
+          path: ${{ github.workspace }}/web/.next/cache
+          # Generate a new cache whenever packages or source files change.
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**.[jt]sx?') }}
+          # If source files changed but packages didn't, rebuild from a prior cache.
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
       - name: Build web
         run: pnpm build:web
+
+  test-web:
+    name: Test web
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Test web
+        run: pnpm test:web

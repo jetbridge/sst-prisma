@@ -1,7 +1,7 @@
 services:
   local-db:
     container_name: local-pg
-    image: postgres:15
+    image: postgres:16
     command: -c 'max_connections=200' # -c 'log_statement=all'
     environment:
       POSTGRES_PORT: 5432

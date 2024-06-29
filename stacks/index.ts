@@ -33,7 +33,7 @@ export default function main(app: sst.App) {
     .stack(Layers)
     .stack(Database)
     .stack(BastionHost)
-    .stack(DatabaseMigrations)
+    // .stack(DatabaseMigrations)
     .stack(Auth)
     .stack(RestApi)
     .stack(AppSyncApi)
