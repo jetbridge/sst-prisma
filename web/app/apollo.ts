@@ -9,6 +9,11 @@ import { getSession } from 'next-auth/react';
 
 const getCognitoAccessJwt = async () => {
   const session = await getSession();
+
+  const token = session?.accessToken ?? '';
+
+  console.log({ token });
+
   return session?.accessToken || '';
 };
 

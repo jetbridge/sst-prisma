@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import SessionWrapper from './ui/SessionProvider';
+import { ApolloClientProvider } from './apolloClient';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,9 +18,11 @@ export default function RootLayout({
 }>) {
   return (
     <SessionWrapper>
-      <html lang="en">
-        <body className={inter.className}>{children}</body>
-      </html>
+      <ApolloClientProvider>
+        <html lang="en">
+          <body className={inter.className}>{children}</body>
+        </html>
+      </ApolloClientProvider>
     </SessionWrapper>
   );
 }
