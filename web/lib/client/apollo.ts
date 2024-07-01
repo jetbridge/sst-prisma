@@ -37,16 +37,16 @@ export const getApolloClient = () => {
     const httpLink = createHttpLink({ uri: appsyncEndpoint });
 
     apolloLink = ApolloLink.from([
-      new SentryLink({
-        attachBreadcrumbs: {
-          includeQuery: true,
-          includeVariables: true,
-          includeFetchResult: true,
-          includeError: true,
-        },
-        setTransaction: true,
-        uri: appsyncEndpoint,
-      }),
+      // new SentryLink({
+      //   attachBreadcrumbs: {
+      //     includeQuery: true,
+      //     includeVariables: true,
+      //     includeFetchResult: true,
+      //     includeError: true,
+      //   },
+      //   setTransaction: true,
+      //   uri: appsyncEndpoint,
+      // }),
       createAuthLink({ url: appsyncEndpoint, region, auth: auth }),
       createSubscriptionHandshakeLink({ url: appsyncEndpoint, region, auth }, httpLink),
     ]);
