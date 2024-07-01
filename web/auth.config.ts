@@ -3,13 +3,6 @@ import { OAuthUserConfig } from 'next-auth/providers';
 import CognitoProvider, { CognitoProfile } from 'next-auth/providers/cognito';
 import { COGNITO_CLIENT_ID, COGNITO_CLIENT_SECRET, COGNITO_USER_POOL_ID, REGION } from './config';
 
-console.log({
-  COGNITO_CLIENT_ID,
-  COGNITO_CLIENT_SECRET,
-  COGNITO_USER_POOL_ID,
-  REGION,
-});
-
 export const authConfig = {
   providers: [
     CognitoProvider({
@@ -19,7 +12,7 @@ export const authConfig = {
 
       clientSecret: COGNITO_CLIENT_SECRET,
       client: {
-        token_endpoint_auth_method: 'none',
+        token_endpoint_auth_method: 'client_secret_basic',
       },
       checks: ['pkce', 'state', 'nonce'], // https://github.com/nextauthjs/next-auth/discussions/3551
     }),
