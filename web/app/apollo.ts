@@ -2,7 +2,7 @@
 
 import { APPSYNC_ENDPOINT, REGION } from '@/config';
 import { ApolloClient, ApolloLink, createHttpLink, InMemoryCache } from '@apollo/client';
-// import { SentryLink } from 'apollo-link-sentry';
+import { SentryLink } from 'apollo-link-sentry';
 import { AUTH_TYPE, createAuthLink } from 'aws-appsync-auth-link';
 import { createSubscriptionHandshakeLink } from 'aws-appsync-subscription-link';
 import { getSession } from 'next-auth/react';
@@ -42,16 +42,16 @@ export const getApolloClient = () => {
     const httpLink = createHttpLink({ uri: appsyncEndpoint });
 
     apolloLink = ApolloLink.from([
-      // new SentryLink({
-      //   attachBreadcrumbs: {
-      //     includeQuery: true,
-      //     includeVariables: true,
-      //     includeFetchResult: true,
-      //     includeError: true,
-      //   },
-      //   setTransaction: true,
-      //   uri: appsyncEndpoint,
-      // }),
+      new SentryLink({
+        attachBreadcrumbs: {
+          includeQuery: true,
+          includeVariables: true,
+          includeFetchResult: true,
+          includeError: true,
+        },
+        setTransaction: true,
+        uri: appsyncEndpoint,
+      }),
       createAuthLink({ url: appsyncEndpoint, region, auth: auth }),
       createSubscriptionHandshakeLink({ url: appsyncEndpoint, region, auth }, httpLink),
     ]);

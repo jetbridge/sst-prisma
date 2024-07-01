@@ -235,6 +235,12 @@ importers:
 
   web:
     dependencies:
+      '@sentry/browser':
+        specifier: ^8.13.0
+        version: 8.13.0
+      apollo-link-sentry:
+        specifier: ^4.0.0
+        version: 4.0.0(@apollo/client@3.10.8(@types/react@18.3.3)(graphql-ws@5.16.0(graphql@16.9.0))(graphql@16.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@sentry/browser@8.13.0)(graphql@16.9.0)
       aws-appsync-auth-link:
         specifier: ^3.0.7
         version: 3.0.7(@apollo/client@3.10.8(@types/react@18.3.3)(graphql-ws@5.16.0(graphql@16.9.0))(graphql@16.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
@@ -2087,13 +2093,37 @@ packages:
   '@rushstack/eslint-patch@1.10.3':
     resolution: {integrity: sha512-qC/xYId4NMebE6w/V33Fh9gWxLgURiNYgVNObbJl2LZv0GUUItCcCqC5axQSwRaAgaxl2mELq1rMzlswaQ0Zxg==}
 
+  '@sentry-internal/browser-utils@8.13.0':
+    resolution: {integrity: sha512-lqq8BYbbs9KTlDuyB5NjdZB6P/llqQs32KUgaCQ/k5DFB4Zf56+BFHXObnMHxwx375X1uixtnEphagWZa+nsLQ==}
+    engines: {node: '>=14.18'}
+
+  '@sentry-internal/feedback@8.13.0':
+    resolution: {integrity: sha512-YyJ6SzpTonixvguAg0H9vkEp7Jq8ZeVY8M4n47ClR0+TtaAUp04ZhcJpHKF7PwBIAzc7DRr2XP112tmWgiVEcg==}
+    engines: {node: '>=14.18'}
+
+  '@sentry-internal/replay-canvas@8.13.0':
+    resolution: {integrity: sha512-lPlfWVIHX+gW4S8a/UOVutuqMyQhlkNUAay0W21MVhZJT5Mtj0p21D/Cz7nrOQRDIiLNq90KAGK2tLxx5NkiWA==}
+    engines: {node: '>=14.18'}
+
+  '@sentry-internal/replay@8.13.0':
+    resolution: {integrity: sha512-DJ1jF/Pab0FH4SeCvSGCnGAu/s0wJvhBWM5VjQp7Jjmcfunp+R3vJibqU8gAVZU1nYRLaqprLdIXrSyP2Km8nQ==}
+    engines: {node: '>=14.18'}
+
   '@sentry-internal/tracing@7.114.0':
     resolution: {integrity: sha512-dOuvfJN7G+3YqLlUY4HIjyWHaRP8vbOgF+OsE5w2l7ZEn1rMAaUbPntAR8AF9GBA6j2zWNoSo8e7GjbJxVofSg==}
     engines: {node: '>=8'}
 
+  '@sentry/browser@8.13.0':
+    resolution: {integrity: sha512-/tp7HZ5qjwDLtwooPMoexdAi2PG7gMNY0bHeMlwy20hs8mclC8RW8ZiJA6czXHfgnbmvxfrHaY53IJyz//JnlA==}
+    engines: {node: '>=14.18'}
+
   '@sentry/core@7.114.0':
     resolution: {integrity: sha512-YnanVlmulkjgZiVZ9BfY9k6I082n+C+LbZo52MTvx3FY6RE5iyiPMpaOh67oXEZRWcYQEGm+bKruRxLVP6RlbA==}
     engines: {node: '>=8'}
+
+  '@sentry/core@8.13.0':
+    resolution: {integrity: sha512-N9Qg4ZGxZWp8eb2eUUHVVKgjBLtFIjS805nG92s6yJmkvOpKm6mLtcUaT/iDf3Hta6nG+xRkhbE3r+Z4cbXG8w==}
+    engines: {node: '>=14.18'}
 
   '@sentry/integrations@7.114.0':
     resolution: {integrity: sha512-BJIBWXGKeIH0ifd7goxOS29fBA8BkEgVVCahs6xIOXBjX1IRS6PmX0zYx/GP23nQTfhJiubv2XPzoYOlZZmDxg==}
@@ -2111,9 +2141,17 @@ packages:
     resolution: {integrity: sha512-tsqkkyL3eJtptmPtT0m9W/bPLkU7ILY7nvwpi1hahA5jrM7ppoU0IMaQWAgTD+U3rzFH40IdXNBFb8Gnqcva4w==}
     engines: {node: '>=8'}
 
+  '@sentry/types@8.13.0':
+    resolution: {integrity: sha512-r63s/H5gvQnQM9tTGBXz2xErUbxZALh4e2Lg/1aHj4zIvGLBjA2z5qWsh6TEZYbpmgAyGShLDr6+rWeUVf9yBQ==}
+    engines: {node: '>=14.18'}
+
   '@sentry/utils@7.114.0':
     resolution: {integrity: sha512-319N90McVpupQ6vws4+tfCy/03AdtsU0MurIE4+W5cubHME08HtiEWlfacvAxX+yuKFhvdsO4K4BB/dj54ideg==}
     engines: {node: '>=8'}
+
+  '@sentry/utils@8.13.0':
+    resolution: {integrity: sha512-PxV0v9VbGWH9zP37P5w2msLUFDr287nYjoY2XVF+RSolyiTs1CQNI5ZMUO3o4MsSac/dpXxjyrZXQd72t/jRYA==}
+    engines: {node: '>=14.18'}
 
   '@sinclair/typebox@0.27.8':
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
@@ -2796,6 +2834,13 @@ packages:
     resolution: {integrity: sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==}
     engines: {node: '>= 8'}
 
+  apollo-link-sentry@4.0.0:
+    resolution: {integrity: sha512-CEd2dSuHwNfxud4Mo3ewnPuV6jBO5rAkzP55M7q8jg4p9OFbyrPcesbkJYXxoh342k6M1H2Km6TWHIcyt0RKgQ==}
+    peerDependencies:
+      '@apollo/client': ^3.2.3
+      '@sentry/browser': ^8.0.0
+      graphql: 15 - 16
+
   archiver-utils@2.1.0:
     resolution: {integrity: sha512-bEL/yUb/fNNiNTuUz979Z0Yg5L+LzLxGJz8x79lYmR54fmTIb6ob/hNQgkQnIUDWIFjZVQwl9Xs356I6BAMHfw==}
     engines: {node: '>= 6'}
@@ -3433,6 +3478,10 @@ packages:
 
   deep-is@0.1.4:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
+
+  deepmerge@4.3.1:
+    resolution: {integrity: sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==}
+    engines: {node: '>=0.10.0'}
 
   defaults@1.0.4:
     resolution: {integrity: sha512-eFuaLoy/Rxalv2kr+lqMlUnrDWV+3j4pljOIJgLIhI058IQfWJ7vXhyEIHu+HtC738klGALYxOKDO0bQP3tg8A==}
@@ -9701,16 +9750,57 @@ snapshots:
 
   '@rushstack/eslint-patch@1.10.3': {}
 
+  '@sentry-internal/browser-utils@8.13.0':
+    dependencies:
+      '@sentry/core': 8.13.0
+      '@sentry/types': 8.13.0
+      '@sentry/utils': 8.13.0
+
+  '@sentry-internal/feedback@8.13.0':
+    dependencies:
+      '@sentry/core': 8.13.0
+      '@sentry/types': 8.13.0
+      '@sentry/utils': 8.13.0
+
+  '@sentry-internal/replay-canvas@8.13.0':
+    dependencies:
+      '@sentry-internal/replay': 8.13.0
+      '@sentry/core': 8.13.0
+      '@sentry/types': 8.13.0
+      '@sentry/utils': 8.13.0
+
+  '@sentry-internal/replay@8.13.0':
+    dependencies:
+      '@sentry-internal/browser-utils': 8.13.0
+      '@sentry/core': 8.13.0
+      '@sentry/types': 8.13.0
+      '@sentry/utils': 8.13.0
+
   '@sentry-internal/tracing@7.114.0':
     dependencies:
       '@sentry/core': 7.114.0
       '@sentry/types': 7.114.0
       '@sentry/utils': 7.114.0
 
+  '@sentry/browser@8.13.0':
+    dependencies:
+      '@sentry-internal/browser-utils': 8.13.0
+      '@sentry-internal/feedback': 8.13.0
+      '@sentry-internal/replay': 8.13.0
+      '@sentry-internal/replay-canvas': 8.13.0
+      '@sentry/core': 8.13.0
+      '@sentry/types': 8.13.0
+      '@sentry/utils': 8.13.0
+
   '@sentry/core@7.114.0':
     dependencies:
       '@sentry/types': 7.114.0
       '@sentry/utils': 7.114.0
+
+  '@sentry/core@8.13.0':
+    dependencies:
+      '@sentry/types': 8.13.0
+      '@sentry/utils': 8.13.0
 
   '@sentry/integrations@7.114.0':
     dependencies:
@@ -9738,9 +9828,15 @@ snapshots:
 
   '@sentry/types@7.114.0': {}
 
+  '@sentry/types@8.13.0': {}
+
   '@sentry/utils@7.114.0':
     dependencies:
       '@sentry/types': 7.114.0
+
+  '@sentry/utils@8.13.0':
+    dependencies:
+      '@sentry/types': 8.13.0
 
   '@sinclair/typebox@0.27.8': {}
 
@@ -10656,6 +10752,16 @@ snapshots:
       normalize-path: 3.0.0
       picomatch: 2.3.1
 
+  apollo-link-sentry@4.0.0(@apollo/client@3.10.8(@types/react@18.3.3)(graphql-ws@5.16.0(graphql@16.9.0))(graphql@16.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@sentry/browser@8.13.0)(graphql@16.9.0):
+    dependencies:
+      '@apollo/client': 3.10.8(@types/react@18.3.3)(graphql-ws@5.16.0(graphql@16.9.0))(graphql@16.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@sentry/browser': 8.13.0
+      deepmerge: 4.3.1
+      dot-prop: 6.0.1
+      graphql: 16.9.0
+      tslib: 2.6.3
+      zen-observable-ts: 1.2.5
+
   archiver-utils@2.1.0:
     dependencies:
       glob: 7.2.3
@@ -11480,6 +11586,8 @@ snapshots:
       which-typed-array: 1.1.15
 
   deep-is@0.1.4: {}
+
+  deepmerge@4.3.1: {}
 
   defaults@1.0.4:
     dependencies:
