@@ -5,8 +5,6 @@ import { AuthError } from 'next-auth';
 
 export async function authenticate() {
   try {
-    console.log('authenticating cognito');
-
     await signIn('cognito', {
       redirectTo: '/',
     });

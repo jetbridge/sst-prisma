@@ -12,8 +12,6 @@ const getCognitoAccessJwt = async () => {
 
   const token = session?.accessToken ?? '';
 
-  console.log({ token });
-
   return session?.accessToken || '';
 };
 

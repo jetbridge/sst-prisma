@@ -74,8 +74,6 @@ export function Auth({ stack, app }: StackContext) {
   const cognitoBaseUrl = cognitoDomain.baseUrl().replace('https://', '');
   const cognitoDomainName = dns.hostedZone ? `${app.stage}-auth.${dns.hostedZone.zoneName}` : cognitoBaseUrl;
 
-  console.log('CALLBACK URLS', callbackUrls);
-
   // create cognito client
   const webClient = userPool.addClient('WebClient', {
     supportedIdentityProviders: [UserPoolClientIdentityProvider.COGNITO],
