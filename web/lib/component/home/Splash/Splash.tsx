@@ -17,7 +17,7 @@ export const Splash = () => {
         setDrops((c) =>
           c.concat(
             <div
-              className="animate-fade"
+              className="animate-fade absolute"
               key={`tile-${techIndex.current}`}
               style={{ left: getRandomNumber(0, rootRef.current?.clientWidth || 600), top: getRandomNumber(50, 300) }}
               onAnimationEnd={() => setDrops((c) => c.slice(1))}
@@ -33,15 +33,14 @@ export const Splash = () => {
   }, []);
 
   return (
-    <div className="flex items-center flex-co relative w-[700px]" ref={rootRef}>
+    <div className="flex items-center flex-col relative" ref={rootRef}>
       <div className="h-full left-0 absolute top-0 w-full z-0">{drops}</div>
-      <h1 className="text-6xl text-white m-0 relative shadow-md">Next+SST</h1>
-      <p className="m-0 z-10">
-        Provided by {/* eslint-disable-next-line react/jsx-no-target-blank */}
+      <h1 className="text-6xl text-white m-0 relative shadow-md font-bold">
         <a href="https://jetbridge.com" target="_blank" rel="noopener">
           JetBridge
-        </a>
-      </p>
+        </a>{' '}
+        SST Template
+      </h1>
     </div>
   );
 };
