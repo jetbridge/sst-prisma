@@ -10,9 +10,8 @@ export const authConfig = {
       issuer: `https://cognito-idp.${REGION}.amazonaws.com/${COGNITO_USER_POOL_ID}`,
       token: true,
 
-      clientSecret: COGNITO_CLIENT_SECRET,
       client: {
-        token_endpoint_auth_method: 'client_secret_basic',
+        token_endpoint_auth_method: 'none',
       },
       checks: ['pkce', 'state', 'nonce'], // https://github.com/nextauthjs/next-auth/discussions/3551
     }),

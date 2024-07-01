@@ -86,7 +86,7 @@ export function Auth({ stack, app }: StackContext) {
       callbackUrls: callbackUrls,
       logoutUrls: callbackUrls,
     },
-    generateSecret: true,
+    // generateSecret: true,
   });
 
   return {
