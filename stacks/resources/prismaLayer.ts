@@ -1,9 +1,11 @@
 import { AssetHashType, IgnoreMode } from 'aws-cdk-lib';
-import { Code, LayerVersion, LayerVersionProps } from 'aws-cdk-lib/aws-lambda';
+import { Code, LayerVersion, LayerVersionProps, Runtime } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 import crypto from 'crypto';
 import { App } from 'sst/constructs';
 import { RUNTIME } from 'stacks';
+
+export const DEFAULT_RUNTIME = Runtime.NODEJS_20_X;
 
 // modules to mark as "external" when bundling
 // added to prismaModules
@@ -134,7 +136,7 @@ export class PrismaLayer extends LayerVersion {
         environment: {
           PRISMA_CLI_BINARY_TARGETS: binaryTarget,
         },
-        image: RUNTIME.bundlingImage,
+        image: DEFAULT_RUNTIME.bundlingImage,
         command: createBundleCommand,
       },
     });

@@ -3,11 +3,13 @@
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 
-// ...
-
-export async function authenticate(prevState: string | undefined, formData: FormData) {
+export async function authenticate() {
   try {
-    await signIn('cognito');
+    console.log('authenticating cognito');
+
+    await signIn('cognito', {
+      redirectTo: '/',
+    });
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {

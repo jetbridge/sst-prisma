@@ -7,7 +7,7 @@ import { Dns } from './dns';
 import { AppSyncApi } from './appSyncApi';
 
 const ALLOWED_HOSTS = [
-  'http://localhost:6020',
+  'http://localhost:3000',
   /// ... add frontend hosts here
 ];
 const ALLOWED_URLS = ['/login', '/api/auth/callback/cognito'];
@@ -20,7 +20,10 @@ export function Auth({ stack, app }: StackContext) {
   const auth = new Cognito(stack, 'Auth', {
     triggers: {
       // save user in DB
-      preSignUp: 'backend/src/auth/trigger/preSignUp.handler',
+      preSignUp: {
+        handler: 'backend/src/auth/trigger/preSignUp.handler',
+        nodejs: { esbuild: { external: ['@prisma/client', '.prisma'] } },
+      },
     },
     login: ['email'],
     cdk: {
@@ -72,6 +75,8 @@ export function Auth({ stack, app }: StackContext) {
   });
   const cognitoBaseUrl = cognitoDomain.baseUrl().replace('https://', '');
   const cognitoDomainName = dns.hostedZone ? `${app.stage}-auth.${dns.hostedZone.zoneName}` : cognitoBaseUrl;
+
+  console.log('CALLBACK URLS', callbackUrls);
 
   // create cognito client
   const webClient = userPool.addClient('WebClient', {

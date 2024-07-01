@@ -21,7 +21,11 @@ export const preSignUpInner: PreSignUpTriggerHandler = async (event) => {
     console.info(`Verified user ${username} with email ${email}`);
   }
 
+  console.log('GETTING PRISMA');
+
   const prisma = await getPrisma();
+
+  console.log({ prisma });
 
   // does a user already exist in the DB?
   const existingUser = await prisma.user.findFirst({
@@ -29,6 +33,8 @@ export const preSignUpInner: PreSignUpTriggerHandler = async (event) => {
       OR: [{ email }, { username }],
     },
   });
+
+  console.log({ existingUser });
 
   // save in DB
   if (existingUser) {
@@ -40,6 +46,8 @@ export const preSignUpInner: PreSignUpTriggerHandler = async (event) => {
     // create
     await prisma.user.create({ data: { email, avatarUrl: picture, name, username } });
   }
+
+  console.log('SAVED USER', event);
 
   return event;
 };
