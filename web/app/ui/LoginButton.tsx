@@ -1,15 +1,26 @@
+import { auth } from '@/auth';
 import { authenticate, unauthenticate } from '../actions';
 
-export const LoginButton = () => {
-  return (
-    <div>
-      <form action={authenticate}>
-        <button type="submit">Login</button>
-      </form>
+interface Props {
+  className?: string;
+}
 
-      <form action={unauthenticate}>
-        <button type="submit">Sign out</button>
-      </form>
+export const Authentication = async ({ className }: Props) => {
+  const session = await auth();
+
+  return (
+    <div className={className}>
+      {session ? (
+        <form action={unauthenticate} className="flex flex-col items-end">
+          <span className="font-bold">{session.user.email}</span>
+
+          <button type="submit">Sign Out</button>
+        </form>
+      ) : (
+        <form action={authenticate}>
+          <button type="submit">Sign In</button>
+        </form>
+      )}
     </div>
   );
 };

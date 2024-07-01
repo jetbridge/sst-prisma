@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { LoginButton } from './ui/LoginButton';
+import { Authentication } from './ui/LoginButton';
 import { TestGql } from './ui/TestGql';
 import Home from '@/lib/component/home/Home';
 

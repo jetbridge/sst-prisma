@@ -4,6 +4,7 @@ import './globals.css';
 import SessionWrapper from './ui/SessionProvider';
 import { ApolloClientProvider } from './apolloClient';
 import clsx from 'clsx';
+import { Authentication } from './ui/LoginButton';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,7 +22,14 @@ export default function RootLayout({
     <SessionWrapper>
       <ApolloClientProvider>
         <html lang="en">
-          <body className={clsx(inter.className, 'bg-slate-700')}>{children}</body>
+          <body className={clsx(inter.className, 'bg-slate-700')}>
+            <div className="flex flex-col h-full">
+              <header className="relative">
+                <Authentication className="w-fit absolute right-6 top-6" />
+              </header>
+              {children}
+            </div>
+          </body>
         </html>
       </ApolloClientProvider>
     </SessionWrapper>
