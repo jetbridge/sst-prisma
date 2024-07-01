@@ -22,7 +22,6 @@ export function Auth({ stack, app }: StackContext) {
       // save user in DB
       preSignUp: {
         handler: 'backend/src/auth/trigger/preSignUp.handler',
-        nodejs: { esbuild: { external: ['@prisma/client', '.prisma'] } },
       },
     },
     login: ['email'],
