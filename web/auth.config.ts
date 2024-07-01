@@ -34,6 +34,24 @@ export const authConfig = {
       session.error = token.error as string | undefined;
       return session;
     },
+
+    jwt: async ({ token, account, user }) => {
+      // Initial sign in
+      if (account && user) {
+        const { id_token, access_token, refresh_token, expires_at } = account;
+
+        return {
+          // save token to session for authenticating to AWS
+          // https://next-auth.js.org/configuration/callbacks#jwt-callback
+          accessToken: access_token,
+          accessTokenExpires: expires_at ? expires_at * 1000 : 0,
+          refreshToken: refresh_token,
+          user,
+        };
+      }
+
+      return token;
+    },
   },
   pages: {
     signIn: '/',
