@@ -239,8 +239,8 @@ importers:
         specifier: 14.2.4
         version: 14.2.4(@babel/core@7.24.7)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.6)
       next-auth:
-        specifier: ^4.24.7
-        version: 4.24.7(next@14.2.4(@babel/core@7.24.7)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.6))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 5.0.0-beta.19
+        version: 5.0.0-beta.19(next@14.2.4(@babel/core@7.24.7)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.6))(react@18.3.1)
       react:
         specifier: ^18
         version: 18.3.1
@@ -314,6 +314,20 @@ packages:
   '@ardatan/sync-fetch@0.0.1':
     resolution: {integrity: sha512-xhlTqH0m31mnsG0tIP4ETgfSB6gXDaYYsUWTrlUV93fFQPI9dd8hE0Ot6MHLCtqgB32hwJAC3YZMWlXZw7AleA==}
     engines: {node: '>=14'}
+
+  '@auth/core@0.32.0':
+    resolution: {integrity: sha512-3+ssTScBd+1fd0/fscAyQN1tSygXzuhysuVVzB942ggU4mdfiTbv36P0ccVnExKWYJKvu3E2r3/zxXCCAmTOrg==}
+    peerDependencies:
+      '@simplewebauthn/browser': ^9.0.1
+      '@simplewebauthn/server': ^9.0.2
+      nodemailer: ^6.8.0
+    peerDependenciesMeta:
+      '@simplewebauthn/browser':
+        optional: true
+      '@simplewebauthn/server':
+        optional: true
+      nodemailer:
+        optional: true
 
   '@aws-cdk/asset-awscli-v1@2.2.202':
     resolution: {integrity: sha512-JqlF0D4+EVugnG5dAsNZMqhu3HW7ehOXm5SDMxMbXNDMdsF0pxtQKNHRl52z1U9igsHmaFpUgSGjbhAJ+0JONg==}
@@ -2456,6 +2470,9 @@ packages:
   '@types/connect@3.4.38':
     resolution: {integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==}
 
+  '@types/cookie@0.6.0':
+    resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
+
   '@types/duplexify@3.6.4':
     resolution: {integrity: sha512-2eahVPsd+dy3CL6FugAzJcxoraWhUghZGEQJns1kTKfCXWKJ5iG/VkaB05wRVrDKHfOFKqb0X0kXh91eE99RZg==}
 
@@ -3252,10 +3269,6 @@ packages:
 
   cookie-signature@1.0.6:
     resolution: {integrity: sha512-QADzlaHc8icV8I7vbaJXJwod9HWYp8uCqf1xa4OfNu1T7JVxQIrUgOWtHdNDtPiywmFbiS12VjotIXLrKM3orQ==}
-
-  cookie@0.5.0:
-    resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
-    engines: {node: '>= 0.6'}
 
   cookie@0.6.0:
     resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
@@ -4942,14 +4955,19 @@ packages:
     resolution: {integrity: sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==}
     engines: {node: '>= 0.6'}
 
-  next-auth@4.24.7:
-    resolution: {integrity: sha512-iChjE8ov/1K/z98gdKbn2Jw+2vLgJtVV39X+rCP5SGnVQuco7QOr19FRNGMIrD8d3LYhHWV9j9sKLzq1aDWWQQ==}
+  next-auth@5.0.0-beta.19:
+    resolution: {integrity: sha512-YHu1igcAxZPh8ZB7GIM93dqgY6gcAzq66FOhQFheAdOx1raxNcApt05nNyNCSB6NegSiyJ4XOPsaNow4pfDmsg==}
     peerDependencies:
-      next: ^12.2.5 || ^13 || ^14
+      '@simplewebauthn/browser': ^9.0.1
+      '@simplewebauthn/server': ^9.0.2
+      next: ^14 || ^15.0.0-0
       nodemailer: ^6.6.5
-      react: ^17.0.2 || ^18
-      react-dom: ^17.0.2 || ^18
+      react: ^18.2.0 || ^19.0.0-0
     peerDependenciesMeta:
+      '@simplewebauthn/browser':
+        optional: true
+      '@simplewebauthn/server':
+        optional: true
       nodemailer:
         optional: true
 
@@ -5020,8 +5038,8 @@ packages:
   nwsapi@2.2.10:
     resolution: {integrity: sha512-QK0sRs7MKv0tKe1+5uZIQk/C8XGza4DAnztJG8iD+TpJIORARrCxczA738awHrZoHeTjSSoHqao2teO0dC/gFQ==}
 
-  oauth@0.9.15:
-    resolution: {integrity: sha512-a5ERWK1kh38ExDEfoO6qUHJb32rd7aYmPHuyCu3Fta/cnICvYmgd2uhuKXvPD+PXB+gCEYYEaQdIRAjCOwAKNA==}
+  oauth4webapi@2.11.1:
+    resolution: {integrity: sha512-aNzOnL98bL6izG97zgnZs1PFEyO4WDVRhz2Pd066NPak44w5ESLRCYmJIyey8avSBPOMtBjhF3ZDDm7bIb7UOg==}
 
   object-assign@4.1.1:
     resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
@@ -5363,13 +5381,13 @@ packages:
     resolution: {integrity: sha512-9ZhXKM/rw350N1ovuWHbGxnGh/SNJ4cnxHiM0rxE4VN41wsg8P8zWn9hv/buK00RP4WvlOyr/RBDiptyxVbkZQ==}
     engines: {node: '>=0.10.0'}
 
-  preact-render-to-string@5.2.6:
-    resolution: {integrity: sha512-JyhErpYOvBV1hEPwIxc/fHWXPfnEGdRKxc8gFdAZ7XV4tlzyzG847XAyEZqoDnynP88akM4eaHcSOzNcLWFguw==}
+  preact-render-to-string@5.2.3:
+    resolution: {integrity: sha512-aPDxUn5o3GhWdtJtW0svRC2SS/l8D9MAgo2+AWml+BhDImb27ALf04Q2d+AHqUUOc6RdSXFIBVa2gxzgMKgtZA==}
     peerDependencies:
       preact: '>=10'
 
-  preact@10.22.0:
-    resolution: {integrity: sha512-RRurnSjJPj4rp5K6XoP45Ui33ncb7e4H7WiOHVpjbkvqvA3U+N8Z6Qbo0AE6leGYBV66n8EhEaFixvIu3SkxFw==}
+  preact@10.11.3:
+    resolution: {integrity: sha512-eY93IVpod/zG3uMF22Unl8h9KkrcKIRs2EGar8hwLZZDU1lkjph303V9HZBwufh2s736U6VXuhD109LYqPoffg==}
 
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
@@ -6575,6 +6593,16 @@ snapshots:
       node-fetch: 2.7.0
     transitivePeerDependencies:
       - encoding
+
+  '@auth/core@0.32.0':
+    dependencies:
+      '@panva/hkdf': 1.2.0
+      '@types/cookie': 0.6.0
+      cookie: 0.6.0
+      jose: 5.6.2
+      oauth4webapi: 2.11.1
+      preact: 10.11.3
+      preact-render-to-string: 5.2.3(preact@10.11.3)
 
   '@aws-cdk/asset-awscli-v1@2.2.202': {}
 
@@ -10212,6 +10240,8 @@ snapshots:
     dependencies:
       '@types/node': 20.14.9
 
+  '@types/cookie@0.6.0': {}
+
   '@types/duplexify@3.6.4':
     dependencies:
       '@types/node': 20.14.9
@@ -11244,8 +11274,6 @@ snapshots:
   convert-to-spaces@2.0.1: {}
 
   cookie-signature@1.0.6: {}
-
-  cookie@0.5.0: {}
 
   cookie@0.6.0: {}
 
@@ -13407,20 +13435,11 @@ snapshots:
 
   negotiator@0.6.3: {}
 
-  next-auth@4.24.7(next@14.2.4(@babel/core@7.24.7)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.6))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  next-auth@5.0.0-beta.19(next@14.2.4(@babel/core@7.24.7)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.6))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
-      '@panva/hkdf': 1.2.0
-      cookie: 0.5.0
-      jose: 4.15.7
+      '@auth/core': 0.32.0
       next: 14.2.4(@babel/core@7.24.7)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.6)
-      oauth: 0.9.15
-      openid-client: 5.6.5
-      preact: 10.22.0
-      preact-render-to-string: 5.2.6(preact@10.22.0)
       react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      uuid: 8.3.2
 
   next-tick@1.1.0: {}
 
@@ -13496,7 +13515,7 @@ snapshots:
   nwsapi@2.2.10:
     optional: true
 
-  oauth@0.9.15: {}
+  oauth4webapi@2.11.1: {}
 
   object-assign@4.1.1: {}
 
@@ -13849,12 +13868,12 @@ snapshots:
       xtend: 4.0.2
     optional: true
 
-  preact-render-to-string@5.2.6(preact@10.22.0):
+  preact-render-to-string@5.2.3(preact@10.11.3):
     dependencies:
-      preact: 10.22.0
+      preact: 10.11.3
       pretty-format: 3.8.0
 
-  preact@10.22.0: {}
+  preact@10.11.3: {}
 
   prelude-ls@1.2.1: {}
 
