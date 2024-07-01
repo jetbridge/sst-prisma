@@ -8,7 +8,7 @@ const PROFILE = {
 } as const;
 
 const REGION = {
-  default: 'eu-central-1',
+  default: 'us-west-2',
 } as const;
 
 export default {
