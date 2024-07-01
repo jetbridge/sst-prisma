@@ -4,6 +4,7 @@ import { StringAttribute, UserPoolClientIdentityProvider } from 'aws-cdk-lib/aws
 import { AaaaRecord, ARecord, RecordTarget } from 'aws-cdk-lib/aws-route53';
 import { UserPoolDomainTarget } from 'aws-cdk-lib/aws-route53-targets';
 import { Dns } from './dns';
+import { AppSyncApi } from './appSyncApi';
 
 const ALLOWED_HOSTS = [
   'http://localhost:6020',
@@ -21,6 +22,7 @@ export function Auth({ stack, app }: StackContext) {
       // save user in DB
       preSignUp: 'backend/src/auth/trigger/preSignUp.handler',
     },
+    login: ['email'],
     cdk: {
       userPoolClient: {},
       userPool: {
@@ -39,6 +41,7 @@ export function Auth({ stack, app }: StackContext) {
       },
     },
   });
+
   const userPool = auth.cdk.userPool;
 
   // custom domain
@@ -78,6 +81,7 @@ export function Auth({ stack, app }: StackContext) {
       callbackUrls: callbackUrls,
       logoutUrls: callbackUrls,
     },
+    generateSecret: true,
   });
 
   return {

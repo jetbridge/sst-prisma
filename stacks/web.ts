@@ -29,6 +29,7 @@ export function Web({ stack, app }: StackContext) {
       NEXT_PUBLIC_REGION: stack.region,
       NEXT_PUBLIC_APPSYNC_ENDPOINT: appSyncApi.api.url,
       NEXT_PUBLIC_COGNITO_CLIENT_ID: webClient.userPoolClientId,
+      NEXT_PUBLIC_COGNITO_CLIENT_SECRET: webClient.userPoolClientSecret.toString(),
       NEXT_PUBLIC_COGNITO_USER_POOL_ID: userPool.userPoolId,
       NEXT_PUBLIC_COGNITO_DOMAIN_NAME: cognitoDomainName,
     },
