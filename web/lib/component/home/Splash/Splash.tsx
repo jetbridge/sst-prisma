@@ -36,7 +36,7 @@ export const Splash = () => {
     <div className="flex items-center flex-col relative" ref={rootRef}>
       <div className="h-full left-0 absolute top-0 w-full z-0">{drops}</div>
       <h1 className="text-6xl text-white m-0 relative shadow-md font-bold">
-        <a href="https://jetbridge.com" target="_blank" rel="noopener">
+        <a href="https://jetbridge.com" target="_blank" rel="noopener" className="underline hover:text-slate-300">
           JetBridge
         </a>{' '}
         SST Template
