@@ -89,7 +89,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Type checks
-        run: pnpm -C web tsc
+        run: pnpm run -C web tsc
       - uses: actions/cache@v4
         name: Enable NextJS cache
         # https://nextjs.org/docs/messages/no-cache#github-actions
