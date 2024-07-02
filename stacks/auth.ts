@@ -1,10 +1,10 @@
 import { Cognito, StackContext, use } from 'sst/constructs'
-import { Duration } from 'aws-cdk-lib'
+import { Duration, RemovalPolicy } from 'aws-cdk-lib'
 import { StringAttribute, UserPoolClientIdentityProvider } from 'aws-cdk-lib/aws-cognito'
 import { AaaaRecord, ARecord, RecordTarget } from 'aws-cdk-lib/aws-route53'
 import { UserPoolDomainTarget } from 'aws-cdk-lib/aws-route53-targets'
 import { Dns } from './dns'
-import { WEB_DOMAIN } from './config'
+import { IS_PRODUCTION, WEB_DOMAIN } from './config'
 import { HttpUserPoolAuthorizer } from 'aws-cdk-lib/aws-apigatewayv2-authorizers'
 
 const ALLOWED_HOSTS = [
@@ -30,6 +30,7 @@ export function Auth({ stack, app }: StackContext) {
     cdk: {
       userPoolClient: {},
       userPool: {
+        removalPolicy: IS_PRODUCTION ? RemovalPolicy.RETAIN : RemovalPolicy.DESTROY,
         // what users can sign in with
         // ⚠️ The Cognito service prevents changing the signInAlias property for an existing user pool.
         signInAliases: { email: true, phone: false },

@@ -124,6 +124,8 @@ export function Database({ stack, app }: StackContext) {
       credentials: Credentials.fromSecret(dbSecret),
       writer: ClusterInstance.serverlessV2('writer'),
       securityGroups: [dbAccessSecurityGroup],
+      removalPolicy: IS_PRODUCTION ? RemovalPolicy.RETAIN : RemovalPolicy.SNAPSHOT,
+      deletionProtection: IS_PRODUCTION,
     })
   }
 
