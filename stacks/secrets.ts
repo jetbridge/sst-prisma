@@ -1,9 +1,10 @@
 import { Secret } from 'aws-cdk-lib/aws-secretsmanager'
 import { Config, StackContext, use } from 'sst/constructs'
 import { Iam } from './iam'
+import { SECRETS_ARN } from './config'
 
 export function Secrets({ stack }: StackContext) {
-  const secretsArn = process.env.SECRETS_ARN
+  const secretsArn = SECRETS_ARN
 
   // needed for NEXTAUTH_SECRET env var since there is no way to provide it via SST Config
   let secrets

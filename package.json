@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "prepare": "pnpm exec husky install",
     "postinstall": "pnpm generate:all",
     "dev": "pnpm dev:sst",
     "dev:sst": "sst dev",

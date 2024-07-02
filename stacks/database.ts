@@ -21,17 +21,30 @@ import { Construct, IConstruct } from 'constructs'
 import { config } from 'dotenv'
 import { App, Config, Function, Script, Stack, StackContext, use } from 'sst/constructs'
 import { Network } from 'stacks/network'
-import { IS_PRODUCTION } from './config'
+import {
+  CREATE_AURORA_DATABASE,
+  DB_CLUSTER_ENDPOINT,
+  DB_CLUSTER_IDENTIFIER,
+  DB_NAME,
+  DB_SECRET_NAME,
+  DB_SECURITY_GROUP_ID,
+  DB_SNAPSHOT_NAME,
+  IS_PRODUCTION,
+  PRISMA_CONNECTION_LIMIT,
+} from './config'
 
 // if no parameter group specified, log queries that take at least this long
 export const logMinDurationStatementDefault = 90 // ms
 
 export function Database({ stack, app }: StackContext) {
   const { vpc, defaultLambdaSecurityGroup } = use(Network)
+  const createDatabase = CREATE_AURORA_DATABASE && !app.local
+
+  if (!createDatabase) return {}
 
   const defaultDatabaseName = APP_NAME
 
-  const dbSecurityGroupId = process.env.DB_SECURITY_GROUP_ID
+  const dbSecurityGroupId = DB_SECURITY_GROUP_ID
   const dbAccessSecurityGroup = dbSecurityGroupId
     ? SecurityGroup.fromSecurityGroupId(stack, 'DbAccessSecurityGroup', dbSecurityGroupId)
     : new SecurityGroup(stack, 'DatabaseAccessSecurityGroup', {
@@ -40,8 +53,6 @@ export function Database({ stack, app }: StackContext) {
       })
 
   let db: DatabaseWithSecret | undefined = undefined
-  const createDatabase = process.env.CREATE_AURORA_DATABASE === 'true' && !app.local
-  if (!createDatabase) return {}
 
   // database settings
   const dbProps: DatabaseProps & Partial<ServerlessClusterProps> = {
@@ -68,8 +79,8 @@ export function Database({ stack, app }: StackContext) {
   } as const
 
   // DB config
-  const dbSnapshotName = process.env.DB_SNAPSHOT_NAME
-  const dbSecretName = process.env.DB_SECRET_NAME
+  const dbSnapshotName = DB_SNAPSHOT_NAME
+  const dbSecretName = DB_SECRET_NAME
 
   // DB credentials - import or generate
   const dbSecret = dbSecretName
@@ -86,10 +97,10 @@ export function Database({ stack, app }: StackContext) {
       })
 
   // create DB or use snapshot or import existing for dev environments
-  const existingDbId = process.env.DB_CLUSTER_IDENTIFIER
+  const existingDbId = DB_CLUSTER_IDENTIFIER
   if (existingDbId) {
     // import existing DB
-    const clusterEndpointAddress = process.env.DB_CLUSTER_ENDPOINT
+    const clusterEndpointAddress = DB_CLUSTER_ENDPOINT
     db = ServerlessDatabaseCluster.fromDatabaseClusterAttributes(stack, 'DatabaseImported', {
       clusterIdentifier: existingDbId,
       port: 5432,
@@ -122,7 +133,7 @@ export function Database({ stack, app }: StackContext) {
 
   db.connections.allowDefaultPortFrom(defaultLambdaSecurityGroup, 'Allow access from lambda functions')
 
-  const prismaConnectionLimit = process.env.PRISMA_CONNECTION_LIMIT || 5
+  const prismaConnectionLimit = PRISMA_CONNECTION_LIMIT
 
   const config = [
     new Config.Parameter(stack, 'DATABASE_NAME', { value: defaultDatabaseName }),
@@ -143,7 +154,7 @@ export function Database({ stack, app }: StackContext) {
   // DB connection for local dev can be overridden
   // https://docs.sst.dev/environment-variables#is_local
   const localDatabaseUrl = process.env['DATABASE_URL']
-  if (process.env.IS_LOCAL && localDatabaseUrl) {
+  if (app.local && localDatabaseUrl) {
     app.addDefaultFunctionEnv({
       ['DATABASE_URL']: localDatabaseUrl,
     })
@@ -188,8 +199,7 @@ function makeDatabaseUrl(db: DatabaseWithSecret): string {
   // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
   let url = `postgresql://${dbUsername}:${dbPassword}@${db.clusterEndpoint.hostname}/${defaultDatabaseName}`
 
-  const prismaConnectionLimitEnv = process.env.PRISMA_CONNECTION_LIMIT
-  const prismaConnectionLimit = prismaConnectionLimitEnv ? parseInt(prismaConnectionLimitEnv) : 5
+  const prismaConnectionLimit = PRISMA_CONNECTION_LIMIT
   if (prismaConnectionLimit) url += `?connection_limit=${prismaConnectionLimit}`
 
   return url
@@ -231,7 +241,7 @@ export interface DatabaseWithSecret extends IServerlessCluster {
 }
 
 export function getDefaultDatabaseName(): string {
-  return process.env.DB_NAME || APP_NAME
+  return DB_NAME || APP_NAME
 }
 
 export class ServerlessDatabaseCluster extends DatabaseCluster {
