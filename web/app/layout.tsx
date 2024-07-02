@@ -4,7 +4,7 @@ import './globals.css';
 import SessionWrapper from './ui/SessionProvider';
 import { ApolloClientProvider } from './apolloClient';
 import clsx from 'clsx';
-import { Authentication } from './ui/LoginButton';
+import { Authentication } from './ui/Authentication/Authentication';
 
 const inter = Inter({ subsets: ['latin'] });
 

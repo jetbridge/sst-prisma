@@ -3,9 +3,9 @@
 import { signIn, signOut } from '@/auth'
 import { AuthError } from 'next-auth'
 
-export async function authenticate() {
+export async function authenticate(redirectTo?: string) {
   try {
-    await signIn('cognito')
+    await signIn('cognito', { redirectTo })
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
