@@ -1,17 +1,4 @@
 {
-  "scripts": {
-    "generate": "pnpm run graphql:generate",
-    "graphql:generate": "graphql-codegen --config graphql/codegen.yml"
-  },
-  "devDependencies": {
-    "@graphql-codegen/cli": "^5.0.0",
-    "@graphql-codegen/client-preset": "^4.2.6",
-    "@graphql-codegen/schema-ast": "^4.0.0",
-    "@graphql-codegen/typescript": "^4.0.1",
-    "@graphql-codegen/typescript-operations": "^4.0.1",
-    "@graphql-codegen/typescript-react-apollo": "^4.3.0",
-    "@graphql-typed-document-node/core": "^3.2.0"
-  },
   "description": "Code shared between the client and server",
   "type": "module"
 }

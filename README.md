@@ -22,6 +22,13 @@ pnpm i  # install dependencies + generate types from DB and GQL schemas
 pnpm dev  # start local dev server
 ```
 
+### Config
+
+Set your default AWS profile and region in `sst.config.ts`.
+
+Edit .env or .env.$stage to set infrastructure vars.
+
+
 ## Features
 
 All features are optional, delete what you don't need.
@@ -32,7 +39,7 @@ Click links to learn more and view documentation.
 - 🌤 [AWS CDK](https://aws.amazon.com/cdk/) - cloud-native infrastructure as code
 - ፨ [GraphQL API](https://docs.serverless-stack.com/constructs/GraphQLApi)
   - ⇅ [AWS AppSync](https://docs.aws.amazon.com/appsync/latest/devguide/what-is-appsync.html) - serverless GraphQL AWS service
-  - ✽ [Code generation](https://www.graphql-code-generator.com/) of [TypeScript](https://www.graphql-code-generator.com/docs/guides/front-end-typescript-only) + [apollo client](https://www.graphql-code-generator.com/plugins/typescript-react-apollo)
+  - ✽ [Code generation](https://www.graphql-code-generator.com/) of [TypeScript](https://www.graphql-code-generator.com/docs/guides/front-end-typescript-only) + [react client](https://the-guild.dev/graphql/codegen/docs/guides/react-vue)
 - 🌐 [REST API gateway](https://docs.serverless-stack.com/api)
 - 🖥 [NextJS](https://nextjs.org/) frontend w/ Material-UI
   - 🎨 [Material-UI](https://mui.com/material-ui/getting-started/overview/) - react components and styling solution
@@ -71,7 +78,7 @@ pnpm dev:web
 ### Run/generate DB migrations locally
 
 ```shell
-pnpm db:migrate:dev
+pnpm db:migrate
 ```
 
 ### Just watch and perform type-checking

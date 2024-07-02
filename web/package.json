@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "sst bind \"next dev\"",
+    "dev": "sst bind 'next dev --port 3020'",
+    "dev:turbo": "sst bind 'next dev --port 3020 --turbo'",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "tsc:watch": "pnpm typecheck --watch"
   },
   "dependencies": {
     "@sentry/browser": "^8.13.0",

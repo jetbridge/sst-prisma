@@ -15,7 +15,7 @@ export function AppSyncApi({ stack }: StackContext) {
         },
       },
     },
-    schema: 'common/graphql/generated/schema.graphql',
+    schema: 'graphql/generated/schema.graphql',
     dataSources: {},
     defaults: {
       function: {

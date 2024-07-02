@@ -5,8 +5,6 @@ import crypto from 'crypto';
 import { App } from 'sst/constructs';
 import { RUNTIME } from 'stacks';
 
-export const DEFAULT_RUNTIME = Runtime.NODEJS_20_X;
-
 // modules to mark as "external" when bundling
 // added to prismaModules
 const PRISMA_LAYER_EXTERNAL = ['@prisma/engines', '@prisma/engines-version', '@prisma/internals'];
@@ -136,7 +134,7 @@ export class PrismaLayer extends LayerVersion {
         environment: {
           PRISMA_CLI_BINARY_TARGETS: binaryTarget,
         },
-        image: DEFAULT_RUNTIME.bundlingImage,
+        image: RUNTIME.bundlingImage,
         command: createBundleCommand,
       },
     });

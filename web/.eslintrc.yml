@@ -1,0 +1,34 @@
+---
+env:
+  browser: true
+  node: false
+  es6: true
+
+settings:
+  react:
+    version: detect
+
+extends:
+  - "../.eslintrc.yml"
+  - "plugin:react/recommended"
+  - "plugin:react-hooks/recommended"
+  - "plugin:react/jsx-runtime"
+
+rules:
+  # sometimes we want to fill these in later
+  "@typescript-eslint/no-empty-interface": off
+
+  # react config
+  "react/prop-types": 0
+  "react/destructuring-assignment": 0
+  "react/no-unescaped-entities": 1
+  "react/require-default-props": 0
+  "react/jsx-props-no-spreading": 0
+  "react/jsx-no-useless-fragment": 1
+  "react/jsx-curly-brace-presence": 1
+  "react/no-unused-prop-types": 1
+  "react/button-has-type": 0
+  "react/jsx-no-duplicate-props": 0
+  "react/jsx-filename-extension":
+    - 1
+    - "extensions": [".tsx", ".jsx"]
