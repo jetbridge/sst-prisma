@@ -1,4 +1,4 @@
-import { auth } from '@/auth'
+import { auth } from '@/app/lib/auth/next'
 import { Authentication } from '../Authentication/Authentication'
 import { WebNavigation } from './WebNavigation'
 

@@ -1,6 +1,6 @@
 import type { NextAuthConfig, Session } from 'next-auth'
 import CognitoProvider from 'next-auth/providers/cognito'
-import { COGNITO_CLIENT_ID, COGNITO_USER_POOL_ID, REGION } from './config'
+import { COGNITO_CLIENT_ID, COGNITO_USER_POOL_ID, REGION } from '@/config'
 import { refreshTokensIfNeeded } from './auth'
 
 if (process.env.NEXTAUTH_URL && process.env.NEXTAUTH_URL.includes('set-me-in-.env')) {

@@ -1,4 +1,4 @@
-import { auth } from '@/auth'
+import { auth } from '@/app/lib/auth/next'
 import { LoginButton } from './LoginButton'
 import { LogoutButton } from './LogoutButton'
 

@@ -1,6 +1,6 @@
 'use server'
 
-import { signIn, signOut } from '@/auth'
+import { signIn, signOut } from '@/app/lib/auth/next'
 import { AuthError } from 'next-auth'
 
 export async function authenticate(redirectTo?: string) {

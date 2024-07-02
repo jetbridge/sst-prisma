@@ -1,7 +1,6 @@
-import NextAuth, { Session } from 'next-auth'
-import { authConfig } from './auth.config'
+import { COGNITO_CLIENT_ID, COGNITO_DOMAIN_NAME } from '@/config'
+import { Session } from 'next-auth'
 import type { JWT } from 'next-auth/jwt'
-import { COGNITO_CLIENT_ID, COGNITO_DOMAIN_NAME } from './config'
 
 interface CognitoRefreshTokenResult {
   access_token: string
@@ -51,10 +50,3 @@ export const refreshTokensIfNeeded = async (session: Session): Promise<Session> 
     refreshToken: refreshedTokens?.refresh_token ?? session.refreshToken, // Fall back to old refresh token
   }
 }
-
-export const {
-  auth,
-  signIn,
-  signOut,
-  handlers: { GET, POST },
-} = NextAuth({ ...authConfig })
