@@ -9,7 +9,8 @@
     "tsc:watch": "pnpm tsc --watch",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "vitest"
   },
   "dependencies": {
     "@sentry/browser": "^8.13.0",
