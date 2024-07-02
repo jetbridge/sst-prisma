@@ -31,7 +31,8 @@ export function Secrets({ stack, app }: StackContext) {
   const SECRET_1 = new Config.Secret(stack, 'SECRET_1')
 
   // grant your app permissions to access the SST secrets
-  app.addDefaultFunctionBinding([SECRET_1])
+  // you need to set values to enable bindings
+  // app.addDefaultFunctionBinding([SECRET_1])
 
   return { secrets, SECRET_1 }
 }
