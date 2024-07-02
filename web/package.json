@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "sst bind 'next dev --port 3020'",
-    "dev:turbo": "sst bind 'next dev --port 3020 --turbo'",
+    "dev": "sst bind 'next dev --port 6001'",
+    "dev:turbo": "sst bind 'next dev --port 6001 --turbo'",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

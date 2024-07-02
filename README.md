@@ -16,6 +16,8 @@ Assumes you have [Node 20](https://nodejs.org/en/download/current/) installed an
 
 ### Setup
 
+Edit `sst.config.ts` and set your default AWS profile and region.
+
 ```shell
 npm i -g pnpm  # install pnpm globally
 pnpm i  # install dependencies + generate types from DB and GQL schemas
@@ -27,7 +29,6 @@ pnpm dev  # start local dev server
 Set your default AWS profile and region in `sst.config.ts`.
 
 Edit .env or .env.$stage to set infrastructure vars.
-
 
 ## Features
 

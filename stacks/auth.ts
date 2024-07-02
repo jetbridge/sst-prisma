@@ -7,7 +7,7 @@ import { Dns } from './dns';
 import { WEB_URL } from './config';
 
 const ALLOWED_HOSTS = [
-  'http://localhost:3000',
+  'http://localhost:6001',
   /// ... add frontend hosts here
 ];
 const ALLOWED_URLS = ['/login', '/api/auth/callback/cognito'];
