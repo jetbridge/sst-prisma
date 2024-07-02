@@ -10,6 +10,9 @@ extends:
   - "plugin:@typescript-eslint/recommended"
   - "plugin:import/recommended"
   - "plugin:import/typescript"
+files:
+  - "**/*.ts"
+  - "**/*.tsx"
 globals:
   Atomics: readonly
   SharedArrayBuffer: readonly
