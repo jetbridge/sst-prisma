@@ -1,11 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { AppSyncIdentity, AppSyncResolverEvent, Callback, Context } from 'aws-lambda';
+import { AppSyncResolverHandler, Context } from 'aws-lambda'
 
-export interface TestCallResolverArgs<A, R, S> {
-  userName?: string;
-  resolverFunc: (event: AppSyncResolverEvent<A, S>, context?: Context, callback?: Callback) => R;
-  args: A;
-  source?: S;
+type InferFunc<T> = T extends (...p: infer P) => infer R | void ? (...p: P) => R : never
+
+export interface CallAuthenticatedResolver<A, R, S> {
+  userName: string
+  resolverFunc: InferFunc<AppSyncResolverHandler<A, R, S>>
+  args: A
+  source?: S
 }
 
 /**
@@ -18,29 +19,27 @@ export const testCallResolver = <A, R, S>({
   args,
   source = null as unknown as S,
   resolverFunc,
-}: TestCallResolverArgs<A, R, S>) =>
+}: CallAuthenticatedResolver<A, R, S>) =>
   resolverFunc(
     {
       arguments: args,
-      identity: userName
-        ? {
-            sub: userName,
-            issuer: 'King Mischa',
-            sourceIp: ['1.2.3.4'],
-            defaultAuthStrategy: 'whatever',
-            groups: [],
-            claims: { 'cognito:username': userName },
-            username: userName,
-          }
-        : ({} as AppSyncIdentity),
+      identity: {
+        sub: userName,
+        issuer: 'King Mischa',
+        sourceIp: ['1.2.3.4'],
+        defaultAuthStrategy: 'whatever',
+        groups: [],
+        claims: { 'cognito:username': userName },
+        username: userName,
+      },
       source,
-      info: {} as any,
+      info: { selectionSetList: [] } as any,
       prev: {} as any,
       request: {} as any,
       stash: {} as any,
     },
     {} as Context,
     () => {
-      throw new Error("don't call lambda callback");
-    }
-  );
+      throw new Error("don't call lambda callback")
+    },
+  )

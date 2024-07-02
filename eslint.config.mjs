@@ -1,87 +1,35 @@
-import { fixupConfigRules, fixupPluginRules } from "@eslint/compat";
-import typescriptEslint from "@typescript-eslint/eslint-plugin";
-import globals from "globals";
-import tsParser from "@typescript-eslint/parser";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-import js from "@eslint/js";
-import { FlatCompat } from "@eslint/eslintrc";
+import eslint from '@eslint/js'
+import tseslint from 'typescript-eslint'
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-    baseDirectory: __dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all
-});
-
-export default [{
-    ignores: [
-        "**/node_modules",
-        "**/build",
-        "**/prisma-generated-client",
-        "**/generated/",
-        "**/cdk.out",
-        "**/__mocks__",
-    ],
-}, ...fixupConfigRules(compat.extends(
-    "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:import/recommended",
-    "plugin:import/typescript",
-)).map(config => ({
-    ...config,
-    files: ["**/*.ts", "**/*.tsx"],
-})), {
-    files: ["**/*.ts", "**/*.tsx"],
-
-    plugins: {
-        "@typescript-eslint": fixupPluginRules(typescriptEslint),
-    },
-
+export default tseslint.config(
+  eslint.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
+  {
     languageOptions: {
-        globals: {
-            ...Object.fromEntries(Object.entries(globals.browser).map(([key]) => [key, "off"])),
-            ...globals.node,
-            Atomics: "readonly",
-            SharedArrayBuffer: "readonly",
-        },
-
-        parser: tsParser,
-        ecmaVersion: 2019,
-        sourceType: "module",
+      parserOptions: {
+        project: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
-
-    settings: {
-        "import/parsers": {
-            "@typescript-eslint/parser": [".ts", ".tsx"],
-        },
-
-        "import/ignore": [
-            "\\.test\\.ts$",
-            "\\.(scss|less|css)$",
-            "node_modules",
-            "build/",
-            "\\.next",
-        ],
-
-        "import/resolver": {
-            typescript: {
-                alwaysTryTypes: true,
-                project: ["tsconfig.json", "*/tsconfig.json"],
-            },
-        },
-    },
-
+  },
+  {
+    ignores: ['.sst', 'web', 'common/generated/graphql'],
+  },
+  {
     rules: {
-        "@typescript-eslint/explicit-module-boundary-types": "off",
-        "@typescript-eslint/no-unused-vars": "off",
-        "@typescript-eslint/no-non-null-assertion": "off",
-        "@typescript-eslint/no-empty-interface": "off",
-        "@typescript-eslint/no-explicit-any": "off",
-        "@typescript-eslint/triple-slash-reference": "off",
-        "@typescript-eslint/ban-types": "off",
-        "no-case-declarations": "off",
+      '@typescript-eslint/explicit-module-boundary-types': 0,
+      '@typescript-eslint/no-unused-vars': 0,
+      '@typescript-eslint/no-non-null-assertion': 0,
+      '@typescript-eslint/no-empty-interface': 0,
+      '@typescript-eslint/no-explicit-any': 0,
+      '@typescript-eslint/no-unsafe-assignment': 0,
+      '@typescript-eslint/no-unsafe-argument': 0,
+      '@typescript-eslint/no-unsafe-member-access': 0,
+      '@typescript-eslint/no-unsafe-call': 0,
+      '@typescript-eslint/triple-slash-reference': 0,
+      '@typescript-eslint/ban-types': 0,
+      'no-case-declarations': 0,
+      '@typescript-eslint/require-await': 1,
     },
-}];
+  },
+)

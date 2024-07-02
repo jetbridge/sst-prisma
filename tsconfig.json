@@ -10,13 +10,17 @@
   },
   "extends": "./tsconfig.base.json",
   "include": [
+    "eslint.config.mjs",
     "stacks/**/*.ts",
     "backend/src/**/*.ts",
     "common/src/**/*.ts",
     "index.d.ts",
     "vite.config.ts",
-    "backend/src/index.d.ts"
+    "backend/src/index.d.ts",
+    "graphql/codegen.ts",
+    "sst.config.ts",
+    "testSetup.ts"
   ],
   "files": ["sst-env.d.ts", "reset.d.ts"],
-  "exclude": ["sst.config.ts", "node_modules", "web/public"]
+  "exclude": ["node_modules", "web/public"]
 }

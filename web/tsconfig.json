@@ -30,7 +30,8 @@
     ".next/types/**/*.ts",
     "../common/src/**/*.ts",
     "../reset.d.ts",
-    "../sst-env.d.ts"
+    "../sst-env.d.ts",
+    "eslint.config.mjs"
   ],
   "exclude": ["node_modules"]
 }
