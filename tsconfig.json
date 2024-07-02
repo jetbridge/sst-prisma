@@ -2,6 +2,7 @@
   "compilerOptions": {
     "strictNullChecks": true,
     "noEmit": true,
+    "moduleResolution": "Bundler",
     "paths": {
       "@common/*": ["./common/src/*"],
       "@backend/*": ["./backend/src/*"]

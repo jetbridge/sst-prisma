@@ -26,7 +26,7 @@ const config = {
   },
   generates: {
     // output combined graphql schema
-    'schema/generated/platform.graphql': {
+    'common/graphql/generated/schema.graphql': {
       config: {
         // include AppSync directives in the generated schema
         includeDirectives: true,

@@ -1,8 +1,8 @@
 name: Build and test
 
 on:
-  workflow_dispatch:
-  workflow_call:
+  push:
+    - '*'
 
 env:
   NODE_OPTIONS: "--max-old-space-size=4096"
