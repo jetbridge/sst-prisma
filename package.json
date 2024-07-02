@@ -48,6 +48,9 @@
   },
   "devDependencies": {
     "@apollo/client": "^3.10.8",
+    "@eslint/compat": "^1.1.0",
+    "@eslint/eslintrc": "^3.1.0",
+    "@eslint/js": "^9.6.0",
     "@graphql-codegen/cli": "^5.0.2",
     "@graphql-codegen/client-preset": "^4.3.1",
     "@graphql-codegen/schema-ast": "^4.1.0",
@@ -76,6 +79,7 @@
     "eslint-plugin-react": "^7.30.0",
     "eslint-plugin-react-hooks": "^4.5.0",
     "fs-extra": "^10.1.0",
+    "globals": "^15.7.0",
     "graphql": "^16.5.0",
     "graphql-tag": "^2.12.6",
     "husky": "^9.0.11",

@@ -36,7 +36,7 @@ jobs:
   test-backend:
     name: Test backend
     env:
-      DATABASE_URL: "postgresql://postgres:pass@localhost:5432/tests?connection_limit=80"
+      DATABASE_URL: "postgresql://prisma:prisma@localhost:5432/tests?connection_limit=80"
 
     services:
       postgres:
