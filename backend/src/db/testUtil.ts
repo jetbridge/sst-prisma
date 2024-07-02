@@ -21,15 +21,13 @@ vi.mock('@backend/db/client', async () => {
 /**
  * Define a database integration test suite.
  * Clears DB contents after running each test in an isolated transaction.
- *
- * ⚠️ This must be imported first in your test suite!
  */
 export const describeIntegrationTest = (title: string, inner: () => void) => {
   beforeEach(async () => {
     await prismaTestingHelper.startNewTransaction()
   })
 
-  afterEach(async () => {
+  afterEach(() => {
     prismaTestingHelper?.rollbackCurrentTransaction()
   })
 
