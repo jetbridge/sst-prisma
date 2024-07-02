@@ -1,6 +1,7 @@
 import type { NextAuthConfig, Session } from 'next-auth'
 import CognitoProvider from 'next-auth/providers/cognito'
 import { COGNITO_CLIENT_ID, COGNITO_USER_POOL_ID, REGION } from './config'
+import { refreshTokensIfNeeded } from './auth'
 
 if (process.env.NEXTAUTH_URL && process.env.NEXTAUTH_URL.includes('set-me-in-.env')) {
   console.error(`Please set WEB_DOMAIN in .env.${process.env.SST_STAGE} to the URL of your frontend site.`)
@@ -52,7 +53,10 @@ export const authConfig = {
         }
       }
 
-      return token
+      // already logged-in
+      // refresh access token if needed
+      const session: Session = token as Session
+      return await refreshTokensIfNeeded(session)
     },
   },
   pages: { signIn: '/' },
