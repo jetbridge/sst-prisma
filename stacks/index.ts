@@ -11,6 +11,7 @@ import { Network } from './network';
 import { RestApi } from './restApi';
 import { Web } from './web';
 import { Aspects } from 'aws-cdk-lib';
+import { Secrets } from './secrets';
 
 // deal with dynamic imports of node built-ins (e.g. "crypto")
 // from https://github.com/evanw/esbuild/pull/2067#issuecomment-1073039746
@@ -29,6 +30,7 @@ export default function main(app: sst.App) {
 
   app
     .stack(Network)
+    .stack(Secrets)
     .stack(Dns)
     .stack(Layers)
     .stack(Database)
