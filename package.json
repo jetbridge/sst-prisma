@@ -28,7 +28,7 @@
     "lint:toplevel": "eslint --ext .js,.ts,.tsx stacks",
     "lint:fix": "pnpm run lint -- --fix",
     "build:web": "pnpm run -C web build",
-    "build:ci": "pnpm run tsc",
+    "build": "pnpm sst:types && pnpm tsc",
     "deploy": "pnpm generate && sst deploy",
     "remove": "sst remove",
     "prettier:exc": "./node_modules/.bin/prettier --config .prettierrc.yaml --write",
