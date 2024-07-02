@@ -3,13 +3,13 @@
 
   Not really using a public API.
 */
+import { SecretsManagerClient, GetSecretValueCommand } from '@aws-sdk/client-secrets-manager'
+import { isProd } from '@common/env'
+import { PrismaClient } from '@prisma/client'
 import { Migrate } from '@prisma/migrate/dist/Migrate.js'
 import { ensureDatabaseExists } from '@prisma/migrate/dist/utils/ensureDatabaseExists'
 import { printFilesFromMigrationIds } from '@prisma/migrate/dist/utils/printFiles'
 import chalk from 'chalk'
-import { GetSecretValueCommand, SecretsManagerClient } from '@aws-sdk/client-secrets-manager'
-import { Prisma, PrismaClient } from '@prisma/client'
-import { isProd } from '@common/env'
 
 export const handler = async (): Promise<string> => {
   const schemaPath = '/var/task/backend/prisma/schema.prisma'
@@ -66,12 +66,12 @@ ${editedMigrationNames.join('\n')}`,
   }
 }
 
-const loadDatabaseUrl = async (): Promise<string> => {
+// like getDatabaseUrl from client.ts but doesn't use SST config
+const _getDatabaseUrl = async (): Promise<string> => {
   let databaseUrl = process.env.DATABASE_URL
   if (process.env.USE_DB_CONFIG !== 'true' && databaseUrl) return databaseUrl
 
   // load database secret
-  // FIXME config
   const secretArn = process.env.DB_SECRET_ARN
   const client = new SecretsManagerClient({})
   const req = new GetSecretValueCommand({ SecretId: secretArn })
@@ -83,6 +83,12 @@ const loadDatabaseUrl = async (): Promise<string> => {
 
   // construct database url
   databaseUrl = `postgresql://${username}:${password}@${host}:${port}/${dbname}`
+
+  return databaseUrl
+}
+
+const loadDatabaseUrl = async (): Promise<string> => {
+  const databaseUrl = await _getDatabaseUrl()
   process.env.DATABASE_URL = databaseUrl
   return databaseUrl
 }

@@ -1,3 +1,5 @@
+import { APP_NAME } from '@common/index'
+import { Duration, IAspect, RemovalPolicy } from 'aws-cdk-lib'
 import { ISecurityGroup, IVpc, Port, SecurityGroup } from 'aws-cdk-lib/aws-ec2'
 import { CfnFunction } from 'aws-cdk-lib/aws-lambda'
 import {
@@ -9,25 +11,26 @@ import {
   DatabaseClusterEngine,
   IServerlessCluster,
   ParameterGroup,
-  ServerlessCluster,
   ServerlessClusterFromSnapshot,
   ServerlessClusterProps,
   SnapshotCredentials,
 } from 'aws-cdk-lib/aws-rds'
 import { ISecret, Secret } from 'aws-cdk-lib/aws-secretsmanager'
 import { Construct, IConstruct } from 'constructs'
-import { App, Script, Function, Config, Stack, StackContext, use, RDS } from 'sst/constructs'
 import { config } from 'dotenv'
-import { APP_NAME } from '@common/index'
-import { Duration, IAspect, RemovalPolicy } from 'aws-cdk-lib'
+import { App, Config, Function, Script, Stack, StackContext, use } from 'sst/constructs'
 import { Network } from 'stacks/network'
 import { IS_PRODUCTION } from './config'
+import { Iam } from './iam'
+import { Effect, Policy, PolicyStatement } from 'aws-cdk-lib/aws-iam'
 
 // if no parameter group specified, log queries that take at least this long
 export const logMinDurationStatementDefault = 90 // ms
 
 export function Database({ stack, app }: StackContext) {
   const net = use(Network)
+  const { defaultLambdaRole } = use(Iam)
+
   const { vpc } = net
 
   const defaultDatabaseName = APP_NAME
@@ -41,7 +44,8 @@ export function Database({ stack, app }: StackContext) {
       })
 
   let db: DatabaseWithSecret | undefined = undefined
-  if (!process.env.CREATE_AURORA_DATABASE) return {}
+  const createDatabase = process.env.CREATE_AURORA_DATABASE === 'true' && !app.local
+  if (!createDatabase) return {}
 
   // database settings
   const dbProps: DatabaseProps & Partial<ServerlessClusterProps> = {
@@ -147,7 +151,15 @@ export function Database({ stack, app }: StackContext) {
     })
   }
 
-  // app.addDefaultFunctionPermissions([dbSecret, 'grantRead']);
+  if (dbSecret) {
+    app.addDefaultFunctionPermissions([
+      new PolicyStatement({
+        effect: Effect.ALLOW,
+        resources: [dbSecret.secretArn],
+        actions: ['secretsmanager:GetSecretValue'],
+      }),
+    ])
+  }
 
   return { db, defaultDatabaseName, dbAccessSecurityGroup }
 }
