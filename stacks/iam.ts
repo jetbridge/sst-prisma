@@ -7,7 +7,7 @@ export function Iam({ stack }: StackContext) {
   // by making an empty function
   // more info: https://discord.com/channels/983865673656705025/1027663092957581383
   const placeholderFn = new Function(stack, 'IamDefault', {
-    handler: 'backend/src/api/internalFunctions/empty.handler',
+    handler: 'backend/src/function/empty.handler',
   })
 
   return {

@@ -1,28 +1,30 @@
-import { NextjsSite, StackContext, use } from 'sst/constructs';
-import { AppSyncApi } from './appSyncApi';
-import { Auth } from './auth';
-import { Dns } from './dns';
-import { WEB_URL } from './config';
-import { Secrets } from './secrets';
+import { NextjsSite, StackContext, use } from 'sst/constructs'
+import { AppSyncApi } from './appSyncApi'
+import { Auth } from './auth'
+import { Dns } from './dns'
+import { IS_PRODUCTION, WEB_URL } from './config'
+import { Secrets } from './secrets'
 
 export function Web({ stack, app }: StackContext) {
-  const { userPool, webClient, cognitoDomainName } = use(Auth);
-  const { secrets, ...configSecrets } = use(Secrets);
-  const appSyncApi = use(AppSyncApi);
-  const dns = use(Dns);
-  const isLocal = app.local;
+  const { userPool, webClient, cognitoDomainName } = use(Auth)
+  const { secrets, ...configSecrets } = use(Secrets)
+  const appSyncApi = use(AppSyncApi)
+  const dns = use(Dns)
+  const isLocal = app.local
 
   if (!isLocal && !process.env.SST_STAGE && !WEB_URL) {
-    console.warn(`Please set WEB_URL in .env.${app.stage} to the URL of your frontend site.`);
+    console.warn(`Please set WEB_URL in .env.${app.stage} to the URL of your frontend site.`)
   }
 
-  const allSecrets = Object.values(configSecrets);
+  const allSecrets = Object.values(configSecrets)
 
   // docs: https://docs.serverless-stack.com/constructs/NextjsSite
-  const frontendSite = new NextjsSite(stack, 'Web', {
+  const nextjsApp = new NextjsSite(stack, 'Web', {
     path: 'web',
     openNextVersion: '3.0.6',
     bind: [...allSecrets],
+    runtime: 'nodejs20.x',
+    warm: IS_PRODUCTION ? 6 : 0,
     customDomain: dns.domainName
       ? {
           domainName: dns.domainName,
@@ -34,7 +36,7 @@ export function Web({ stack, app }: StackContext) {
         comment: `NextJS distribution for ${app.name} (${app.stage})`,
       },
     },
-    memorySize: 1024,
+    memorySize: 1536,
     environment: {
       NEXTAUTH_SECRET: secrets.secretValueFromJson('AUTH_SECRET').toString(),
       NEXTAUTH_URL: isLocal ? 'http://localhost:6001' : WEB_URL ?? 'https://set-me-in-.env',
@@ -45,9 +47,9 @@ export function Web({ stack, app }: StackContext) {
       NEXT_PUBLIC_COGNITO_USER_POOL_ID: userPool.userPoolId,
       NEXT_PUBLIC_COGNITO_DOMAIN_NAME: cognitoDomainName,
     },
-  });
+  })
 
   stack.addOutputs({
-    WebURL: frontendSite.customDomainUrl || frontendSite.url || 'unknown',
-  });
+    WebURL: nextjsApp.customDomainUrl || nextjsApp.url || 'unknown',
+  })
 }

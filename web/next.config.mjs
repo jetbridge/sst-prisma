@@ -1,5 +1,7 @@
 import { resolve } from 'path'
 const __dirname = resolve()
+const projectRoot = resolve(__dirname, '../')
+console.log('projectRoot', projectRoot)
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -7,7 +9,7 @@ const nextConfig = {
 
   experimental: {
     // for open-next output
-    outputFileTracingRoot: resolve(__dirname, '../'),
+    outputFileTracingRoot: projectRoot,
     // don't include dev deps in the deployed bundle
     outputFileTracingExcludes: {
       '*': [
