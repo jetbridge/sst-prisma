@@ -7,10 +7,9 @@ import { Migrate } from '@prisma/migrate/dist/Migrate.js';
 import { ensureDatabaseExists } from '@prisma/migrate/dist/utils/ensureDatabaseExists';
 import { printFilesFromMigrationIds } from '@prisma/migrate/dist/utils/printFiles';
 import chalk from 'chalk';
+import { isProd, sleep } from '@common/index';
 import { GetSecretValueCommand, SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
 import { Prisma, PrismaClient } from '@prisma/client';
-import { isProd } from '@common/env';
-import { sleep } from '@common/util';
 
 export const handler = async (): Promise<string> => {
   const schemaPath = '/var/task/backend/prisma/schema.prisma';

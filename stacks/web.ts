@@ -19,6 +19,7 @@ export function Web({ stack, app }: StackContext) {
   // docs: https://docs.serverless-stack.com/constructs/NextjsSite
   const frontendSite = new NextjsSite(stack, 'Web', {
     path: 'web',
+    openNextVersion: '3.0.6',
     customDomain: dns.domainName
       ? {
         domainName: dns.domainName,

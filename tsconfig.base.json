@@ -1,31 +1,21 @@
 {
-  "extends": "@tsconfig/node18/tsconfig.json",
+  "extends": "@tsconfig/node20/tsconfig.json",
   "compilerOptions": {
     "module": "esnext",
     "target": "ESNext",
     "allowJs": true,
     "esModuleInterop": true,
     "incremental": true,
+    // for service paths
     "baseUrl": ".",
     "paths": {
-      "@common/*": ["./common/src/*"], // shared
+      "@common/*": ["common/src/*"], // shared
       "@backend/*": ["backend/src/*"],
       "@web/*": ["web/src/*"]
     },
     "types": ["vitest/globals"],
-    "jsx": "react-jsx", // better frontend/backend tooling interoperability (ts-jest)
-    "moduleResolution": "bundler", // assume esbuild/webpack/turbopack is used for bundling and let them handle imports
-    "declaration": true /* Generates corresponding '.d.ts' file. */,
-    "declarationMap": true /* Generates a sourcemap for each corresponding '.d.ts' file. */,
-    "sourceMap": true /* Generates corresponding '.map' file. */,
-    "experimentalDecorators": true, // enable decorators
-    "emitDecoratorMetadata": true, // for runtime use of decorators
-    "strictPropertyInitialization": true,
-    "strictNullChecks": true,
-    "noImplicitReturns": true /* Report error when not all code paths in function return a value. */,
-    "noFallthroughCasesInSwitch": true /* Report errors for fallthrough cases in switch statement. */,
-    "noImplicitOverride": true // must use override
-    // "noUnusedLocals": true /* Report errors on unused locals. */,
-    // "noUnusedParameters": true /* Report errors on unused parameters. */,
-  }
+    "jsx": "react-jsx", // react 17 (used in all packages)
+    "moduleResolution": "bundler" // assume esbuild/webpack/turbopack is used for bundling and let them handle imports
+  },
+  "files": ["./index.d.ts"]
 }

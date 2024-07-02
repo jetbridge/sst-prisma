@@ -1,5 +1,7 @@
 import type { SSTConfig } from 'sst';
 
+process.env.SST_BUILD_CONCURRENCY = '8';
+
 // you can configure your default profiles and regions to use here
 // map of stage to profile name
 const PROFILE = {

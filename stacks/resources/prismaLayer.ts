@@ -18,6 +18,9 @@ export interface PrismaLayerProps extends Omit<LayerVersionProps, 'code'> {
   // some more modules to add to the layer
   nodeModules?: string[];
 
+  // binary targets, e.g. "linux-arm64-openssl-3.0.x"
+  binaryTargets?: string[];
+
   // prisma libs
   prismaModules?: string[];
   // engines to keep
@@ -70,6 +73,9 @@ export class PrismaLayer extends LayerVersion {
       : modulesToInstall;
     const modulesToInstallArgs = modulesToInstallWithVersion.concat(nodeModules).join(' ');
 
+    // target architectures
+    const binaryTargets = props.binaryTargets || ['linux-arm64-openssl-3.0.x'];
+
     // delete engines not requested
     const allEngines: PrismaEngine[] = ['introspection-engine', 'schema-engine', 'libquery_engine', 'prisma-fmt'];
     const prismaEngines = props.prismaEngines || ['libquery_engine'];
@@ -87,6 +93,8 @@ export class PrismaLayer extends LayerVersion {
         `mkdir -p ${layerDir}`,
         // install PRISMA_DEPS
         `cd ${layerDir} && HOME=/tmp /tmp/npm/node_modules/.bin/npm install --omit dev --omit peer --omit optional ${modulesToInstallArgs}`,
+        `echo "Installed ${modulesToInstallArgs}"`,
+        `ls -la ${engineDir}`,
         // delete unneeded engines
         ...deleteEngineCmds,
         // internals sux
@@ -110,6 +118,8 @@ export class PrismaLayer extends LayerVersion {
     bundleCommandHash.update(JSON.stringify(createBundleCommand));
     const bundleCommandDigest = bundleCommandHash.digest('hex');
 
+    const binaryTarget = binaryTargets[0];
+
     // bundle
     const code = Code.fromAsset('.', {
       // don't send all our files to docker (slow)
@@ -121,6 +131,9 @@ export class PrismaLayer extends LayerVersion {
       assetHash: bundleCommandDigest,
 
       bundling: {
+        environment: {
+          PRISMA_CLI_BINARY_TARGETS: binaryTarget,
+        },
         image: RUNTIME.bundlingImage,
         command: createBundleCommand,
       },
@@ -132,9 +145,8 @@ export class PrismaLayer extends LayerVersion {
     this.environment = app.local
       ? {}
       : {
-        PRISMA_QUERY_ENGINE_LIBRARY:
-          '/opt/nodejs/node_modules/@prisma/engines/libquery_engine-rhel-openssl-1.0.x.so.node',
-      };
+          PRISMA_QUERY_ENGINE_LIBRARY: `/opt/nodejs/node_modules/@prisma/engines/libquery_engine-${binaryTargets}.so.node`,
+        };
     // modules provided by layer
     this.externalModules = [...new Set([...PRISMA_LAYER_EXTERNAL, ...nodeModules])];
   }

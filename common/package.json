@@ -1,26 +1,4 @@
 {
-  "name": "common",
-  "version": "1.0.0",
   "description": "Code shared between the client and server",
-  "main": "build/index.js",
-  "type": "module",
-  "types": "./src/index.ts",
-  "scripts": {
-    "build": "tsc",
-    "start": "tsc -w",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "generate": "pnpm run graphql:generate",
-    "lint": "eslint --ext .js,.ts,.tsx src",
-    "clean": "rimraf dist",
-    "graphql:generate": "graphql-codegen --config ../graphql/codegen.ts"
-  },
-  "devDependencies": {
-    "@graphql-codegen/cli": "5.0.0",
-    "@graphql-codegen/client-preset": "4.1.0"
-  },
-  "keywords": [],
-  "author": "",
-  "peerDependencies": {
-    "graphql": "^16.5.0"
-  }
+  "type": "module"
 }

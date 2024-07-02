@@ -6,7 +6,6 @@ import { Button, LinearProgress } from '@mui/material';
 import { GreetDocument } from '@common/generated/gql/graphql';
 import { useMutation } from '@apollo/client';
 
-
 export const Profile: React.FC = () => {
   // get current user
   const { data: session } = useSession();
@@ -14,7 +13,7 @@ export const Profile: React.FC = () => {
 
   // call greeter mutation
   const [greetResponse, setGreetResponse] = React.useState<GQL.GreetingResponse | null>(null);
-  const [greet, { loading: greetingLoading }] = useMutation(GreetDocument)
+  const [greet, { loading: greetingLoading }] = useMutation(GreetDocument);
   const handleGreet = React.useCallback(async () => {
     if (!user) return;
 

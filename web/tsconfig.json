@@ -9,13 +9,15 @@
     "jsx": "preserve",
     "module": "esnext",
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "baseUrl": ".",
-    "paths": {
-      "@common/*": ["../common/src/*"], // shared
-      "@web/*": ["./*"]
-    }
+    "isolatedModules": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "../common/src/**/*"],
+  "include": [
+    "next-env.d.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "../common/src/**/*.ts",
+    "../reset.d.ts",
+    "../sst-env.d.ts"
+  ],
   "exclude": ["node_modules"]
 }

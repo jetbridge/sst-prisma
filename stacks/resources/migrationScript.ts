@@ -27,6 +27,7 @@ export class DbMigrationScript extends Construct {
       prismaVersion: PRISMA_VERSION,
       prismaEngines: ['schema-engine'],
       prismaModules: ['@prisma/engines', '@prisma/internals', '@prisma/client'],
+      binaryTargets: ['linux-arm64-openssl-3.0.x'],
     });
 
     const migrationFunction = new Function(this, 'MigrationScriptLambda', {
@@ -37,17 +38,21 @@ export class DbMigrationScript extends Construct {
       copyFiles: [
         { from: 'backend/prisma/schema.prisma' },
         { from: 'backend/prisma/migrations' },
-        { from: 'backend/prisma/schema.prisma', to: 'backend/src/db/schema.prisma' },
+        { from: 'backend/prisma/schema.prisma', to: 'backend/src/repo/schema.prisma' },
         { from: 'backend/prisma/migrations', to: 'backend/src/repo/migrations' },
         { from: 'backend/package.json', to: 'backend/src/package.json' },
       ],
 
       nodejs: {
+        format: 'cjs',
         esbuild: { external: migrationLayer.externalModules || [] },
       },
-      timeout: '3 minutes',
+      timeout: '13 minutes',
       environment: {
+        ...migrationLayer.environment,
         DB_SECRET_ARN: dbSecretsArn,
+        // uncomment in an emergency if you get a lock error on prod
+        // PRISMA_SCHEMA_DISABLE_ADVISORY_LOCK: "true",
       },
     });
 

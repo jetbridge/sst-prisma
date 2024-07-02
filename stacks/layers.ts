@@ -1,14 +1,10 @@
-import { StackContext } from 'sst/constructs';
 import { RemovalPolicy } from 'aws-cdk-lib';
-import { ESM_REQUIRE_SHIM } from 'stacks';
+import { StackContext } from 'sst/constructs';
 import { PrismaLayer } from './resources/prismaLayer';
 
-export const PRISMA_VERSION = '5.1.1';
+export const PRISMA_VERSION = '5.16.1';
 
-// default externalModules (not bundled with lambda function code)
-export const LAYER_MODULES = ['encoding', '@prisma/client/runtime'];
-
-export function Layers({ stack, app }: StackContext) {
+export function Layers({ app, stack }: StackContext) {
   // shared prisma lambda layer
   const prismaLayer = new PrismaLayer(stack, 'PrismaLayer', {
     description: 'Prisma engine and library',
@@ -16,22 +12,20 @@ export function Layers({ stack, app }: StackContext) {
     prismaVersion: PRISMA_VERSION,
 
     // retain for rollbacks
+    // removalPolicy: IS_PRODUCTION ? RemovalPolicy.RETAIN : RemovalPolicy.DESTROY,
     removalPolicy: RemovalPolicy.RETAIN,
 
     prismaEngines: ['libquery_engine'],
+
+    binaryTargets: ['linux-arm64-openssl-3.0.x'],
   });
+
+  // const sentryLayer = getSentryLayerByLang(this)
 
   app.addDefaultFunctionLayers([prismaLayer]);
   app.addDefaultFunctionEnv(prismaLayer.environment);
-  app.setDefaultFunctionProps({
-    copyFiles: [{ from: 'backend/prisma/schema.prisma', to: 'src/schema.prisma' }],
-    nodejs: {
-      format: 'esm',
-      esbuild: {
-        banner: { js: ESM_REQUIRE_SHIM },
-        external: LAYER_MODULES.concat(prismaLayer.externalModules),
-        sourcemap: true,
-      },
-    },
-  });
+
+  return {
+    externalModules: prismaLayer.externalModules,
+  };
 }
