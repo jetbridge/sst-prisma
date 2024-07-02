@@ -53,7 +53,7 @@ export function Web({ stack, app }: StackContext) {
   webDomain = webDomain.replace('https://', '').replace('http://', '')
 
   stack.addOutputs({
-    WEB_URL: nextjsApp.customDomainUrl || nextjsApp.url || 'unknown',
-    WEB_DOMAIN: webDomain,
+    WebUrl: nextjsApp.customDomainUrl || nextjsApp.url || 'unknown',
+    WebDomain: webDomain,
   })
 }
