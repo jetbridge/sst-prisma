@@ -1,7 +1,6 @@
 import { resolve } from 'path'
 const __dirname = resolve()
 const projectRoot = resolve(__dirname, '../')
-console.log('projectRoot', projectRoot)
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
