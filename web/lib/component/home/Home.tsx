@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Splash } from './Splash/Splash';
+import { Authentication } from '@/app/ui/LoginButton';
 
 const Home: React.FC = () => {
   return (
@@ -8,7 +9,7 @@ const Home: React.FC = () => {
       <Splash />
 
       <div>
-        <LoginButton callbackUrl="/profile" />
+        <Authentication />
       </div>
     </div>
   );

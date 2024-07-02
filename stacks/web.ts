@@ -36,7 +36,7 @@ export function Web({ stack, app }: StackContext) {
     },
     memorySize: 1024,
     environment: {
-      NEXTAUTH_SECRET: secrets.secretValueFromJson('NEXTAUTH_SECRET').toString(),
+      NEXTAUTH_SECRET: secrets.secretValueFromJson('AUTH_SECRET').toString(),
       NEXTAUTH_URL: isLocal ? 'http://localhost:6001' : WEB_URL ?? 'https://set-me-in-.env',
 
       NEXT_PUBLIC_REGION: stack.region,

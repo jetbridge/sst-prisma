@@ -132,7 +132,7 @@ export function Database({ stack, app }: StackContext) {
 
   stack.addOutputs({
     DBName: { value: defaultDatabaseName, description: 'Name of the default database' },
-    GetSecretsCommand: {
+    GetDatabaseSecretsCommand: {
       value: `aws secretsmanager get-secret-value --region ${stack.region} --secret-id ${db.secret?.secretArn ?? 'unknown'} --query SecretString --output text`,
       description: 'Command to get DB connection info and credentials',
     },
