@@ -10,6 +10,7 @@
     "watch": "pnpm run tsc:watch",
     "tsc": "tsc",
     "tsc:watch": "tsc --watch",
+    "sst:types": "sst types",
     "db:seed": "pnpm run --filter backend seed",
     "db:seed:clean": "pnpm run --filter backend seed:clean",
     "db:reset": "pnpm -C backend dropcreatedb:docker",
