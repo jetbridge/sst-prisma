@@ -1,21 +1,26 @@
+import { resolve } from 'path'
+const __dirname = resolve()
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: ['@common'],
 
-  // for open-next output
-  outputFileTracingRoot: path.join(__dirname, '../'),
-  // don't include dev deps in the deployed bundle
-  outputFileTracingExcludes: {
-    '*': [
-      './**/.prisma/client/libquery_engine-darwin*', // prisma mac binary
-      './**/@swc/core-linux-x64-gnu*',
-      './**/@swc/core-linux-x64-musl*',
-      './**/@esbuild*',
-      './**/webpack*',
-      './**/rollup*',
-      './**/terser*',
-      './**/sharp*',
-    ],
+  experimental: {
+    // for open-next output
+    outputFileTracingRoot: resolve(__dirname, '../'),
+    // don't include dev deps in the deployed bundle
+    outputFileTracingExcludes: {
+      '*': [
+        './**/.prisma/client/libquery_engine-darwin*', // prisma mac binary
+        './**/@swc/core-linux-x64-gnu*',
+        './**/@swc/core-linux-x64-musl*',
+        './**/@esbuild*',
+        './**/webpack*',
+        './**/rollup*',
+        './**/terser*',
+        './**/sharp*',
+      ],
+    },
   },
 
   images: {
