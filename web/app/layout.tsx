@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import SessionWrapper from './providers/SessionProvider'
+import SessionWrapper from './lib/providers/SessionProvider'
 import { ApolloClientProvider } from './apolloClient'
 import clsx from 'clsx'
-import { Authentication } from './ui/Authentication/Authentication'
+import { Authentication } from './lib/ui/Authentication/Authentication'
 
 const inter = Inter({ subsets: ['latin'] })
 

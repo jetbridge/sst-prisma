@@ -1,18 +1,16 @@
 import { render, screen } from '@testing-library/react'
-import Home from './Home'
 import { SessionProvider } from 'next-auth/react'
-
-const DEFAULT_PROPS = {}
+import { Hero } from './Hero'
 
 const createComponent = () => {
   render(
     <SessionProvider>
-      <Home {...DEFAULT_PROPS} />
+      <Hero />
     </SessionProvider>,
   )
 }
 
-describe('Home', () => {
+describe('Hero', () => {
   it('should able to render component', () => {
     createComponent()
     expect(screen.getByText('SST Template')).toBeTruthy()

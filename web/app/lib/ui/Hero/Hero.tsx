@@ -1,15 +1,14 @@
-'use client';
+'use client'
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react'
+import STACK from './Stack'
 
-import STACK from './Stack';
+const getRandomNumber = (min: number, max: number) => Math.random() * (max - min) + min
 
-const getRandomNumber = (min: number, max: number) => Math.random() * (max - min) + min;
-
-export const Splash = () => {
-  const [drops, setDrops] = useState<JSX.Element[]>([]);
-  const rootRef = useRef<HTMLDivElement>(null);
-  const techIndex = useRef(0);
+export const Hero = () => {
+  const [drops, setDrops] = useState<JSX.Element[]>([])
+  const rootRef = useRef<HTMLDivElement>(null)
+  const techIndex = useRef(0)
 
   useEffect(() => {
     const interval = setInterval(
@@ -23,14 +22,14 @@ export const Splash = () => {
               onAnimationEnd={() => setDrops((c) => c.slice(1))}
             >
               {STACK[techIndex.current++ % STACK.length]}
-            </div>
-          )
+            </div>,
+          ),
         ),
-      1000
-    );
+      1000,
+    )
 
-    return () => clearInterval(interval);
-  }, []);
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <div className="flex items-center flex-col relative" ref={rootRef}>
@@ -42,5 +41,5 @@ export const Splash = () => {
         SST Template
       </h1>
     </div>
-  );
-};
+  )
+}

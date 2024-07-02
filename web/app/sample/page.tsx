@@ -6,8 +6,8 @@ import { TestGql } from './TestGql'
 
 export default () => {
   return (
-    <div>
+    <main>
       <TestGql />
-    </div>
+    </main>
   )
 }

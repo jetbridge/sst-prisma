@@ -20,5 +20,5 @@ export async function authenticate(redirectTo?: string) {
 }
 
 export async function unauthenticate() {
-  await signOut()
+  await signOut({ redirectTo: '/' })
 }
