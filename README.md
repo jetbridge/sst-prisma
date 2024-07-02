@@ -16,9 +16,12 @@ Assumes you have [Node 20](https://nodejs.org/en/download/current/) installed an
 
 ### Setup
 
+Edit `sst.config.ts` and set your default AWS profile and region.
+
 ```shell
 npm i -g pnpm  # install pnpm globally
 pnpm i  # install dependencies + generate types from DB and GQL schemas
+pnpm db:migrate  # run DB migrations
 pnpm dev  # start local dev server
 ```
 
@@ -28,7 +31,6 @@ Set your default AWS profile and region in `sst.config.ts`.
 
 Edit .env or .env.$stage to set infrastructure vars.
 
-
 ## Features
 
 All features are optional, delete what you don't need.
@@ -37,19 +39,19 @@ Click links to learn more and view documentation.
 
 - 🌩 [Serverless Stack](https://serverless-stack.com/) - powerful CDK developer experience tools
 - 🌤 [AWS CDK](https://aws.amazon.com/cdk/) - cloud-native infrastructure as code
-- ፨ [GraphQL API](https://docs.serverless-stack.com/constructs/GraphQLApi)
+- ፨ [GraphQL API](https://docs.serverless-stack.com/constructs/GraphQLApi) (optional)
   - ⇅ [AWS AppSync](https://docs.aws.amazon.com/appsync/latest/devguide/what-is-appsync.html) - serverless GraphQL AWS service
   - ✽ [Code generation](https://www.graphql-code-generator.com/) of [TypeScript](https://www.graphql-code-generator.com/docs/guides/front-end-typescript-only) + [react client](https://the-guild.dev/graphql/codegen/docs/guides/react-vue)
 - 🌐 [REST API gateway](https://docs.serverless-stack.com/api)
-- 🖥 [NextJS](https://nextjs.org/) frontend w/ Material-UI
-  - 🎨 [Material-UI](https://mui.com/material-ui/getting-started/overview/) - react components and styling solution
+- 🖥 [NextJS](https://nextjs.org/) nextjs app router
+  - 🎨 [Tailwind](https://tailwindcss.com/) - for styling
   - 🔓 [NextAuth.js](https://next-auth.js.org/) - authentication and session management
 - 🔓 [AWS Cognito](https://aws.amazon.com/cognito/) - authentication backend
 - 💾 [Prisma ORM](https://www.prisma.io/docs/)
   - 📚 Prisma engine lambda layer
   - 📜 Prisma DB migration CDK script
   - 🐳 Database integration test setup with postgres in docker
-- 🔋 [Aurora Serverless RDS](https://aws.amazon.com/rds/aurora/serverless/) PostgreSQL
+- 🔋 [Aurora Serverless v2 RDS](https://aws.amazon.com/rds/aurora/serverless/) PostgreSQL
 - ⚡️ [Live local lambda development](https://docs.serverless-stack.com/live-lambda-development) (`pnpm dev`)
   - 🐞 [Lambda debugging](https://docs.sst.dev/live-lambda-development#debugging-with-visual-studio-code) - set breakpoints on your lambda functions and step through in your IDE
 - 📦 [pnpm](https://pnpm.io/) - fast and correct package manager

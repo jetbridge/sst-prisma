@@ -17,6 +17,11 @@ export function AppSyncApi({ stack }: StackContext) {
     },
     schema: 'graphql/generated/schema.graphql',
     dataSources: {},
+    defaults: {
+      function: {
+        nodejs: { esbuild: { external: ['@prisma/client', '.prisma'] } },
+      },
+    },
 
     // define resolvers here - https://docs.serverless-stack.com/constructs/AppSyncApi#using-the-minimal-config
     resolvers: {

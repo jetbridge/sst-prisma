@@ -1,21 +1,21 @@
-import { RemovalPolicy } from 'aws-cdk-lib';
-import { IVpc } from 'aws-cdk-lib/aws-ec2';
-import { Construct } from 'constructs';
-import { App, Function, Script } from 'sst/constructs';
-import { PRISMA_VERSION } from '../layers';
-import { PrismaLayer } from './prismaLayer';
-import { RUN_DB_MIGRATIONS } from 'stacks/config';
+import { RemovalPolicy } from 'aws-cdk-lib'
+import { IVpc } from 'aws-cdk-lib/aws-ec2'
+import { Construct } from 'constructs'
+import { App, Function, Script } from 'sst/constructs'
+import { PRISMA_VERSION } from '../layers'
+import { PrismaLayer } from './prismaLayer'
+import { RUN_DB_MIGRATIONS } from 'stacks/config'
 
 interface DbMigrationScriptProps {
-  vpc?: IVpc;
-  dbSecretsArn: string;
+  vpc?: IVpc
+  dbSecretsArn: string
 }
 
 export class DbMigrationScript extends Construct {
   constructor(scope: Construct, id: string, { vpc, dbSecretsArn }: DbMigrationScriptProps) {
-    super(scope, id);
+    super(scope, id)
 
-    const app = App.of(scope) as App;
+    const app = App.of(scope) as App
 
     // lambda layer for migrations
     const migrationLayer = new PrismaLayer(this, 'PrismaMigrateLayer', {
@@ -28,7 +28,7 @@ export class DbMigrationScript extends Construct {
       prismaEngines: ['schema-engine'],
       prismaModules: ['@prisma/engines', '@prisma/internals', '@prisma/client'],
       binaryTargets: ['linux-arm64-openssl-3.0.x'],
-    });
+    })
 
     const migrationFunction = new Function(this, 'MigrationScriptLambda', {
       vpc,
@@ -45,7 +45,7 @@ export class DbMigrationScript extends Construct {
 
       nodejs: {
         format: 'cjs',
-        esbuild: { external: migrationLayer.externalModules || [] },
+        esbuild: { external: migrationLayer.externalModules || [], target: 'node20' },
       },
       timeout: '13 minutes',
       environment: {
@@ -54,14 +54,14 @@ export class DbMigrationScript extends Construct {
         // uncomment in an emergency if you get a lock error on prod
         // PRISMA_SCHEMA_DISABLE_ADVISORY_LOCK: "true",
       },
-    });
+    })
 
     // script to run migrations for us during deployment
     if (RUN_DB_MIGRATIONS) {
       new Script(this, 'MigrationScript', {
         onCreate: migrationFunction,
         onUpdate: migrationFunction,
-      });
+      })
     }
   }
 }

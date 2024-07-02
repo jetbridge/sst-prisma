@@ -1,0 +1,38 @@
+# Bump version and tag
+
+name: Update version and tag
+
+on:
+  workflow_call:
+    secrets:
+      RELEASE_PAT:
+        # personal token is required to trigger other workflows
+        required: true
+  workflow_dispatch:
+
+jobs:
+  update-version:
+    name: Update version and tag
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.RELEASE_PAT }}
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9
+      - name: Generate new version
+        run: |
+          git config --local user.email "github-bot@risrx.com"
+          git config --local user.name "github-bot"
+          pnpm version patch
+      - name: Push new version
+        run: git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_PAT }}
+      - name: Push new tag
+        run: git push --tags
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_PAT }}

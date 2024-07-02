@@ -8,6 +8,6 @@ if [[ -n "${CI}" ]]; then
 else
 	echo "Starting DB"
 	docker-compose --project-directory "${SCRIPT_DIR}/.." up -d --remove-orphans
-	"$SCRIPT_DIR/waitForPg.sh"
+	"$SCRIPT_DIR/waitForPg.sh" || (echo "Failed to start DB" && exit 1)
 fi
 

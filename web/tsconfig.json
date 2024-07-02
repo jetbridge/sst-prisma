@@ -1,23 +1,37 @@
 {
-  "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
-    "moduleResolution": "node",
+    "strict": true,
     "noEmit": true,
-    "jsx": "preserve",
+    "esModuleInterop": true,
     "module": "esnext",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "types": ["vitest/globals"],
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"],
+      "@common/*": ["../common/src/*"]
+    }
   },
   "include": [
     "next-env.d.ts",
-    "src/**/*.ts",
-    "src/**/*.tsx",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
     "../common/src/**/*.ts",
     "../reset.d.ts",
-    "../sst-env.d.ts"
+    "../sst-env.d.ts",
+    "eslint.config.mjs"
   ],
   "exclude": ["node_modules"]
 }

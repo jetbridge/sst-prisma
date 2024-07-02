@@ -1,31 +1,36 @@
-import { Cognito, StackContext, use } from 'sst/constructs';
-import { Duration } from 'aws-cdk-lib';
-import { StringAttribute, UserPoolClientIdentityProvider } from 'aws-cdk-lib/aws-cognito';
-import { AaaaRecord, ARecord, RecordTarget } from 'aws-cdk-lib/aws-route53';
-import { UserPoolDomainTarget } from 'aws-cdk-lib/aws-route53-targets';
-import { Dns } from './dns';
-import { WEB_URL } from './config';
+import { Cognito, StackContext, use } from 'sst/constructs'
+import { Duration, RemovalPolicy } from 'aws-cdk-lib'
+import { StringAttribute, UserPoolClientIdentityProvider } from 'aws-cdk-lib/aws-cognito'
+import { AaaaRecord, ARecord, RecordTarget } from 'aws-cdk-lib/aws-route53'
+import { UserPoolDomainTarget } from 'aws-cdk-lib/aws-route53-targets'
+import { Dns } from './dns'
+import { IS_PRODUCTION, WEB_DOMAIN } from './config'
+import { HttpUserPoolAuthorizer } from 'aws-cdk-lib/aws-apigatewayv2-authorizers'
 
 const ALLOWED_HOSTS = [
   'http://localhost:6001',
-  ...(WEB_URL ? [WEB_URL] : []),
+  ...(WEB_DOMAIN ? [`https://${WEB_DOMAIN}`] : []),
   /// ... add frontend hosts here
-];
-const ALLOWED_URLS = ['/login', '/api/auth/callback/cognito'];
+]
+const ALLOWED_URLS = ['/login', '/api/auth/callback/cognito']
 
 export function Auth({ stack, app }: StackContext) {
-  const dns = use(Dns);
+  const { certificateGlobal, domainName, hostedZone } = use(Dns)
 
-  const callbackUrls = ALLOWED_HOSTS.flatMap((h) => ALLOWED_URLS.map((url) => h + url));
+  const callbackUrls = ALLOWED_HOSTS.flatMap((h) => ALLOWED_URLS.map((url) => h + url))
 
   const auth = new Cognito(stack, 'Auth', {
     triggers: {
       // save user in DB
-      preSignUp: 'backend/src/auth/trigger/preSignUp.handler',
+      preSignUp: {
+        handler: 'backend/src/auth/trigger/preSignUp.handler',
+      },
     },
+    login: ['email'],
     cdk: {
       userPoolClient: {},
       userPool: {
+        removalPolicy: IS_PRODUCTION ? RemovalPolicy.RETAIN : RemovalPolicy.DESTROY,
         // what users can sign in with
         // ⚠️ The Cognito service prevents changing the signInAlias property for an existing user pool.
         signInAliases: { email: true, phone: false },
@@ -40,37 +45,42 @@ export function Auth({ stack, app }: StackContext) {
         },
       },
     },
-  });
-  const userPool = auth.cdk.userPool;
+  })
 
+  const userPool = auth.cdk.userPool
+
+  let cognitoDomainName
   // custom domain
-  const domainName = dns.domainName;
-  if (dns.hostedZone && dns.certificateGlobal && domainName) {
-    const authDomain = 'auth.' + domainName;
-    const domain = userPool.addDomain('CustomDomain', {
+  if (hostedZone && certificateGlobal && domainName) {
+    cognitoDomainName = `${app.stage}-auth.${domainName}`
+    const customDomain = userPool.addDomain('CustomDomain', {
       customDomain: {
-        domainName: authDomain,
-        certificate: dns.certificateGlobal,
+        domainName: cognitoDomainName,
+        certificate: certificateGlobal,
       },
-    });
+    })
     new ARecord(stack, 'Domain4', {
-      zone: dns.hostedZone,
-      target: RecordTarget.fromAlias(new UserPoolDomainTarget(domain)),
-      recordName: authDomain,
-    });
+      zone: hostedZone,
+      target: RecordTarget.fromAlias(new UserPoolDomainTarget(customDomain)),
+      recordName: cognitoDomainName,
+    })
     new AaaaRecord(stack, 'Domain6', {
-      zone: dns.hostedZone,
-      target: RecordTarget.fromAlias(new UserPoolDomainTarget(domain)),
-      recordName: authDomain,
-    });
+      zone: hostedZone,
+      target: RecordTarget.fromAlias(new UserPoolDomainTarget(customDomain)),
+      recordName: cognitoDomainName,
+    })
+  } else {
+    // default auth domain
+    // must be set for cognito to work at all unless a custom domain is specified
+    // must be globally unique
+    // feel free to edit this
+    const resourcePrefix = `auth-${app.name}-${app.stage}`
+    const cognitoDomain = userPool.addDomain('CognitoDomain', {
+      cognitoDomain: { domainPrefix: resourcePrefix },
+    })
+    const cognitoBaseUrl = cognitoDomain.baseUrl().replace('https://', '')
+    cognitoDomainName = cognitoBaseUrl
   }
-
-  // get cognito domain
-  const cognitoDomain = userPool.addDomain('CognitoDomain', {
-    cognitoDomain: { domainPrefix: `${app.name}-${app.stage}` },
-  });
-  const cognitoBaseUrl = cognitoDomain.baseUrl().replace('https://', '');
-  const cognitoDomainName = dns.hostedZone ? `${app.stage}-auth.${dns.hostedZone.zoneName}` : cognitoBaseUrl;
 
   // create cognito client
   const webClient = userPool.addClient('WebClient', {
@@ -80,12 +90,17 @@ export function Auth({ stack, app }: StackContext) {
       callbackUrls: callbackUrls,
       logoutUrls: callbackUrls,
     },
-  });
+  })
+  const httpApiAuthorizer = new HttpUserPoolAuthorizer('HttpUserPoolAuthorizer', userPool, {
+    userPoolClients: [webClient],
+  })
+  stack.addOutputs({ UserPoolId: userPool.userPoolId, WebClientId: webClient.userPoolClientId })
 
   return {
     userPool,
     domainName,
     webClient,
     cognitoDomainName,
-  };
+    httpApiAuthorizer,
+  }
 }

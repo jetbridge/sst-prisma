@@ -1,5 +1,5 @@
-import { StackContext, use } from 'sst/constructs';
-import { Duration } from 'aws-cdk-lib';
+import { StackContext, use } from 'sst/constructs'
+import { Duration } from 'aws-cdk-lib'
 import {
   BastionHostLinux,
   CfnEIP,
@@ -9,26 +9,27 @@ import {
   InstanceType,
   Peer,
   SubnetType,
-} from 'aws-cdk-lib/aws-ec2';
-import { ARecord, RecordTarget } from 'aws-cdk-lib/aws-route53';
-import { Database } from './database';
-import { Dns } from './dns';
-import { Network } from './network';
+} from 'aws-cdk-lib/aws-ec2'
+import { ARecord, RecordTarget } from 'aws-cdk-lib/aws-route53'
+import { Database } from './database'
+import { Dns } from './dns'
+import { Network } from './network'
+import { SSH_KEYPAIR_NAME } from './config'
 
 export const BastionHost = ({ stack, app }: StackContext) => {
   // set this to enable a bastion host
-  const keypairName = process.env['SSH_KEYPAIR_NAME'];
+  const keypairName = SSH_KEYPAIR_NAME
 
   if (!keypairName) {
     stack.addOutputs({
       Enabled: { value: 'false', description: 'SSH_KEYPAIR_NAME is not set' },
-    });
-    return;
+    })
+    return
   }
 
-  const { vpc, defaultLambdaSecurityGroup } = use(Network);
-  const { db } = use(Database);
-  const { hostedZone } = use(Dns);
+  const { vpc, defaultLambdaSecurityGroup } = use(Network)
+  const { db } = use(Database)
+  const { hostedZone } = use(Dns)
 
   // skip if no DB
   if (!db) return
@@ -39,28 +40,28 @@ export const BastionHost = ({ stack, app }: StackContext) => {
     instanceName: app.logicalPrefixedName('bastion'),
     subnetSelection: { subnetType: SubnetType.PUBLIC },
     securityGroup: defaultLambdaSecurityGroup,
-  });
+  })
 
   // SSH keypair
-  host.instance.instance.keyName = keypairName;
+  host.instance.instance.keyName = keypairName
 
   // allow DB access
-  db.connections.allowDefaultPortFrom(host);
+  db.connections.allowDefaultPortFrom(host)
 
   // allow public SSH access
-  host.allowSshAccessFrom(Peer.anyIpv4(), Peer.anyIpv6());
+  host.allowSshAccessFrom(Peer.anyIpv4(), Peer.anyIpv6())
 
   // give it a static IP
-  const eip = new CfnEIP(stack, 'Ip');
+  const eip = new CfnEIP(stack, 'Ip')
   new CfnEIPAssociation(stack, 'BastionEIPAssociation', {
     eip: eip.ref,
     instanceId: host.instanceId,
-  });
+  })
   stack.addOutputs({
     BastionHostIp: { value: eip.ref, description: 'IP address of the bastion host' },
-  });
+  })
 
-  let publicHost = eip.ref;
+  let publicHost = eip.ref
 
   // give it a domain or an elastic IP
   if (hostedZone) {
@@ -69,11 +70,11 @@ export const BastionHost = ({ stack, app }: StackContext) => {
       target: RecordTarget.fromIpAddresses(publicHost),
       recordName: `bastion.${hostedZone.zoneName}`,
       ttl: Duration.minutes(2),
-    });
+    })
     stack.addOutputs({
       BastionHost: { value: aRec.domainName, description: 'Bastion hostname' },
-    });
-    publicHost = aRec.domainName;
+    })
+    publicHost = aRec.domainName
   }
 
   // copy and paste SSH command-line
@@ -86,7 +87,7 @@ export const BastionHost = ({ stack, app }: StackContext) => {
       description: 'Create SSH tunnel to DB',
       value: `ssh -i ~/.ssh/${keypairName}.cer ec2-user@${publicHost} -L 5431:${db.clusterEndpoint.hostname}:${db.clusterEndpoint.port}`,
     },
-  });
+  })
 
-  return { host };
-};
+  return { host }
+}

@@ -3,7 +3,7 @@
 set -ex
 
 function testcmd {
-  docker-compose exec -T sst-local-db psql -U postgres -c "select 'postgres is alive'"
+  docker-compose exec -T database psql -U postgres -c "select 'postgres is alive'"
 }
 
 TRIES=0

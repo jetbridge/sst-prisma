@@ -1,45 +1,54 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-import withBundleAnalyzer from '@next/bundle-analyzer';
-import { resolve } from 'path';
+import { resolve } from 'path'
+const __dirname = resolve()
+const projectRoot = resolve(__dirname, '../')
+console.log('projectRoot', projectRoot)
 
-const __dirname = resolve();
-
-/**
- * @type {import('next').NextConfig}
- */
+/** @type {import('next').NextConfig} */
 const nextConfig = {
-  // minify faster
-  swcMinify: true,
-
-  reactStrictMode: false,
-  transpilePackages: ['common'],
-
-  // we don't need to import EVERY component or icon
-  // this rewrites imports to only import what we need from MUI
-  modularizeImports: {
-    '@mui/material': {
-      transform: '@mui/material/{{member}}',
-    },
-    '@mui/icons-material': {
-      transform: '@mui/icons-material/{{member}}',
-    },
-  },
+  transpilePackages: ['@common'],
 
   experimental: {
-    outputFileTracingRoot: resolve(__dirname, '..'),
+    // for open-next output
+    outputFileTracingRoot: projectRoot,
+    // don't include dev deps in the deployed bundle
+    outputFileTracingExcludes: {
+      '*': [
+        './**/.prisma/client/libquery_engine-darwin*', // prisma mac binary
+        './**/@swc/core-linux-x64-gnu*',
+        './**/@swc/core-linux-x64-musl*',
+        './**/@esbuild*',
+        './**/rollup*',
+        './**/terser*',
+        './**/sharp*',
+      ],
+    },
   },
-};
 
-const bundleAnalyzer = withBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' });
-
-/**
- * @type {import('next').NextConfig}
- */
-export default bundleAnalyzer({
-  ...nextConfig,
   images: {
-    domains: [
-      // put your domains here
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+        port: '',
+        pathname: '**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '6001',
+        pathname: '**',
+      },
     ],
+    minimumCacheTTL: 86400 * 365, // cache optimized images for a long time
   },
-});
+
+  // https://docs.sst.dev/constructs/NextjsSite#source-maps
+  webpack: (config, options) => {
+    if (!options.dev) {
+      config.devtool = 'source-map'
+    }
+    return config
+  },
+}
+
+export default nextConfig

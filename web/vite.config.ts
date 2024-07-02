@@ -17,13 +17,13 @@ export default defineConfig({
     react(),
     process.env.VITEST
       ? {
-        name: 'css-preprocess',
-        enforce: 'pre',
-        transform(code, id) {
-          if (/\.(css|sass|scss)$/.test(id)) return { code: '' };
-          return null;
-        },
-      }
+          name: 'css-preprocess',
+          enforce: 'pre',
+          transform(code, id) {
+            if (/\.(css)$/.test(id)) return { code: '' };
+            return null;
+          },
+        }
       : undefined,
   ],
 });

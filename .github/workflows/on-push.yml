@@ -1,0 +1,33 @@
+name: Build on push
+
+on:
+  push:
+    branches:
+      - "**"
+
+    # don't run if a tag was pushed
+    tags-ignore:
+      - "v*"
+
+    # don't run if only package.json (version) was updated
+    paths-ignore:
+      - "package.json"
+
+# This will cancel the workflow https://stackoverflow.com/questions/66335225/how-to-cancel-previous-runs-in-the-pr-when-you-push-new-commitsupdate-the-curre
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    uses: ./.github/workflows/build-and-test.yml
+
+  # enable if PAT is provided
+  # update-version:
+  #   # if on production branch, bump version
+  #   if: github.ref == 'refs/heads/prod'
+  #   needs: build-and-test
+  #   uses: ./.github/workflows/update-version.yml
+  #   secrets:
+  #     # personal token is required to trigger other workflows
+  #     RELEASE_PAT: ${{ secrets.RELEASE_PAT }}

@@ -1,30 +1,30 @@
-import { AssetHashType, IgnoreMode } from 'aws-cdk-lib';
-import { Code, LayerVersion, LayerVersionProps } from 'aws-cdk-lib/aws-lambda';
-import { Construct } from 'constructs';
-import crypto from 'crypto';
-import { App } from 'sst/constructs';
-import { RUNTIME } from 'stacks';
+import { AssetHashType, IgnoreMode } from 'aws-cdk-lib'
+import { Code, LayerVersion, LayerVersionProps, Runtime } from 'aws-cdk-lib/aws-lambda'
+import { Construct } from 'constructs'
+import crypto from 'crypto'
+import { App } from 'sst/constructs'
+import { RUNTIME } from 'stacks'
 
 // modules to mark as "external" when bundling
 // added to prismaModules
-const PRISMA_LAYER_EXTERNAL = ['@prisma/engines', '@prisma/engines-version', '@prisma/internals'];
+const PRISMA_LAYER_EXTERNAL = ['@prisma/engines', '@prisma/engines-version', '@prisma/internals']
 
-type PrismaEngine = 'introspection-engine' | 'schema-engine' | 'prisma-fmt' | 'libquery_engine';
+type PrismaEngine = 'introspection-engine' | 'schema-engine' | 'prisma-fmt' | 'libquery_engine'
 
 export interface PrismaLayerProps extends Omit<LayerVersionProps, 'code'> {
   // e.g. 5.0.0
-  prismaVersion?: string;
+  prismaVersion?: string
 
   // some more modules to add to the layer
-  nodeModules?: string[];
+  nodeModules?: string[]
 
   // binary targets, e.g. "linux-arm64-openssl-3.0.x"
-  binaryTargets?: string[];
+  binaryTargets?: string[]
 
   // prisma libs
-  prismaModules?: string[];
+  prismaModules?: string[]
   // engines to keep
-  prismaEngines?: PrismaEngine[];
+  prismaEngines?: PrismaEngine[]
 }
 
 /**
@@ -49,39 +49,37 @@ export interface PrismaLayerProps extends Omit<LayerVersionProps, 'code'> {
  *   }
  */
 export class PrismaLayer extends LayerVersion {
-  externalModules: string[];
+  externalModules: string[]
 
-  environment: Record<string, string>;
+  environment: Record<string, string>
 
   constructor(scope: Construct, id: string, props: PrismaLayerProps = {}) {
-    const { prismaVersion, prismaModules, ...rest } = props;
-    const nodeModules = props.nodeModules || [];
+    const { prismaVersion, prismaModules, ...rest } = props
+    const nodeModules = props.nodeModules || []
 
-    const app = App.of(scope) as App;
+    const app = App.of(scope) as App
 
-    const layerDir = '/asset-output/nodejs';
-    const nm = `${layerDir}/node_modules`;
-    const engineDir = `${nm}/@prisma/engines`;
-    const internalsDir = `${nm}/@prisma/internals`;
-    const clientDir = `${nm}/@prisma/client`;
+    const layerDir = '/asset-output/nodejs'
+    const nm = `${layerDir}/node_modules`
+    const engineDir = `${nm}/@prisma/engines`
+    const internalsDir = `${nm}/@prisma/internals`
+    const clientDir = `${nm}/@prisma/client`
 
     // what are we asking npm to install?
     // deps to npm install to the layer
-    const modulesToInstall = prismaModules || ['@prisma/client', '@prisma/engines'];
+    const modulesToInstall = prismaModules || ['@prisma/client', '@prisma/engines']
     const modulesToInstallWithVersion = prismaVersion
       ? modulesToInstall.map((dep) => `${dep}@${prismaVersion}`)
-      : modulesToInstall;
-    const modulesToInstallArgs = modulesToInstallWithVersion.concat(nodeModules).join(' ');
+      : modulesToInstall
+    const modulesToInstallArgs = modulesToInstallWithVersion.concat(nodeModules).join(' ')
 
     // target architectures
-    const binaryTargets = props.binaryTargets || ['linux-arm64-openssl-3.0.x'];
+    const binaryTargets = props.binaryTargets || ['linux-arm64-openssl-3.0.x']
 
     // delete engines not requested
-    const allEngines: PrismaEngine[] = ['introspection-engine', 'schema-engine', 'libquery_engine', 'prisma-fmt'];
-    const prismaEngines = props.prismaEngines || ['libquery_engine'];
-    const deleteEngineCmds = allEngines
-      .filter((e) => !prismaEngines.includes(e))
-      .map((e) => `rm -f ${engineDir}/${e}*`);
+    const allEngines: PrismaEngine[] = ['introspection-engine', 'schema-engine', 'libquery_engine', 'prisma-fmt']
+    const prismaEngines = props.prismaEngines || ['libquery_engine']
+    const deleteEngineCmds = allEngines.filter((e) => !prismaEngines.includes(e)).map((e) => `rm -f ${engineDir}/${e}*`)
 
     const createBundleCommand = [
       // create asset bundle in docker
@@ -111,14 +109,14 @@ export class PrismaLayer extends LayerVersion {
         `rm -rf ${nm}/@types`,
         `rm -rf ${nm}/.prisma`,
       ].join(' && '),
-    ];
+    ]
 
     // hash our parameters so we know when we need to rebuild
-    const bundleCommandHash = crypto.createHash('sha256');
-    bundleCommandHash.update(JSON.stringify(createBundleCommand));
-    const bundleCommandDigest = bundleCommandHash.digest('hex');
+    const bundleCommandHash = crypto.createHash('sha256')
+    bundleCommandHash.update(JSON.stringify(createBundleCommand))
+    const bundleCommandDigest = bundleCommandHash.digest('hex')
 
-    const binaryTarget = binaryTargets[0];
+    const binaryTarget = binaryTargets[0]
 
     // bundle
     const code = Code.fromAsset('.', {
@@ -137,17 +135,17 @@ export class PrismaLayer extends LayerVersion {
         image: RUNTIME.bundlingImage,
         command: createBundleCommand,
       },
-    });
+    })
 
-    super(scope, id, { ...rest, code });
+    super(scope, id, { ...rest, code })
 
     // hint for prisma to find the engine
     this.environment = app.local
       ? {}
       : {
-          PRISMA_QUERY_ENGINE_LIBRARY: `/opt/nodejs/node_modules/@prisma/engines/libquery_engine-${binaryTargets}.so.node`,
-        };
+          PRISMA_QUERY_ENGINE_LIBRARY: `/opt/nodejs/node_modules/@prisma/engines/libquery_engine-${binaryTarget}.so.node`,
+        }
     // modules provided by layer
-    this.externalModules = [...new Set([...PRISMA_LAYER_EXTERNAL, ...nodeModules])];
+    this.externalModules = [...new Set([...PRISMA_LAYER_EXTERNAL, ...nodeModules])]
   }
 }
