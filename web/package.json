@@ -5,11 +5,11 @@
   "scripts": {
     "dev": "sst bind 'next dev --port 6001'",
     "dev:turbo": "sst bind 'next dev --port 6001 --turbo'",
+    "tsc": "tsc --noEmit",
+    "tsc:watch": "pnpm tsc --watch",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "typecheck": "tsc --noEmit",
-    "tsc:watch": "pnpm typecheck --watch"
+    "lint": "next lint"
   },
   "dependencies": {
     "@sentry/browser": "^8.13.0",
