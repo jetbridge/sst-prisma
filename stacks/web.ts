@@ -2,7 +2,7 @@ import { NextjsSite, StackContext, use } from 'sst/constructs'
 import { AppSyncApi } from './appSyncApi'
 import { Auth } from './auth'
 import { Dns } from './dns'
-import { IS_PRODUCTION, WEB_URL } from './config'
+import { IS_PRODUCTION, WEB_DOMAIN } from './config'
 import { Secrets } from './secrets'
 
 export function Web({ stack, app }: StackContext) {
@@ -12,8 +12,8 @@ export function Web({ stack, app }: StackContext) {
   const dns = use(Dns)
   const isLocal = app.local
 
-  if (!isLocal && !process.env.SST_STAGE && !WEB_URL) {
-    console.warn(`Please set WEB_URL in .env.${app.stage} to the URL of your frontend site.`)
+  if (!isLocal && !process.env.SST_STAGE && !WEB_DOMAIN) {
+    console.warn(`Please set WEB_DOMAIN in .env.${app.stage} to the hostname of your frontend site.`)
   }
 
   const allSecrets = Object.values(configSecrets)
@@ -39,13 +39,13 @@ export function Web({ stack, app }: StackContext) {
     memorySize: 1536,
     environment: {
       NEXTAUTH_SECRET: secrets.secretValueFromJson('AUTH_SECRET').toString(),
-      NEXTAUTH_URL: isLocal ? 'http://localhost:6001' : WEB_URL ?? 'https://set-me-in-.env',
+      NEXTAUTH_URL: isLocal ? 'http://localhost:6001' : WEB_DOMAIN ? `https://${WEB_DOMAIN}` : 'https://set-me-in-.env',
 
       NEXT_PUBLIC_REGION: stack.region,
       NEXT_PUBLIC_APPSYNC_ENDPOINT: appSyncApi.api.url,
       NEXT_PUBLIC_COGNITO_CLIENT_ID: webClient.userPoolClientId,
       NEXT_PUBLIC_COGNITO_USER_POOL_ID: userPool.userPoolId,
-      NEXT_PUBLIC_COGNITO_DOMAIN_NAME: cognitoDomainName,
+      NEXT_PUBLIC_COGNITO_DOMAIN_NAME: cognitoDomainName || '',
     },
   })
 

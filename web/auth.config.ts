@@ -2,17 +2,21 @@ import type { NextAuthConfig, Session } from 'next-auth'
 import CognitoProvider from 'next-auth/providers/cognito'
 import { COGNITO_CLIENT_ID, COGNITO_USER_POOL_ID, REGION } from './config'
 
+if (process.env.NEXTAUTH_URL && process.env.NEXTAUTH_URL.includes('set-me-in-.env')) {
+  console.error(`Please set WEB_DOMAIN in .env.${process.env.SST_STAGE} to the URL of your frontend site.`)
+}
+
 export const authConfig = {
+  trustHost: true, // trust X-Forwarded-Host from CloudFront
   providers: [
     CognitoProvider({
       clientId: COGNITO_CLIENT_ID,
       issuer: `https://cognito-idp.${REGION}.amazonaws.com/${COGNITO_USER_POOL_ID}`,
       token: true,
-
       client: {
         token_endpoint_auth_method: 'none',
       },
-      checks: ['pkce', 'state', 'nonce'], // https://github.com/nextauthjs/next-auth/discussions/3551
+      checks: ['nonce', 'pkce', 'state'], // https://github.com/nextauthjs/next-auth/discussions/3551
     }),
   ],
   callbacks: {

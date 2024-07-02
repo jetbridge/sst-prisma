@@ -9,5 +9,7 @@ interface Props {
 export const Authentication = async ({ className }: Props) => {
   const session = await auth()
 
-  return <div className={className}>{session ? <LogoutButton userEmail={session.user.email} /> : <LoginButton />}</div>
+  return (
+    <div className={className}>{session ? <LogoutButton userEmail={session?.user?.email} /> : <LoginButton />}</div>
+  )
 }
