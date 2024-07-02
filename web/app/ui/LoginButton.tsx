@@ -1,12 +1,15 @@
-import { auth } from '@/auth';
-import { authenticate, unauthenticate } from '../actions';
+'use client'
+
+import { auth } from '@/auth'
+import { authenticate, unauthenticate } from '../actions'
+import { useSession } from 'next-auth/react'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
-export const Authentication = async ({ className }: Props) => {
-  const session = await auth();
+export const Authentication = ({ className }: Props) => {
+  const { data: session } = useSession()
 
   return (
     <div className={className}>
@@ -22,5 +25,5 @@ export const Authentication = async ({ className }: Props) => {
         </form>
       )}
     </div>
-  );
-};
+  )
+}
