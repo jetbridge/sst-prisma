@@ -10,7 +10,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "vitest"
+    "test": "vitest",
+    "clean": "rm -rf .next"
   },
   "dependencies": {
     "@sentry/browser": "^8.13.0",
