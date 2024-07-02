@@ -1,6 +1,13 @@
-import { defineConfig, configDefaults } from 'vitest/config';
+import { defineConfig, configDefaults } from 'vitest/config'
+import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
+  plugins: [
+    tsconfigPaths({
+      loose: true,
+    }),
+  ],
+
   test: {
     globals: true,
     clearMocks: true,
@@ -32,4 +39,4 @@ export default defineConfig({
       },
     },
   },
-});
+})
