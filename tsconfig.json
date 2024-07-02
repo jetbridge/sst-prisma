@@ -10,9 +10,9 @@
   },
   "extends": "./tsconfig.base.json",
   "include": [
-    "stacks/**/*",
-    "backend/src/**/*",
-    "common/src/**/*",
+    "stacks/**/*.ts",
+    "backend/src/**/*.ts",
+    "common/src/**/*.ts",
     "index.d.ts",
     "vite.config.ts",
     "backend/src/index.d.ts"

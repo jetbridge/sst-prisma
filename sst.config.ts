@@ -16,13 +16,13 @@ export default {
   config(input) {
     const stage = input.stage;
 
-    const region = (stage && REGION[stage]) || REGION.default;
-    const profile = (stage && PROFILE[stage]) || PROFILE.default;
+    const region = (stage && REGION[stage]) || REGION.default || process.env.AWS_DEFAULT_REGION;
+    const profile = (stage && PROFILE[stage]) || PROFILE.default || process.env.AWS_PROFILE;
 
     return {
       name: 'myapp', // replace me
-      region,
-      profile: process.env.CI ? undefined : profile,
+      ...(region && { region }),
+      ...(profile && !process.env.CI && { profile }),
       stage,
     };
   },

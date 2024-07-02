@@ -41,7 +41,6 @@ export default function main(app: sst.App) {
     .stack(Dns)
     .stack(Layers)
     .stack(Database)
-    .stack(Secrets)
     .stack(BastionHost)
     // .stack(DatabaseMigrations)
     .stack(Auth)

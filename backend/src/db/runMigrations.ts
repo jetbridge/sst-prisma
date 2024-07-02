@@ -7,37 +7,18 @@ import { Migrate } from '@prisma/migrate/dist/Migrate.js';
 import { ensureDatabaseExists } from '@prisma/migrate/dist/utils/ensureDatabaseExists';
 import { printFilesFromMigrationIds } from '@prisma/migrate/dist/utils/printFiles';
 import chalk from 'chalk';
-import { isProd, sleep } from '@common/index';
 import { GetSecretValueCommand, SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
 import { Prisma, PrismaClient } from '@prisma/client';
+import { isProd } from '@common/env';
 
 export const handler = async (): Promise<string> => {
   const schemaPath = '/var/task/backend/prisma/schema.prisma';
   const dbUrl = await loadDatabaseUrl();
 
   // get DB connection
-  try {
-    await createDbIfNotExists(dbUrl);
-    const client = new PrismaClient();
-    await client.$connect();
-  } catch (ex) {
-    const errorCode = (ex as Prisma.PrismaClientInitializationError).errorCode;
-    if (errorCode == 'P1001') {
-      // timed out waiting to reach DB server
-      // it might be waking up from slumber
-      // so retry in a short bit
-      console.warn('Database not yet available, retrying...');
-      await sleep(30_000);
-      console.info('Retrying...');
-
-      await createDbIfNotExists(dbUrl);
-      const client = new PrismaClient();
-      await client.$connect();
-    } else {
-      console.error('Failed to run database migrations');
-      throw ex;
-    }
-  }
+  await createDbIfNotExists(dbUrl);
+  const client = new PrismaClient();
+  await client.$connect();
 
   process.env.DATABASE_URL = dbUrl;
 
