@@ -27,7 +27,7 @@ jobs:
       # generate types from infra
       # needed for typechecks
       - name: SST types
-        run: pnpm sst:types --stage test
+        run: pnpm run sst:types --stage test
       - name: Type checks
         run: pnpm build
       - name: Lint
