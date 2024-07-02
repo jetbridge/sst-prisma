@@ -1,6 +1,6 @@
 'use client'
 
-import { TestGql } from '../ui/TestGql'
+import { TestGql } from './TestGql'
 
 // graphql demo
 
