@@ -1,7 +1,7 @@
 'use client'
 
-import { authenticate } from '@/app/serverActions'
 import { useSearchParams } from 'next/navigation'
+import { authenticate } from '@/app/lib/actions/auth'
 
 export const LoginButton = () => {
   const searchParams = useSearchParams()

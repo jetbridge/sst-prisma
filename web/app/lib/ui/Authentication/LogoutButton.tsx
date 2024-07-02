@@ -1,4 +1,4 @@
-import { unauthenticate } from '@/app/serverActions'
+import { unauthenticate } from '@/app/lib/actions/auth'
 
 interface Props {
   userEmail: string
