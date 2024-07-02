@@ -7,19 +7,22 @@ import { Secrets } from './secrets';
 
 export function Web({ stack, app }: StackContext) {
   const { userPool, webClient, cognitoDomainName } = use(Auth);
+  const { secrets, ...configSecrets } = use(Secrets);
   const appSyncApi = use(AppSyncApi);
   const dns = use(Dns);
-  const { secret } = use(Secrets);
   const isLocal = app.local;
 
   if (!isLocal && !WEB_URL) {
     console.warn(`Please set WEB_URL in .env.${app.stage} to the URL of your frontend site.`);
   }
 
+  const allSecrets = Object.values(configSecrets);
+
   // docs: https://docs.serverless-stack.com/constructs/NextjsSite
   const frontendSite = new NextjsSite(stack, 'Web', {
     path: 'web',
     openNextVersion: '3.0.6',
+    bind: [...allSecrets],
     customDomain: dns.domainName
       ? {
           domainName: dns.domainName,
@@ -33,7 +36,7 @@ export function Web({ stack, app }: StackContext) {
     },
     memorySize: 1024,
     environment: {
-      NEXTAUTH_SECRET: secret.secretValueFromJson('RANDOM').toString(),
+      NEXTAUTH_SECRET: secrets.secretValueFromJson('NEXTAUTH_SECRET').toString(),
       NEXTAUTH_URL: isLocal ? 'http://localhost:6001' : WEB_URL ?? 'https://set-me-in-.env',
 
       NEXT_PUBLIC_REGION: stack.region,

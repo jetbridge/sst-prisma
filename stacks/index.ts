@@ -37,6 +37,7 @@ export default function main(app: sst.App) {
 
   app
     .stack(Network)
+    .stack(Secrets)
     .stack(Dns)
     .stack(Layers)
     .stack(Database)
