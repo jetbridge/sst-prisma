@@ -36,7 +36,7 @@ jobs:
   test-backend:
     name: Test backend
     env:
-      DATABASE_URL: "postgresql://postgres:pass@localhost:5438/myapp?connection_limit=80"
+      DATABASE_URL: "postgresql://postgres:pass@localhost:5432/myapp?connection_limit=80"
 
     services:
       postgres:
