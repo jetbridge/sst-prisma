@@ -16,7 +16,6 @@ export function Secrets({ stack, app }: StackContext) {
     secrets = secretsArn
       ? Secret.fromSecretCompleteArn(stack, 'Secrets', secretsArn)
       : new Secret(stack, 'App', {
-          secretName: app.logicalPrefixedName('app'),
           description: `${stack.stackName} ${stack.stage} secrets`,
           // secret default template
           generateSecretString: {

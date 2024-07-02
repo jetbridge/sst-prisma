@@ -86,7 +86,6 @@ export function Database({ stack, app }: StackContext) {
   const dbSecret = dbSecretName
     ? Secret.fromSecretNameV2(stack, 'DbSecretImported', dbSecretName)
     : new Secret(stack, 'DbSecretGenerated', {
-        secretName: app.logicalPrefixedName('db'),
         description: `DB secret for ${app.logicalPrefixedName('db')}`,
         removalPolicy: RemovalPolicy.RETAIN,
         generateSecretString: {
