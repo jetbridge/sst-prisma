@@ -102,11 +102,11 @@
     }
   },
   "lint-staged": {
-    "*.{yaml,yml}": [
+    "*.{yaml,yml},!(pnpm-lock.yaml)": [
       "yamllint"
     ],
     "{*.{ts,js},!(node*)**/*.{ts,tsx,js,jsx}}": [
-      "eslint --fix",
+      "eslint --cache --fix",
       "prettier --write"
     ]
   },
