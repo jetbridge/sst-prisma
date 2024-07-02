@@ -15,5 +15,5 @@ export function DatabaseMigrations({ stack, app }: StackContext) {
     dbSecretsArn: db.secret!.secretArn,
   });
 
-  return  {  dbMigrationScript };
+  return { dbMigrationScript };
 }

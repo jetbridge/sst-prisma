@@ -3,7 +3,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import type { AppProps } from 'next/app';
-import { ApolloClientProvider } from 'web/lib/hook/apolloClient';
+import { ApolloClientProvider } from '@web/lib/hook/apolloClient';
 import '../styles/globals.css';
 
 const theme = createTheme({

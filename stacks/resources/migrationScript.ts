@@ -4,6 +4,7 @@ import { Construct } from 'constructs';
 import { App, Function, Script } from 'sst/constructs';
 import { PRISMA_VERSION } from '../layers';
 import { PrismaLayer } from './prismaLayer';
+import { RUN_DB_MIGRATIONS } from 'stacks/config';
 
 interface DbMigrationScriptProps {
   vpc?: IVpc;
@@ -56,9 +57,11 @@ export class DbMigrationScript extends Construct {
     });
 
     // script to run migrations for us during deployment
-    new Script(this, 'MigrationScript', {
-      onCreate: migrationFunction,
-      onUpdate: migrationFunction,
-    });
+    if (RUN_DB_MIGRATIONS) {
+      new Script(this, 'MigrationScript', {
+        onCreate: migrationFunction,
+        onUpdate: migrationFunction,
+      });
+    }
   }
 }

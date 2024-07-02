@@ -1,0 +1,5 @@
+  mutation Greet($name: String!) {
+    greet(name: $name) {
+      greeting
+    }
+  }

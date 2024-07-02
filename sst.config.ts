@@ -2,18 +2,20 @@ import type { SSTConfig } from 'sst';
 
 process.env.SST_BUILD_CONCURRENCY = '8';
 
-// AWS profile to use - what credentials to use
+// you can configure your default profiles and regions to use here
+// map of stage to profile name
 const PROFILE = {
   default: undefined,
-} as const;
-
+};
+// map of stage to region
 const REGION = {
-  default: 'us-west-2',
-} as const;
+  default: undefined,
+};
 
 export default {
   config(input) {
-    const stage = input.stage as string;
+    const stage = input.stage;
+
     const region = (stage && REGION[stage]) || REGION.default;
     const profile = (stage && PROFILE[stage]) || PROFILE.default;
 
