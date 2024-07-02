@@ -21,8 +21,10 @@ Edit `sst.config.ts` and set your default AWS profile and region.
 ```shell
 npm i -g pnpm  # install pnpm globally
 pnpm i  # install dependencies + generate types from DB and GQL schemas
+pnpm commit-hooks # install commit hooks for linting and formatting (optional)
 pnpm db:migrate  # run DB migrations
-pnpm dev  # start local dev server
+pnpm dev  # start AWS local dev environment
+pnpm dev:web  # start NextJS frontend dev server
 ```
 
 ### Config
