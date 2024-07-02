@@ -4,6 +4,7 @@ export const CREATE_AURORA_DATABASE = process.env.CREATE_AURORA_DATABASE === 'tr
 export const WEB_DOMAIN = process.env.WEB_DOMAIN
 export const HOSTED_ZONE_NAME = process.env.HOSTED_ZONE_NAME
 export const PRISMA_CONNECTION_LIMIT = parseInt(process.env.PRISMA_CONNECTION_LIMIT || '15')
+export const SSH_KEYPAIR_NAME = process.env.SSH_KEYPAIR_NAME
 
 // for importing existing resources
 export const DB_SECURITY_GROUP_ID = process.env.DB_SECURITY_GROUP_ID
