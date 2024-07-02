@@ -1,6 +1,7 @@
 import { APP_NAME } from '@common/index'
 import { Duration, IAspect, RemovalPolicy } from 'aws-cdk-lib'
 import { ISecurityGroup, IVpc, Port, SecurityGroup } from 'aws-cdk-lib/aws-ec2'
+import { Effect, PolicyStatement } from 'aws-cdk-lib/aws-iam'
 import { CfnFunction } from 'aws-cdk-lib/aws-lambda'
 import {
   AuroraCapacityUnit,
@@ -21,17 +22,12 @@ import { config } from 'dotenv'
 import { App, Config, Function, Script, Stack, StackContext, use } from 'sst/constructs'
 import { Network } from 'stacks/network'
 import { IS_PRODUCTION } from './config'
-import { Iam } from './iam'
-import { Effect, Policy, PolicyStatement } from 'aws-cdk-lib/aws-iam'
 
 // if no parameter group specified, log queries that take at least this long
 export const logMinDurationStatementDefault = 90 // ms
 
 export function Database({ stack, app }: StackContext) {
-  const net = use(Network)
-  const { defaultLambdaRole } = use(Iam)
-
-  const { vpc } = net
+  const { vpc, defaultLambdaSecurityGroup } = use(Network)
 
   const defaultDatabaseName = APP_NAME
 
@@ -79,6 +75,8 @@ export function Database({ stack, app }: StackContext) {
   const dbSecret = dbSecretName
     ? Secret.fromSecretNameV2(stack, 'DbSecretImported', dbSecretName)
     : new Secret(stack, 'DbSecretGenerated', {
+        secretName: app.logicalPrefixedName('db'),
+        description: `DB secret for ${app.logicalPrefixedName('db')}`,
         removalPolicy: RemovalPolicy.RETAIN,
         generateSecretString: {
           secretStringTemplate: JSON.stringify({ username: 'postgres' }),
@@ -122,7 +120,7 @@ export function Database({ stack, app }: StackContext) {
   if (db.connections)
     db.connections.allowFrom(dbAccessSecurityGroup, Port.tcp(5432), 'Allow access from DB access security group')
 
-  db.connections.allowDefaultPortFrom(net.defaultLambdaSecurityGroup, 'Allow access from lambda functions')
+  db.connections.allowDefaultPortFrom(defaultLambdaSecurityGroup, 'Allow access from lambda functions')
 
   const prismaConnectionLimit = process.env.PRISMA_CONNECTION_LIMIT || 5
 
