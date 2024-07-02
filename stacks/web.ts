@@ -12,7 +12,7 @@ export function Web({ stack, app }: StackContext) {
   const dns = use(Dns);
   const isLocal = app.local;
 
-  if (!isLocal && !WEB_URL) {
+  if (!isLocal && !process.env.SST_STAGE && !WEB_URL) {
     console.warn(`Please set WEB_URL in .env.${app.stage} to the URL of your frontend site.`);
   }
 

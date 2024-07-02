@@ -37,7 +37,7 @@
     "db:migrate:test": "pnpm db:start && pnpm -C backend migrate:test",
     "db:start": "bin/startLocalDb.sh",
     "db:stop": "docker-compose down",
-    "clean": "tsc --clean && rm -rf .build .sst dist common/graphql/generated && pnpm run --recursive --if-present clean"
+    "clean": "tsc --clean && rm -rf .build .sst common/generated graphql/generated && pnpm run --recursive --if-present clean"
   },
   "dependencies": {
     "desm": "^1.3.0",
