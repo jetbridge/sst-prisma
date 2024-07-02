@@ -1,12 +1,9 @@
 'use client'
 
-import { useMutation } from '@apollo/client'
-import { graphql } from '@common/generated/graphql'
+import * as GQL from '../../../../../common/graphql/generated/gql'
 
-const greetMutation = graphql('mutation Greet($name: String!) {\n  greet(name: $name) {\n    greeting\n  }\n}')
-
-export const TestGql = () => {
-  const [greet, { data: greetResult, loading }] = useMutation(greetMutation)
+export const Greet = () => {
+  const [greet, { data: greetResult, loading }] = GQL.useGreetMutation()
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">

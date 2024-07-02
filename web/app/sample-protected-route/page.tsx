@@ -1,13 +1,13 @@
 'use client'
 
-import { TestGql } from './TestGql'
+import { Greet } from './lib/ui/Greet'
 
 // graphql demo
 
 export default () => {
   return (
     <main>
-      <TestGql />
+      <Greet />
     </main>
   )
 }
