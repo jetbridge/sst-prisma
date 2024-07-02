@@ -1,7 +1,6 @@
-import type { NextAuthConfig, Session } from 'next-auth';
-import { OAuthUserConfig } from 'next-auth/providers';
-import CognitoProvider, { CognitoProfile } from 'next-auth/providers/cognito';
-import { COGNITO_CLIENT_ID, COGNITO_CLIENT_SECRET, COGNITO_USER_POOL_ID, REGION } from './config';
+import type { NextAuthConfig, Session } from 'next-auth'
+import CognitoProvider from 'next-auth/providers/cognito'
+import { COGNITO_CLIENT_ID, COGNITO_USER_POOL_ID, REGION } from './config'
 
 export const authConfig = {
   providers: [
@@ -17,27 +16,27 @@ export const authConfig = {
     }),
   ],
   callbacks: {
-    authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user;
+    authorized({ auth }) {
+      const isLoggedIn = !!auth?.user
 
-      return isLoggedIn;
+      return isLoggedIn
     },
 
     session: async ({ session, token }) => {
       if (!session?.user || !token?.accessToken) {
-        console.error('No accessToken found on token or session');
-        return session;
+        console.error('No accessToken found on token or session')
+        return session
       }
-      session.accessToken = token.accessToken as string;
-      session.user = token.user as Session['user'];
-      session.error = token.error as string | undefined;
-      return session;
+      session.accessToken = token.accessToken as string
+      session.user = token.user as Session['user']
+      session.error = token.error as string | undefined
+      return session
     },
 
     jwt: async ({ token, account, user }) => {
       // Initial sign in
       if (account && user) {
-        const { id_token, access_token, refresh_token, expires_at } = account;
+        const { access_token, refresh_token, expires_at } = account
 
         return {
           // save token to session for authenticating to AWS
@@ -46,14 +45,11 @@ export const authConfig = {
           accessTokenExpires: expires_at ? expires_at * 1000 : 0,
           refreshToken: refresh_token,
           user,
-        };
+        }
       }
 
-      return token;
+      return token
     },
   },
-  pages: {
-    signIn: '/',
-    verifyRequest: '/',
-  },
-} satisfies NextAuthConfig;
+  pages: { signIn: '/' },
+} satisfies NextAuthConfig

@@ -1,15 +1,12 @@
-'use client'
-
 import { auth } from '@/auth'
-import { authenticate, unauthenticate } from '../actions'
-import { useSession } from 'next-auth/react'
+import { authenticate, unauthenticate } from '@/app/serverActions'
 
 interface Props {
   className?: string
 }
 
-export const Authentication = ({ className }: Props) => {
-  const { data: session } = useSession()
+export const Authentication = async ({ className }: Props) => {
+  const session = await auth()
 
   return (
     <div className={className}>
