@@ -1,6 +1,7 @@
-import { seedFakerSampleData } from '@backend/db/seed/fakeSampleData';
+import { seedFakerSampleData } from '@backend/db/seed/fakeSampleData'
 
-const { prisma } = await import('@backend/db/clientSync');
+const { prisma } = await import('@backend/db/clientSync')
 
-await seedFakerSampleData();
-await prisma.$disconnect();
+await seedFakerSampleData()
+await prisma.$disconnect()
+process.exit(0)
