@@ -9,7 +9,7 @@ interface CognitoRefreshTokenResult {
   refresh_token: string
 }
 
-export const refreshCognitoAccessToken = async (tokens: JWT): Promise<CognitoRefreshTokenResult> => {
+const refreshCognitoAccessToken = async (tokens: JWT): Promise<CognitoRefreshTokenResult> => {
   if (!COGNITO_CLIENT_ID) throw new Error('COGNITO_CLIENT_ID is not set')
   if (!COGNITO_DOMAIN_NAME) throw new Error('COGNITO_DOMAIN_NAME is not set')
 
